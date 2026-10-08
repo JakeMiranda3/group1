@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System_Information_Group_1.Model;
+using MySqlConnector;
+using DBAccess.DAL;
 namespace System_Information_Group_1.DAL
 {
     public class AdministratorDal
@@ -35,7 +37,7 @@ namespace System_Information_Group_1.DAL
 
         #endregion
 
-        public static Administrator createAdministrator(object reader, object administratorIdOrdinal, object personIdOrdinal)
+        private static Administrator createAdministrator(MySqlDataReader reader, int administratorIdOrdinal, int personIdOrdinal)
         {
             return new Administrator(
                 reader.GetFieldValueCheckNull<int>(personIdOrdinal),
