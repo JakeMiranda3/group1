@@ -102,6 +102,20 @@ public partial class MainWindow : Window
         }
 
         RefreshPersons();
+        clear_field();
+    }
+
+    private void clear_field()
+    {
+        LastNameBox.Clear();
+        FirstNameBox.Clear();
+        DobBox.Clear();
+        PhoneBox.Clear();
+        AddressBox.Clear();
+        ZipBox.Clear();
+        CityBox.Clear();
+        StateBox.Clear();
+        RoleCombo.SelectedIndex = -1;
     }
 
     private void UpdateButton_Click(object sender, RoutedEventArgs e)
