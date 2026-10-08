@@ -10,6 +10,8 @@ drop table if exists `doctor_speciality`;
 drop table if exists `appointment`;
 drop table if exists `patient`;
 drop table if exists `visit`;
+drop table if exists `test`;
+drop table if exists `test_order`;
 
 
 CREATE TABLE person (
@@ -99,6 +101,25 @@ CREATE TABLE visit (
         REFERENCES appointment (appointment_id),
     CONSTRAINT visit_fk_nurse FOREIGN KEY (nurse_id)
         REFERENCES nurse (nurse_id)
+);
+
+CREATE TABLE test (
+    test_code INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    low_value DECIMAL(9,2),
+    high_value DECIMAL(9,2),
+    measurement_type VARCHAR(10)
+);
+
+CREATE TABLE test_order (
+    appointment_id INT,
+    test_code INT,
+    performed_datetime DATETIME,
+    test_result VARCHAR(1024),
+    is_abnormal BOOLEAN,
+    PRIMARY KEY (appointment_id, test_code),
+    CONSTRAINT test_order_fk_test FOREIGN KEY (test_code) REFERENCES test(test_code),
+    CONSTRAINT test_order_fk_visit FOREIGN KEY (appointment_id) REFERENCES visit(appointment_id)
 );
 
 
