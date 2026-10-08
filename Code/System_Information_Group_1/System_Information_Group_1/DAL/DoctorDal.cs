@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System_Information_Group_1.Model;
+using MySqlConnector;
+using DBAccess.DAL;
 namespace System_Information_Group_1.DAL
 {
     public class DoctorDal
@@ -34,7 +36,7 @@ namespace System_Information_Group_1.DAL
         }
         #endregion
 
-        private static Doctor createDoctor(object reader, object doctorIdOrdinal, object personIdOrdinal)
+        private static Doctor createDoctor(MySqlDataReader reader, int doctorIdOrdinal, int personIdOrdinal)
         {
             return new Doctor(
                 reader.GetFieldValueCheckNull<int>(personIdOrdinal),

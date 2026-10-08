@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System_Information_Group_1.Model;
-
+using MySqlConnector;
+using DBAccess.DAL;
 namespace System_Information_Group_1.DAL
 {
     public class NurseDal
@@ -38,7 +39,7 @@ namespace System_Information_Group_1.DAL
             return NurseDal.createNurse(reader, nurseIdOrdinal, personIdOrdinal);
         }
 
-        private static Nurse createNurse(object reader, int nurseIdOrdinal, int personIdOrdinal)
+        private static Nurse createNurse(MySqlDataReader reader, int nurseIdOrdinal, int personIdOrdinal)
         {
             return new Nurse(
                 reader.GetFieldValueCheckNull<int>(personIdOrdinal),

@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System_Information_Group_1.Model;
+using MySqlConnector;
+using DBAccess.DAL;
 namespace System_Information_Group_1.DAL
 {
     public class DoctorSpecialityDal
     {
         #region Access Methods
-        public List<DoctorSpeciality> getDoctorSpecialitiesByPersonId(int id) { 
+        public List<DoctorSpeciality> getDoctorSpecialitiesByPersonId(int id)
+        {
 
             var specialities = new List<DoctorSpeciality>();
 
@@ -23,16 +26,18 @@ namespace System_Information_Group_1.DAL
             var personIdOrdinal = reader.GetOrdinal("person_id");
             var specialityNameOrdinal = reader.GetOrdinal("speciality_name");
 
-            while (reader.Read) { 
+            while (reader.Read())
+            {
                 specialities.Add(
                     DoctorSpecialityDal.createDoctorSpeciality(reader, personIdOrdinal, specialityNameOrdinal)
-                )
-              
+                );
+
             }
             return specialities;
         }
 
-        public List<DoctorSpeciality> getDoctorSpecialitiesBySpecialityName(string specialityName) { 
+        public List<DoctorSpeciality> getDoctorSpecialitiesBySpecialityName(string specialityName)
+        {
             var specialities = new List<DoctorSpeciality>();
             using var connection = new MySqlConnection(Connection.ConnectionString());
             connection.Open();
@@ -42,20 +47,23 @@ namespace System_Information_Group_1.DAL
             using var reader = command.ExecuteReader();
             var personIdOrdinal = reader.GetOrdinal("person_id");
             var specialityNameOrdinal = reader.GetOrdinal("speciality_name");
-            while (reader.Read) { 
+            while (reader.Read())
+            {
                 specialities.Add(
                     DoctorSpecialityDal.createDoctorSpeciality(reader, personIdOrdinal, specialityNameOrdinal)
-                )
-              
+                );
+
             }
             return specialities;
         }
         #endregion
 
-        public static DoctorSpeciality createDoctorSpeciality(object reader, int personIdOrdinal, int specialityNameOrdinal) {
+        private static DoctorSpeciality createDoctorSpeciality(MySqlDataReader reader, int personIdOrdinal, int specialityNameOrdinal)
+        {
             return new DoctorSpeciality(
                 reader.GetFieldValueCheckNull<int>(personIdOrdinal),
                 reader.GetFieldValueCheckNull<string>(specialityNameOrdinal)
             );
         }
+    }
 }
