@@ -84,6 +84,11 @@ public class Person
     /// </value>
     public string State { get; set; }
 
+    /// <summary>
+    ///     Gets or sets roles assigned to the person (comma separated).
+    /// </summary>
+    public string Roles { get; set; }
+
     #endregion
 
     #region Constructors

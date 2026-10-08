@@ -4,10 +4,58 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Background="Beige">
-        <TextBlock HorizontalAlignment="Left" Margin="300,142,0,0" TextWrapping="Wrap" Text="Hello World"
-                   VerticalAlignment="Top" />
+        Title="MainWindow" Height="1920" Width="1080" Loaded="Window_Loaded">
+    <Grid Background="LightBlue">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="300" />
+        </Grid.ColumnDefinitions>
 
+        <DataGrid x:Name="PersonsGrid" Grid.Column="0" Margin="8" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Last" Binding="{Binding LastName}" />
+                <DataGridTextColumn Header="First" Binding="{Binding FirstName}" />
+                <DataGridTextColumn Header="DOB" Binding="{Binding DateOfBirth}" />
+                <DataGridTextColumn Header="Phone" Binding="{Binding ContactPhoneNumber}" />
+                <DataGridTextColumn Header="Address" Binding="{Binding Address}" />
+                <DataGridTextColumn Header="Zip" Binding="{Binding Zip}" />
+                <DataGridTextColumn Header="City" Binding="{Binding City}" />
+                <DataGridTextColumn Header="State" Binding="{Binding State}" />
+                <DataGridTextColumn Header="Role" Binding="{Binding Roles}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Column="1" Margin="8">
+            <TextBlock Text="Last Name" />
+            <TextBox x:Name="LastNameBox" />
+            <TextBlock Text="First Name" />
+            <TextBox x:Name="FirstNameBox" />
+            <TextBlock Text="Date of Birth" />
+            <TextBox x:Name="DobBox" />
+            <TextBlock Text="Phone" />
+            <TextBox x:Name="PhoneBox" />
+            <TextBlock Text="Address" />
+            <TextBox x:Name="AddressBox" />
+            <TextBlock Text="Zip" />
+            <TextBox x:Name="ZipBox" />
+            <TextBlock Text="City" />
+            <TextBox x:Name="CityBox" />
+            <TextBlock Text="State" />
+            <TextBox x:Name="StateBox" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="4">
+                <TextBlock VerticalAlignment="Center" Margin="4" Text="role assigned" Width="84" />
+                <ComboBox x:Name="RoleCombo" Width="160" Margin="4">
+                    <ComboBoxItem>Administrator</ComboBoxItem>
+                    <ComboBoxItem>Doctor</ComboBoxItem>
+                    <ComboBoxItem>Nurse</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="4">
+                <Button x:Name="CreateButton" Click="CreateButton_Click" Content="Create" Width="70" Margin="4" />
+                <Button x:Name="UpdateButton" Click="UpdateButton_Click" Content="Update" Width="70" Margin="4" />
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

@@ -1,5 +1,6 @@
 ﻿using MySqlConnector;
 using System_Information_Group_1.Model;
+using System;
 
 namespace System_Information_Group_1.DAL;
 /// <summary>
@@ -15,6 +16,28 @@ public class DoctorDal
             reader.GetFieldValueCheckNull<int>(personIdOrdinal),
             reader.GetFieldValueCheckNull<int>(doctorIdOrdinal)
         );
+    }
+
+    /// <summary>
+    /// Creates a doctor row for the given person id and returns the created Doctor with generated id.
+    /// </summary>
+    /// <param name="personId">Person id to assign doctor role to.</param>
+    /// <returns>Created Doctor object.</returns>
+    public Doctor CreateDoctor(int personId)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+
+        var insert = "insert into doctor (person_id) values (@personId);";
+        using (var cmd = new MySqlCommand(insert, connection))
+        {
+            cmd.Parameters.Add("@personId", MySqlDbType.Int32).Value = personId;
+            cmd.ExecuteNonQuery();
+        }
+
+        using var idCmd = new MySqlCommand("select last_insert_id();", connection);
+        var newId = System.Convert.ToInt32(idCmd.ExecuteScalar());
+        return new Doctor(personId, newId);
     }
 
     #endregion
