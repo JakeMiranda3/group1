@@ -1,9 +1,10 @@
-﻿using DBAccess.DAL;
-using MySqlConnector;
+﻿using MySqlConnector;
 using System_Information_Group_1.Model;
 
 namespace System_Information_Group_1.DAL;
-
+/// <summary>
+/// The data access layer in the system for the administrator table in the database. This class provides methods to retrieve administrator data based on person ID or administrator ID.
+/// </summary>
 public class AdministratorDal
 {
     #region Methods
@@ -19,9 +20,13 @@ public class AdministratorDal
 
     #endregion
 
-    #region access methods
-
-    public Administrator getAdministratorWithPersonId(int id)
+    #region access methods    
+    /// <summary>
+    /// Gets the administrator with person identifier.
+    /// </summary>
+    /// <param name="id">The identifier.</param>
+    /// <returns>the admin with the specified person ID</returns>
+    public Administrator GetAdministratorWithPersonId(int id)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
@@ -33,8 +38,12 @@ public class AdministratorDal
         var personIdOrdinal = reader.GetOrdinal("person_id");
         return createAdministrator(reader, administratorIdOrdinal, personIdOrdinal);
     }
-
-    public Administrator getAdministratorWithAdministratorId(int id)
+    /// <summary>
+    /// Gets the administrator with administrator identifier.
+    /// </summary>
+    /// <param name="id">The identifier.</param>
+    /// <returns>Get the admin with the specified admin ID</returns>
+    public Administrator GetAdministratorWithAdministratorId(int id)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();

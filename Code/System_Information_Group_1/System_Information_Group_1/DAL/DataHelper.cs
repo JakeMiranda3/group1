@@ -2,7 +2,7 @@
 using System.Data;
 using MySqlConnector;
 
-namespace DBAccess.DAL;
+namespace System_Information_Group_1.DAL;
 
 /// <summary>
 ///     Helper class define an Extension method that checks if a column is null before retturn its value

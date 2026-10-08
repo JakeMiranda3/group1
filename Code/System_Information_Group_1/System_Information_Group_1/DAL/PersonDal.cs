@@ -1,5 +1,4 @@
 ﻿using System;
-using DBAccess.DAL;
 using MySqlConnector;
 using System_Information_Group_1.Model;
 
@@ -12,8 +11,12 @@ namespace System_Information_Group_1.DAL;
 /// </summary>
 public class PersonDal
 {
-    #region Methods
-
+    #region Methods    
+    /// <summary>
+    /// Gets the person with identifier.
+    /// </summary>
+    /// <param name="id">The identifier.</param>
+    /// <returns>The person with the identifier</returns>
     public Person GetPersonWithId(int id)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());

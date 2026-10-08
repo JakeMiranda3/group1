@@ -1,14 +1,19 @@
-﻿using DBAccess.DAL;
-using MySqlConnector;
+﻿using MySqlConnector;
 using System_Information_Group_1.Model;
 
 namespace System_Information_Group_1.DAL;
-
+/// <summary>
+/// The data access layer in the system for the nurse table in the database. This class provides methods to retrieve nurse data based on person ID or nurse ID.
+/// </summary>
 public class NurseDal
 {
-    #region Methods
-
-    public Nurse getNurseWithPersonId(int id)
+    #region Methods    
+    /// <summary>
+    /// Gets the nurse with person identifier.
+    /// </summary>
+    /// <param name="id">The identifier.</param>
+    /// <returns>the nurse with the person ID</returns>
+    public Nurse GetNurseWithPersonId(int id)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
@@ -22,8 +27,12 @@ public class NurseDal
         // this should only return one nurse since this ID is a primary key
         return createNurse(reader, nurseIdOrdinal, personIdOrdinal);
     }
-
-    public Nurse getNurseWithNurseId(int id)
+    /// <summary>
+    /// Gets the nurse with nurse identifier.
+    /// </summary>
+    /// <param name="id">The identifier.</param>
+    /// <returns>The nurse with the specified nurse ID</returns>
+    public Nurse GetNurseWithNurseId(int id)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();

@@ -37,7 +37,12 @@ public class Person
     ///     The first name.
     /// </value>
     public string FirstName { get; set; }
-
+    /// <summary>
+    /// Gets or sets the date of birth.
+    /// </summary>
+    /// <value>
+    /// The date of birth.
+    /// </value>
     public DateTime DateOfBirth { get; set; }
 
     /// <summary>
@@ -47,7 +52,12 @@ public class Person
     ///     The contact phone number.
     /// </value>
     public string ContactPhoneNumber { get; set; }
-
+    /// <summary>
+    /// Gets or sets the address.
+    /// </summary>
+    /// <value>
+    /// The address.
+    /// </value>
     public string Address { get; set; }
 
     /// <summary>
