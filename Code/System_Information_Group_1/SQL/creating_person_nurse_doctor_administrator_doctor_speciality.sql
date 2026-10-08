@@ -9,6 +9,7 @@ drop table if exists `doctor`;
 drop table if exists `doctor_speciality`;
 drop table if exists `appointment`;
 drop table if exists `patient`;
+drop table if exists `visit`;
 
 
 CREATE TABLE person (
