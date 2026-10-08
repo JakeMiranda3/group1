@@ -96,8 +96,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DAL\AdministratorDal.cs" />
     <Compile Include="DAL\Connection.cs" />
     <Compile Include="DAL\DataHelper.cs" />
+    <Compile Include="DAL\DoctorDal.cs" />
+    <Compile Include="DAL\DoctorSpecialityDal.cs" />
+    <Compile Include="DAL\NurseDal.cs" />
     <Compile Include="DAL\PersonDal.cs" />
     <Compile Include="Model\Administrator.cs" />
     <Compile Include="Model\Doctor.cs" />
