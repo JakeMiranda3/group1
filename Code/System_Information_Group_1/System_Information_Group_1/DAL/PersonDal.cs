@@ -1,65 +1,62 @@
-﻿using DBAccess.DAL;
+﻿using System;
+using DBAccess.DAL;
 using MySqlConnector;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System_Information_Group_1.Model;
 
-namespace System_Information_Group_1.DAL
+namespace System_Information_Group_1.DAL;
+
+/// <summary>
+///     Ther personal data access layer class
+///     @author Colby
+///     @version Fall 2026
+/// </summary>
+public class PersonDal
 {
-    /// <summary>
-    /// Ther personal data access layer class
-    /// @author Colby
-    /// @version Fall 2026
-    /// </summary>
-    public class PersonDal
+    #region Methods
+
+    public Person GetPersonWithId(int id)
     {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
 
-        #region Access Methods
-        public Person GetPersonWithId(int id) {
-            using var connection = new MySqlConnection(Connection.ConnectionString());
-            connection.Open();
+        var query = "select * from person where person_id = @id;";
 
-            var query = "select * from person where person_id = @id;";
+        using var command = new MySqlCommand(query, connection);
+        command.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
 
-            using var command = new MySqlCommand(query, connection);
-            command.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
+        using var reader = command.ExecuteReader();
+        var personIdOrdinal = reader.GetOrdinal("person_id");
+        var firstNameOrdinal = reader.GetOrdinal("first_name");
+        var lastNameOrdinal = reader.GetOrdinal("last_name");
+        var dateOfBirthOrdinal = reader.GetOrdinal("date_of_birth");
+        var contactPhoneNumberOrdinal = reader.GetOrdinal("contact_phone_number");
+        var addressOrdinal = reader.GetOrdinal("address");
+        var zipOrdinal = reader.GetOrdinal("zip");
+        var cityOrdinal = reader.GetOrdinal("city");
+        var stateOrdinal = reader.GetOrdinal("state");
 
-            using var reader = command.ExecuteReader();
-            var personIdOrdinal = reader.GetOrdinal("person_id");
-            var firstNameOrdinal = reader.GetOrdinal("first_name");
-            var lastNameOrdinal = reader.GetOrdinal("last_name");
-            var dateOfBirthOrdinal = reader.GetOrdinal("date_of_birth");
-            var contactPhoneNumberOrdinal = reader.GetOrdinal("contact_phone_number");
-            var addressOrdinal = reader.GetOrdinal("address");
-            var zipOrdinal = reader.GetOrdinal("zip");
-            var cityOrdinal = reader.GetOrdinal("city");
-            var stateOrdinal = reader.GetOrdinal("state");
+        // this should only return one person since this ID is a primary key
 
-            // this should only return one person since this ID is a primary key
-
-            return PersonDal.createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
-                contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal);
-        }
-
-        private static Person createPerson(MySqlDataReader reader, int personIdOrdinal, int firstNameOrdinal, int lastNameOrdinal, int dateOfBirthOrdinal,
-            int contractPhoneNumberOrdinal, int addressOrdinal, int zipOrdinal, int cityOrdinal, int stateOrdinal) {
-            return new Person(
-                reader.GetFieldValueCheckNull<int>(personIdOrdinal),
-                reader.GetFieldValueCheckNull<string>(lastNameOrdinal),
-                reader.GetFieldValueCheckNull<string>(firstNameOrdinal),
-                reader.GetFieldValueCheckNull<DateTime>(dateOfBirthOrdinal),
-                reader.GetFieldValueCheckNull<string>(contractPhoneNumberOrdinal),
-                reader.GetFieldValueCheckNull<string>(addressOrdinal),
-                reader.GetFieldValueCheckNull<string>(zipOrdinal),
-                reader.GetFieldValueCheckNull<string>(cityOrdinal),
-                reader.GetFieldValueCheckNull<string>(stateOrdinal)
-            );
-        }
-        #endregion
+        return createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
+            contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal);
     }
 
+    private static Person createPerson(MySqlDataReader reader, int personIdOrdinal, int firstNameOrdinal,
+        int lastNameOrdinal, int dateOfBirthOrdinal,
+        int contractPhoneNumberOrdinal, int addressOrdinal, int zipOrdinal, int cityOrdinal, int stateOrdinal)
+    {
+        return new Person(
+            reader.GetFieldValueCheckNull<int>(personIdOrdinal),
+            reader.GetFieldValueCheckNull<string>(lastNameOrdinal),
+            reader.GetFieldValueCheckNull<string>(firstNameOrdinal),
+            reader.GetFieldValueCheckNull<DateTime>(dateOfBirthOrdinal),
+            reader.GetFieldValueCheckNull<string>(contractPhoneNumberOrdinal),
+            reader.GetFieldValueCheckNull<string>(addressOrdinal),
+            reader.GetFieldValueCheckNull<string>(zipOrdinal),
+            reader.GetFieldValueCheckNull<string>(cityOrdinal),
+            reader.GetFieldValueCheckNull<string>(stateOrdinal)
+        );
+    }
 
+    #endregion
 }
