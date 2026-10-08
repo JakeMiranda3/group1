@@ -1,60 +1,60 @@
-create table person(
-	person_id int auto_increment,
-    last_name varchar(20) not null, 
-    first_name varchar(20) not null, 
-    date_of_birth dateTime not null, 
-	contact_phone_number char(12), 
-    address varchar(20), 
-    zip varchar(9), 
-    city varchar(20), 
-    state varchar(20),
-    primary key(person_id)
+
+use cs3230f26_g1;
+SET FOREIGN_KEY_CHECKS = 0;
+
+drop table if exists `person`;
+drop table if exists `administrator`;
+drop table if exists `nurse`;
+drop table if exists `doctor`;
+drop table if exists `doctor_speciality`;
+
+
+CREATE TABLE person (
+    person_id INT AUTO_INCREMENT,
+    last_name VARCHAR(20) NOT NULL,
+    first_name VARCHAR(20) NOT NULL,
+    date_of_birth DATETIME NOT NULL,
+    contact_phone_number CHAR(12),
+    address VARCHAR(20),
+    zip VARCHAR(9),
+    city VARCHAR(20),
+    state VARCHAR(20),
+    PRIMARY KEY (person_id)
 );
 
-create table administrator(
-	person_id int, 
-    administrator_id int auto_increment not null, 
-    
-    foreign key administrator_fk_person
-    (person_id) references person(person_id), 
-    
-    primary key(person_id), 
-    
-    unique uq_administrator_administrator_id (administrator_id)
+CREATE TABLE administrator (
+    person_id INT,
+    administrator_id INT AUTO_INCREMENT NOT NULL,
+    CONSTRAINT administrator_fk_person FOREIGN KEY (person_id)
+        REFERENCES person (person_id),
+    PRIMARY KEY (person_id),
+    UNIQUE uq_administrator_administrator_id (administrator_id)
 );
 
-create table nurse(
-	person_id int, 
-    nurse_id int auto_increment not null, 
-    
-    foreign key nurse_fk_person
-    (person_id) references person(person_id), 
-    
-    primary key (person_id),
-    unique uq_nurse_nurse_id (nurse_id)
+CREATE TABLE nurse (
+    person_id INT,
+    nurse_id INT AUTO_INCREMENT NOT NULL,
+    CONSTRAINT nurse_fk_person FOREIGN KEY (person_id)
+        REFERENCES person (person_id),
+    PRIMARY KEY (person_id),
+    UNIQUE uq_nurse_nurse_id (nurse_id)
 );
 
-create table doctor(
-	person_id int, 
-    doctor_id int auto_increment not null,
-    
-    primary key(person_id), 
-    
-    foreign key doctor_fk_person 
-    (person_id) references person(person_id), 
-    
-    unique uq_doctor_doctor_id (doctor_id)
+CREATE TABLE doctor (
+    person_id INT,
+    doctor_id INT AUTO_INCREMENT NOT NULL,
+    PRIMARY KEY (person_id),
+    CONSTRAINT doctor_fk_person FOREIGN KEY (person_id)
+        REFERENCES person (person_id),
+    UNIQUE uq_doctor_doctor_id (doctor_id)
 );
 
-create table doctor_speciality(
-	person_id int, 
-    speciality_name varchar(20), 
-    
-    primary key(person_id, speciality_name),
-    
-    foreign key doctor_speciality_fk_person 
-    (person_id) references person(person_id)
-    
-    
+CREATE TABLE doctor_speciality (
+    person_id INT,
+    speciality_name VARCHAR(20),
+    PRIMARY KEY (person_id , speciality_name),
+    CONSTRAINT doctor_speciality_fk_person FOREIGN KEY (person_id)
+        REFERENCES person (person_id)
 );
 
+SET FOREIGN_KEY_CHECKS = 1;
