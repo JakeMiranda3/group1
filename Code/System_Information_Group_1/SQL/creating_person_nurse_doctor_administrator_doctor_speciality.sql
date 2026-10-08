@@ -7,6 +7,8 @@ drop table if exists `administrator`;
 drop table if exists `nurse`;
 drop table if exists `doctor`;
 drop table if exists `doctor_speciality`;
+drop table if exists `appointment`;
+drop table if exists `patient`;
 
 
 CREATE TABLE person (
@@ -56,5 +58,47 @@ CREATE TABLE doctor_speciality (
     CONSTRAINT doctor_speciality_fk_person FOREIGN KEY (person_id)
         REFERENCES person (person_id)
 );
+
+CREATE TABLE patient (
+    person_id INT UNIQUE PRIMARY KEY,
+    patient_id INT AUTO_INCREMENT,
+    is_active BOOLEAN DEFAULT TRUE,
+    CONSTRAINT patient_fk_person FOREIGN KEY (person_id)
+        REFERENCES person (person_id),
+    UNIQUE uq_patient_patient_id (patient_id)
+);
+
+CREATE TABLE appointment (
+    appointment_id INT AUTO_INCREMENT PRIMARY KEY,
+    doctor_id INT NOT NULL,
+    patient_id INT NOT NULL,
+    reason VARCHAR(100),
+    appointment_datetime DATETIME,
+    UNIQUE (patient_id , appointment_datetime),
+    UNIQUE (doctor_id , appointment_datetime),
+    CONSTRAINT appointment_fk_doctor FOREIGN KEY (doctor_id)
+        REFERENCES doctor (doctor_id),
+    CONSTRAINT appointment_fk_patient FOREIGN KEY (patient_id)
+        REFERENCES patient (patient_id)
+);
+
+CREATE TABLE visit (
+    appointment_id INT PRIMARY KEY,
+    symptoms VARCHAR(200),
+    nurse_id INT,
+    systolic_blood_pressure INT,
+    diastolic_blood_pressure INT,
+    temperature DECIMAL(4 , 1 ),
+    pulse INT,
+    height INT,
+    weight INT,
+    initial_diagnosis VARCHAR(200),
+    final_diagnosis VARCHAR(200),
+    CONSTRAINT visit_fk_appointment FOREIGN KEY (appointment_id)
+        REFERENCES appointment (appointment_id),
+    CONSTRAINT visit_fk_nurse FOREIGN KEY (nurse_id)
+        REFERENCES nurse (nurse_id)
+);
+
 
 SET FOREIGN_KEY_CHECKS = 1;
