@@ -9,6 +9,7 @@
         mc:Ignorable="d"
         Title="Create Appointment" MinHeight="720" MinWidth="1280" WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip">
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70*" />
@@ -60,7 +61,7 @@
                 </Border>
 
                 <Viewbox Grid.Row="2" StretchDirection="DownOnly">
-                    <Button FontSize="16" Padding="4,5,4,5">Schedule Appointment At Selected Time Block</Button>
+                    <Button Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5">Schedule Appointment At Selected Time Block</Button>
                 </Viewbox>
             </Grid>
 
