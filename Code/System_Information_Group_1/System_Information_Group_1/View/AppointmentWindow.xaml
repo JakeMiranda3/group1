@@ -7,18 +7,64 @@
         xmlns:barUserControl="clr-namespace:System_Information_Group_1.View.UserControls"
 
         mc:Ignorable="d"
-        Title="Create Appointment" MinHeight="720" MinWidth="1280" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" >
+        Title="Create Appointment" MinHeight="720" MinWidth="1280" WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResizeWithGrip">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70*"/>
-            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="70*" />
+            <ColumnDefinition Width="30*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
-        <barUserControl:TopAppBar Grid.ColumnSpan="3"></barUserControl:TopAppBar>
-        
+        <Border Grid.ColumnSpan="3" BorderThickness="0,0,0,2" BorderBrush="Black">
+
+            <barUserControl:TopAppBar/>
+        </Border>
+        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1,0,2,1">
+
+
+            <Grid Background="#4CBED8E6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="6*" />
+                </Grid.RowDefinitions>
+
+
+                <Grid Grid.Row="0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Viewbox StretchDirection="DownOnly" Margin="10,0,0,0">
+                        <Label Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
+                               MinWidth="50" Content="Selected Doctor:"/>
+                    </Viewbox>
+                    <ComboBox Grid.Column="1" MinWidth="100" Margin="5,0,20,0" FontSize="16" VerticalAlignment="Center" />
+                </Grid>
+
+                <Border Grid.Row="1" BorderThickness="0,0,0,2" BorderBrush="Black">
+                    <StackPanel  VerticalAlignment="Top">
+                        <Viewbox HorizontalAlignment="Left" StretchDirection="DownOnly" Margin="10,0,0,0">
+                            <Label FontSize="16" Content="View Doctors Appointments On Date"/>
+                        </Viewbox>
+                        <DatePicker VerticalAlignment="Center" Margin="15,0,10,0" FontSize="16" />
+                    </StackPanel>
+                </Border>
+
+                <Viewbox Grid.Row="2" StretchDirection="DownOnly">
+                    <Button FontSize="16" Padding="4,5,4,5">Schedule Appointment At Selected Time Block</Button>
+                </Viewbox>
+            </Grid>
+
+        </Border>
+
     </Grid>
 </Window>
