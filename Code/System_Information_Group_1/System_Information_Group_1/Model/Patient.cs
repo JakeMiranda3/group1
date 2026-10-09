@@ -9,7 +9,8 @@ namespace System_Information_Group_1.Model;
 /// </summary>
 public class Patient
 {
-    #region Properties    
+    #region Properties
+
     /// <summary>
     /// Gets or sets the person identifier.
     /// </summary>
@@ -36,7 +37,8 @@ public class Patient
 
     #endregion
 
-    #region Constructors    
+    #region Constructors
+
     /// <summary>
     /// Initializes a new instance of the <see cref="Patient"/> class.
     /// </summary>

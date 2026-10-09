@@ -103,6 +103,7 @@
     <Compile Include="DAL\DoctorDal.cs" />
     <Compile Include="DAL\DoctorSpecialityDal.cs" />
     <Compile Include="DAL\NurseDal.cs" />
+    <Compile Include="DAL\PatientDal.cs" />
     <Compile Include="DAL\PersonDal.cs" />
     <Compile Include="Model\Administrator.cs" />
     <Compile Include="Model\Doctor.cs" />
