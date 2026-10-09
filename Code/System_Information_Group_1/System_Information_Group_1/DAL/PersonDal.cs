@@ -41,6 +41,11 @@ public class PersonDal
 
         // this should only return one person since this ID is a primary key
 
+        if (!reader.Read())
+        {
+            throw new InvalidOperationException("Person not found.");
+        }
+
         return createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
             contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal);
     }
@@ -138,6 +143,16 @@ public class PersonDal
             cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = personId;
             var count = Convert.ToInt32(cmd.ExecuteScalar());
             if (count > 0) roles.Add("nurse");
+        }
+
+        using (var cmd = new MySqlCommand("select count(*) from patient where person_id = @id;", connection))
+        {
+            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = personId;
+            var count = Convert.ToInt32(cmd.ExecuteScalar());
+            if (count > 0)
+            {
+                roles.Add("patient");
+            }
         }
 
         return roles.ToArray();

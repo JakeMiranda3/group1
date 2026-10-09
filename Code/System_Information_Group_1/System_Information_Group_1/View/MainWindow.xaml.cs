@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.Windows.Navigation;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
@@ -27,6 +28,7 @@ public partial class MainWindow : Window
     private readonly NurseDal nurseDal = new NurseDal();
     private readonly DoctorDal doctorDal = new DoctorDal();
     private readonly AdministratorDal administratorDal = new AdministratorDal();
+    private readonly PatientDal patientDal = new PatientDal();
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
@@ -92,6 +94,9 @@ public partial class MainWindow : Window
                         break;
                     case "Administrator":
                         administratorDal.CreateAdministrator(created.PersonId);
+                        break;
+                    case "Patient":
+                        patientDal.CreatePatient(created.PersonId);
                         break;
                 }
             }

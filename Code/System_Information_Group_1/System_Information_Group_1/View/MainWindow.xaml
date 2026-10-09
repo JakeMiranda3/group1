@@ -49,6 +49,7 @@
                     <ComboBoxItem>Administrator</ComboBoxItem>
                     <ComboBoxItem>Doctor</ComboBoxItem>
                     <ComboBoxItem>Nurse</ComboBoxItem>
+                    <ComboBoxItem>Patient</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
 
