@@ -89,6 +89,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="View\UserControls\TimeBlockSchedule.xaml.cs">
+      <DependentUpon>TimeBlockSchedule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\TimeCard.xaml.cs">
+      <DependentUpon>TimeCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\TopAppBar.xaml.cs">
       <DependentUpon>TopAppBar.xaml</DependentUpon>
     </Compile>
@@ -125,6 +131,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\UserControls\TimeBlockSchedule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\TimeCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\TopAppBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

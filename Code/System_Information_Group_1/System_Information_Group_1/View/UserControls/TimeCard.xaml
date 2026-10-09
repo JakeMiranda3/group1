@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="System_Information_Group_1.View.UserControls.TimeCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:System_Information_Group_1.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="800">
+    <Border BorderThickness="1,1,1,1" BorderBrush="Black">
+        <Button HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Style="{StaticResource BlueButtonStyle}" Background="#FFF7F0E0" BorderBrush="{x:Null}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" BorderThickness="0,1,2,1" BorderBrush="Black">
+                    <Viewbox StretchDirection="DownOnly" Stretch="Fill" >
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0">
+                            <Label FontSize="16">Wednesday, October 30th</Label>
+                            <Label HorizontalAlignment="Center" FontSize="16">9:00 PM</Label>
+                        </StackPanel>
+                    </Viewbox>
+                </Border>
+                <Border Grid.Column="1" BorderThickness="0,1,2,1" BorderBrush="Black">
+                    <Viewbox StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Left" >
+                        <Label FontSize="16">Dr. Important person</Label>
+                    </Viewbox>
+                </Border>
+                <Border Grid.Column="2" BorderThickness="0,1,2,1" BorderBrush="Black">
+                    <Viewbox StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Left" >
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0">
+                            <Label FontSize="16">Patient Name</Label>
+                            <Label HorizontalAlignment="Center" FontSize="16">(522)-628-5099</Label>
+                        </StackPanel>
+                    </Viewbox>
+                </Border>
+            </Grid>
+        </Button>
+    </Border>
+</UserControl>

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:System_Information_Group_1.View"
         xmlns:barUserControl="clr-namespace:System_Information_Group_1.View.UserControls"
+        xmlns:scheduleUserControl="clr-namespace:System_Information_Group_1.View.UserControls"
 
         mc:Ignorable="d"
         Title="Create Appointment" MinHeight="720" MinWidth="1280" WindowStartupLocation="CenterScreen"
@@ -23,6 +24,8 @@
 
             <barUserControl:TopAppBar/>
         </Border>
+
+        <barUserControl:TimeBlockSchedule Grid.Column="0" Grid.Row="1"></barUserControl:TimeBlockSchedule>
         <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1,0,2,1">
 
 
