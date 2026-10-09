@@ -14,7 +14,21 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         this.InitializeComponent();
+
     }
 
+
     #endregion
+
+    private void onNurseRadioButtonClicked(object sender, RoutedEventArgs e)
+    {
+        this.MainWindowFrame.Navigate(new NurseLoginPage());
+    }
+
+    private void onAdminRadioButtonClicked(object sender, RoutedEventArgs e)
+    {
+        //TODO implement admin login page
+        //this.MainWindowFrame.Navigate(new AdminLoginPage());
+    }
+
 }

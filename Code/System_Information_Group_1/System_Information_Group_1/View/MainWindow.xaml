@@ -4,10 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Background="Beige">
-        <TextBlock HorizontalAlignment="Left" Margin="300,142,0,0" TextWrapping="Wrap" Text="Hello World"
-                   VerticalAlignment="Top" />
+        Title="Hi-Tek"
+        Height="450"
+        Width="800">
+    <Grid Background="WhiteSmoke" Height="450" Width="800">
+        <TextBlock x:Name="___MainWindows_Title_" HorizontalAlignment="Center" Margin="0,24,0,0" TextWrapping="Wrap" Text="Welcome!"
+                   VerticalAlignment="Top" FontFamily="Arial Black" FontSize="22" Height="37" Width="176" TextAlignment="Center" Foreground="#FF0079FF" />
+
+        <Frame Height ="235" Width="650" x:Name="MainWindowFrame" NavigationUIVisibility="Hidden" Margin="95,186,55,29"/>
+        <GroupBox x:Name="MainWindowGroupBox" Background="White" FontFamily="Arial Black" Header="Choose your Role" Padding="10" Margin="176,66,136,269" Foreground="Black">
+            <StackPanel  x:Name="MainWindowStackPanel" Height="50" Background="#FF0052FF">
+                <RadioButton x:Name="MainWindowNurseRadioButton" Content="Nurse" Foreground="White" Margin="4" Click="onNurseRadioButtonClicked"/>
+                <RadioButton x:Name="MainWindowAdminRadioButton" Content="Administrator" Foreground="White" Margin="4" Click="onAdminRadioButtonClicked"/>
+            </StackPanel>
+        </GroupBox>
 
     </Grid>
 </Window>
