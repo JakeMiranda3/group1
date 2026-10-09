@@ -17,7 +17,7 @@
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -103,11 +103,13 @@
     <Compile Include="DAL\DoctorDal.cs" />
     <Compile Include="DAL\DoctorSpecialityDal.cs" />
     <Compile Include="DAL\NurseDal.cs" />
+    <Compile Include="DAL\PatientDal.cs" />
     <Compile Include="DAL\PersonDal.cs" />
     <Compile Include="Model\Administrator.cs" />
     <Compile Include="Model\Doctor.cs" />
     <Compile Include="Model\DoctorSpeciality.cs" />
     <Compile Include="Model\Nurse.cs" />
+    <Compile Include="Model\Patient.cs" />
     <Compile Include="Model\Person.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
