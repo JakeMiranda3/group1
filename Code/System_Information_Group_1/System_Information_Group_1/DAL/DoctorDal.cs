@@ -1,6 +1,8 @@
 ﻿using MySqlConnector;
 using System_Information_Group_1.Model;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace System_Information_Group_1.DAL;
 /// <summary>
@@ -10,13 +12,17 @@ public class DoctorDal
 {
     #region Methods
 
-    private static Doctor createDoctor(MySqlDataReader reader, int doctorIdOrdinal, int personIdOrdinal)
+    private static Doctor createDoctorWithoutPerson(MySqlDataReader reader, int doctorIdOrdinal, int personIdOrdinal)
     {
-        return new Doctor(
-            reader.GetFieldValueCheckNull<int>(personIdOrdinal),
+        var personId = reader.GetFieldValueCheckNull<int>(personIdOrdinal);
+        var doctor = new Doctor(
+            personId,
             reader.GetFieldValueCheckNull<int>(doctorIdOrdinal)
         );
+
+        return doctor;
     }
+
 
     /// <summary>
     /// Creates a doctor row for the given person id and returns the created Doctor with generated id.
@@ -58,7 +64,7 @@ public class DoctorDal
         using var reader = command.ExecuteReader();
         var doctorIdOrdinal = reader.GetOrdinal("doctor_id");
         var personIdOrdinal = reader.GetOrdinal("person_id");
-        return createDoctor(reader, doctorIdOrdinal, personIdOrdinal);
+        return createDoctorWithoutPerson(reader, doctorIdOrdinal, personIdOrdinal);
     }
     /// <summary>
     /// Gets the doctor with doctor identifier.
@@ -75,7 +81,40 @@ public class DoctorDal
         using var reader = command.ExecuteReader();
         var doctorIdOrdinal = reader.GetOrdinal("doctor_id");
         var personIdOrdinal = reader.GetOrdinal("person_id");
-        return createDoctor(reader, doctorIdOrdinal, personIdOrdinal);
+        return createDoctorWithoutPerson(reader, doctorIdOrdinal, personIdOrdinal);
+    }
+
+    public IList<Doctor> GetAllDoctors()
+    {
+
+        IList<Doctor> doctorList = new List<Doctor>();
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+        var query = "select d.doctor_id, d.person_id, p.last_name, p.first_name, p.date_of_birth," +
+                    "p.contact_phone_number, p.address, p.zip, p.city, p.state from doctor d JOIN person p ON d.person_id = p.person_id";
+        using var command = new MySqlCommand(query, connection);
+        using var reader = command.ExecuteReader();
+
+        var doctorIdOrdinal = reader.GetOrdinal("doctor_id");
+        var personIdOrdinal = reader.GetOrdinal("person_id");
+        var firstNameOrdinal = reader.GetOrdinal("first_name");
+        var lastNameOrdinal = reader.GetOrdinal("last_name");
+        var dateOfBirthOrdinal = reader.GetOrdinal("date_of_birth");
+        var contactPhoneNumberOrdinal = reader.GetOrdinal("contact_phone_number");
+        var addressOrdinal = reader.GetOrdinal("address");
+        var zipOrdinal = reader.GetOrdinal("zip");
+        var cityOrdinal = reader.GetOrdinal("city");
+        var stateOrdinal = reader.GetOrdinal("state");
+
+        while (reader.Read())
+        {
+            var doctor = createDoctorWithoutPerson(reader, doctorIdOrdinal, personIdOrdinal);
+            doctor.Person = PersonDal.createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal,
+                dateOfBirthOrdinal, contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal);
+            doctorList.Add(doctor);
+        }
+
+        return doctorList;
     }
 
     #endregion

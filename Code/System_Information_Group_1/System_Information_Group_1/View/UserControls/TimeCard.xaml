@@ -17,21 +17,21 @@
                 <Border Grid.Column="0" BorderThickness="0,1,2,1" BorderBrush="Black">
                     <Viewbox StretchDirection="DownOnly" Stretch="Fill" >
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0">
-                            <Label FontSize="16">Wednesday, October 30th</Label>
-                            <Label HorizontalAlignment="Center" FontSize="16">9:00 PM</Label>
+                            <Label x:Name="dateLabel" FontSize="16"></Label>
+                            <Label x:Name="timeLabel" HorizontalAlignment="Center" FontSize="16"></Label>
                         </StackPanel>
                     </Viewbox>
                 </Border>
                 <Border Grid.Column="1" BorderThickness="0,1,2,1" BorderBrush="Black">
                     <Viewbox StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Left" >
-                        <Label FontSize="16">Dr. Important person</Label>
+                        <Label x:Name="doctorLabel" FontSize="16"></Label>
                     </Viewbox>
                 </Border>
                 <Border Grid.Column="2" BorderThickness="0,1,2,1" BorderBrush="Black">
                     <Viewbox StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Left" >
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0">
-                            <Label FontSize="16">Patient Name</Label>
-                            <Label HorizontalAlignment="Center" FontSize="16">(522)-628-5099</Label>
+                            <Label x:Name="patientNameLabel" FontSize="16"></Label>
+                            <Label x:Name="patientPhoneLabel" HorizontalAlignment="Center" FontSize="16"></Label>
                         </StackPanel>
                     </Viewbox>
                 </Border>

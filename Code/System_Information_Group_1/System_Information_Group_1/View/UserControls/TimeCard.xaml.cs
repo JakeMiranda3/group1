@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,23 @@ namespace System_Information_Group_1.View.UserControls
     /// </summary>
     public partial class TimeCard : UserControl
     {
+        private const String DefaultEmptyMessage = "Available";
         public TimeCard()
         {
             InitializeComponent();
+        }
+
+        public TimeCard(DateTime date, String doctorName) : this()
+        {
+            this.doctorLabel.Content = doctorName;
+            this.dateLabel.Content = date.ToString("D", CultureInfo.CurrentCulture);
+            this.timeLabel.Content = date.ToString("t", CultureInfo.CurrentCulture);
+            this.patientNameLabel.Content = DefaultEmptyMessage;
+        }
+        public TimeCard(DateTime date, String doctorName, String patientName, String patientPhone) : this(date, doctorName)
+        {
+            this.patientNameLabel.Content = patientName;
+            this.patientPhoneLabel.Content = patientPhone;
         }
     }
 }

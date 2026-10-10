@@ -14,7 +14,7 @@
             <RowDefinition Height="90*"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
         </Grid.RowDefinitions>
-        <ListBox Background="{x:Null}" BorderBrush="#FF434446">
+        <ListBox x:Name="scheduleListBox" Background="{x:Null}" BorderBrush="#FF434446">
         </ListBox>
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button Style="{StaticResource BlueButtonStyle}"  Width="100" Height="30" Margin="0,0,10,0" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">

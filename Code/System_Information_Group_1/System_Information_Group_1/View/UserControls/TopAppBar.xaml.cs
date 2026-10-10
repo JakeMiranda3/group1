@@ -24,5 +24,16 @@ namespace System_Information_Group_1.View.UserControls
         {
             this.InitializeComponent();
         }
+
+        public String AppBarTitle
+        {
+            get => this.barTitle.Text;
+            set => this.barTitle.Text = value;
+        }
+
+        public void setUsernameAndRole(String role, String username)
+        {
+            this.roleAndUsernameTextblock.Text = $"{role}: {username}";
+        }
     }
 }

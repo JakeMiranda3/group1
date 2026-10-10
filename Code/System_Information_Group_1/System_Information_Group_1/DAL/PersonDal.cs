@@ -143,7 +143,7 @@ public class PersonDal
         return roles.ToArray();
     }
 
-    private static Person createPerson(MySqlDataReader reader, int personIdOrdinal, int firstNameOrdinal,
+    public static Person createPerson(MySqlDataReader reader, int personIdOrdinal, int firstNameOrdinal,
         int lastNameOrdinal, int dateOfBirthOrdinal,
         int contactPhoneNumberOrdinal, int addressOrdinal, int zipOrdinal, int cityOrdinal, int stateOrdinal)
     {

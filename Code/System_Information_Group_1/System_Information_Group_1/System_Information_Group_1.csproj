@@ -89,6 +89,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\AppointmentCreationController.cs" />
     <Compile Include="View\UserControls\TimeBlockSchedule.xaml.cs">
       <DependentUpon>TimeBlockSchedule.xaml</DependentUpon>
     </Compile>
@@ -98,7 +99,7 @@
     <Compile Include="View\UserControls\TopAppBar.xaml.cs">
       <DependentUpon>TopAppBar.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\AppointmentWindow.xaml">
+    <Page Include="View\AppointmentCreationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -124,8 +125,8 @@
     <Compile Include="Model\Nurse.cs" />
     <Compile Include="Model\Patient.cs" />
     <Compile Include="Model\Person.cs" />
-    <Compile Include="View\AppointmentWindow.xaml.cs">
-      <DependentUpon>AppointmentWindow.xaml</DependentUpon>
+    <Compile Include="View\AppointmentCreationWindow.xaml.cs">
+      <DependentUpon>AppointmentCreationWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -171,8 +172,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

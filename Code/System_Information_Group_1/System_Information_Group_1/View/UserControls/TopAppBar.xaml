@@ -15,10 +15,10 @@
             <ColumnDefinition Width="30*"/>
         </Grid.ColumnDefinitions>
         <Viewbox Grid.Column="3" HorizontalAlignment="Right" StretchDirection="DownOnly">
-            <TextBlock  Margin="0,0,10,0" TextWrapping="Wrap" Text="ROLE FIRSTNAME LASTNAME" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="18"/>
+            <TextBlock x:Name="roleAndUsernameTextblock" Margin="0,0,10,0" TextWrapping="Wrap" Text="ROLE FIRSTNAME LASTNAME" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="18"/>
         </Viewbox>
         <Viewbox Grid.Column="1" StretchDirection="DownOnly">
-            <TextBlock  Margin="0,0,0,0" TextWrapping="Wrap" Text="Appointment Schedules" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+            <TextBlock x:Name="barTitle" Margin="0,0,0,0" TextWrapping="Wrap" Text="Appointment Schedules" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
 
         </Viewbox>
         <Viewbox Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Left">

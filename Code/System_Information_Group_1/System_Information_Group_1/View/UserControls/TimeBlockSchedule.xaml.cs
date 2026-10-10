@@ -24,5 +24,20 @@ namespace System_Information_Group_1.View.UserControls
         {
             InitializeComponent();
         }
+
+        public void addScheduleSlotWithAppointmentFilled(DateTime date, String doctorName, String patientName, String patientPhone)
+        {
+            this.scheduleListBox.SelectedItems.Add(new TimeCard(date, doctorName, patientName, patientPhone));
+        }
+
+        public void addEmptyScheduleSlot(DateTime date, String doctorName)
+        {
+            this.scheduleListBox.SelectedItems.Add(new TimeCard(date, doctorName));
+        }
+
+        public void clearScheduleSlots()
+        {
+            this.scheduleListBox.SelectedItems.Clear();
+        }
     }
 }
