@@ -90,6 +90,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Constants\AccountType.cs" />
+    <Compile Include="Controller\AuthServiceSingleton.cs" />
+    <Compile Include="Controller\IAuthService.cs" />
     <Compile Include="DAL\AccountDal.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\PasswordHasher.cs" />
@@ -166,8 +168,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
