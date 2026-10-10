@@ -6,12 +6,14 @@
              
              mc:Ignorable="d" 
              d:DesignHeight="235" d:DesignWidth="500"
-             Background="WhiteSmoke">
+             Background="WhiteSmoke" MouseDown="onLoginButtonClicked">
     <Grid Background="White" Margin="68,27,68,27">
-        <TextBlock HorizontalAlignment="Left" Margin="63,43,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" FontFamily="Arial Black" Foreground="#FF005AFF"/>
-        <TextBlock HorizontalAlignment="Left" Margin="63,123,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" FontFamily="Arial Black" Foreground="#FF005AFF"/>
-        <TextBox x:Name="nurseUsernameTextBox" HorizontalAlignment="Left" Margin="175,43,0,0" TextWrapping="Wrap" Text="John" VerticalAlignment="Top" Width="120" Foreground="#FF8C9495"/>
-        <TextBox x:Name="nursePasswordTextBox" HorizontalAlignment="Left" Margin="175,123,0,0" TextWrapping="Wrap" Text="Doe" VerticalAlignment="Top" Width="120" Foreground="#FF8C9495"/>
+        <TextBlock HorizontalAlignment="Left" Margin="54,25,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" FontFamily="Arial Black" Foreground="#FF005AFF"/>
+        <TextBlock HorizontalAlignment="Left" Margin="54,90,0,0" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" FontFamily="Arial Black" Foreground="#FF005AFF"/>
+        <TextBox x:Name="usernameTextBox" HorizontalAlignment="Left" Margin="175,23,0,0" TextWrapping="Wrap" Text="John" VerticalAlignment="Top" Width="120" Foreground="#FF8C9495"/>
+        <TextBox x:Name="passwordTextBox" HorizontalAlignment="Left" Margin="175,90,0,0" TextWrapping="Wrap" Text="Doe" VerticalAlignment="Top" Width="120" Foreground="#FF8C9495"/>
+        <Button x:Name="loginButton" Content="Login" Background="WhiteSmoke"  HorizontalAlignment="Left"  VerticalAlignment="Top" FontFamily="Arial Black" Margin="215,142,0,0" />
+        <TextBlock x:Name="loginErrorMessage"  HorizontalAlignment="Left" Margin="18,145,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="172" FontFamily="Arial Black" Foreground="Red" FontSize="10"/>
 
     </Grid>
 </UserControl>

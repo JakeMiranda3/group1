@@ -26,6 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\System_Information_Group_1.xml</DocumentationFile>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -90,9 +91,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Constants\AccountType.cs" />
-    <Compile Include="Controller\AuthServiceSingleton.cs" />
-    <Compile Include="Controller\IAuthService.cs" />
+    <Compile Include="Authorization\AuthServiceSingleton.cs" />
+    <Compile Include="Authorization\IAuthService.cs" />
+    <Compile Include="Controller\LoginController.cs" />
     <Compile Include="DAL\AccountDal.cs" />
+    <Compile Include="InputValidation\PasswordValidator.cs" />
+    <Compile Include="InputValidation\UsernameValidator.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\PasswordHasher.cs" />
     <Compile Include="View\AdminLoginPage.xaml.cs">
@@ -112,7 +116,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\MainWindow.xaml">
+    <Page Include="View\LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -132,8 +136,8 @@
     <Compile Include="Model\DoctorSpeciality.cs" />
     <Compile Include="Model\Nurse.cs" />
     <Compile Include="Model\Person.cs" />
-    <Compile Include="View\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="View\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\NurseLoginPage.xaml">

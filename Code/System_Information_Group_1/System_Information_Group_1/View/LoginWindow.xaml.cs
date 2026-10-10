@@ -35,4 +35,5 @@ public partial class MainWindow : Window
         this.mainWindowFrame.Navigate(new AdminLoginPage());
     }
 
+
 }
