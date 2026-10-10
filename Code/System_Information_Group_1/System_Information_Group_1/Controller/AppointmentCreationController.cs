@@ -8,13 +8,28 @@ namespace System_Information_Group_1.Controller;
 public class AppointmentCreationController
 {
     private readonly DoctorDal doctorDal;
+    private readonly AppointmentDal appointmentDal;
+    private readonly PersonDal personDal;
     public AppointmentCreationController()
     {
         this.doctorDal = new DoctorDal();
+        this.appointmentDal = new AppointmentDal();
+        this.personDal = new PersonDal();
     }
 
-    public IList<Doctor> getAvailableDoctors()
+    public IList<Doctor> GetAvailableDoctors()
     {
         return this.doctorDal.GetAllDoctors();
+    }
+
+#nullable enable
+    public IList<Appointment> GetDoctorsAppointments(Doctor? doctor)
+    {
+        if (doctor == null)
+        {
+            return new List<Appointment>();
+        }
+
+        return this.appointmentDal.GetDoctorsAppointmentsByDoctorId(doctor.DoctorId);
     }
 }

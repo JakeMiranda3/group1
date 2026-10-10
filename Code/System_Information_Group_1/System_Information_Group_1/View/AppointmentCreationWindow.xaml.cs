@@ -35,7 +35,19 @@ namespace System_Information_Group_1.View
 
         private void regenerateDoctorComboBox()
         {
-            Doctors = new ObservableCollection<Doctor>(this.controller.getAvailableDoctors());
+            this.Doctors = new ObservableCollection<Doctor>(this.controller.GetAvailableDoctors());
+        }
+
+        private void doctorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var date = this.appointmentTimePicker.SelectedDate;
+            if (date != null)
+            {
+                this.scheduleControl.SetupSchedulesWithAppointments(this.controller.GetDoctorsAppointments(this.doctorComboBox.SelectedItem as Doctor),
+                    date.Value,
+                    "Doctor name");
+            }
+
         }
     }
 }

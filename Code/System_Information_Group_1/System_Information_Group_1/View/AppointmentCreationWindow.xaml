@@ -25,7 +25,7 @@
             <barUserControl:TopAppBar/>
         </Border>
 
-        <barUserControl:TimeBlockSchedule Grid.Column="0" Grid.Row="1"></barUserControl:TimeBlockSchedule>
+        <barUserControl:TimeBlockSchedule x:Name="scheduleControl" Grid.Column="0" Grid.Row="1"></barUserControl:TimeBlockSchedule>
         <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1,0,2,1">
 
 
@@ -51,7 +51,7 @@
                         <Label Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
                                MinWidth="50" Content="Selected Doctor:"/>
                     </Viewbox>
-                    <ComboBox x:Name="doctorComboBox" ItemsSource="{Binding Doctors}" Grid.Column="1" MinWidth="100" Margin="5,0,20,0" FontSize="16" VerticalAlignment="Center" />
+                    <ComboBox x:Name="doctorComboBox" ItemsSource="{Binding Doctors}" Grid.Column="1" MinWidth="100" Margin="5,0,20,0" FontSize="16" VerticalAlignment="Center" SelectionChanged="doctorComboBox_SelectionChanged"/>
                 </Grid>
 
                 <Border Grid.Row="1" BorderThickness="0,0,0,2" BorderBrush="Black">

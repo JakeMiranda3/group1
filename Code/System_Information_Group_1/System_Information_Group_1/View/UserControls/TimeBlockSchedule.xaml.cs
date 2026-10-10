@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System_Information_Group_1.Model;
 
 namespace System_Information_Group_1.View.UserControls
 {
@@ -20,24 +23,53 @@ namespace System_Information_Group_1.View.UserControls
     /// </summary>
     public partial class TimeBlockSchedule : UserControl
     {
+        private static readonly TimeSpan ClinicStartTime = new (8, 0, 0);
+        private static readonly TimeSpan ClinicEndTime = new (17, 0, 0);
+        private const int TimeIntervalInMinutes = 15;
         public TimeBlockSchedule()
         {
             InitializeComponent();
         }
 
-        public void addScheduleSlotWithAppointmentFilled(DateTime date, String doctorName, String patientName, String patientPhone)
+        public void SetupSchedulesWithAppointments(IList<Appointment> appointments, DateTime selectedDay, string doctorName)
         {
-            this.scheduleListBox.SelectedItems.Add(new TimeCard(date, doctorName, patientName, patientPhone));
+            this.clearScheduleSlots();
+            this.fillAppointmentCards(appointments, doctorName);
+            var timeSlot = new TimeSpan(ClinicStartTime.Hours, ClinicStartTime.Minutes, ClinicStartTime.Seconds);
+            while (timeSlot.Ticks < ClinicEndTime.Ticks)
+            {
+                if (!appointments.Any(appointment => appointment.Date.TimeOfDay.Equals(timeSlot))) //No appointment in slot
+                {
+                    this.addEmptyScheduleSlot(selectedDay.Date.AddTicks(timeSlot.Ticks), doctorName);
+                }
+
+                timeSlot = timeSlot.Add(TimeSpan.FromMinutes(TimeIntervalInMinutes));
+            }
         }
 
-        public void addEmptyScheduleSlot(DateTime date, String doctorName)
+
+
+        private void fillAppointmentCards(IList<Appointment> appointments, string doctorName)
         {
-            this.scheduleListBox.SelectedItems.Add(new TimeCard(date, doctorName));
+            foreach (Appointment appointment in appointments)
+            {
+                this.addScheduleSlotWithAppointmentFilled(appointment.Date, doctorName, appointment.PatientId.ToString(), "Phone");
+            }
+        }
+
+        private void addScheduleSlotWithAppointmentFilled(DateTime date, String doctorName, String patientName, String patientPhone)
+        {
+            this.scheduleListBox.Items.Add(new TimeCard(date, doctorName, patientName, patientPhone));
+        }
+
+        private void addEmptyScheduleSlot(DateTime date, String doctorName)
+        {
+            this.scheduleListBox.Items.Add(new TimeCard(date, doctorName));
         }
 
         public void clearScheduleSlots()
         {
-            this.scheduleListBox.SelectedItems.Clear();
+            this.scheduleListBox.Items.Clear();
         }
     }
 }
