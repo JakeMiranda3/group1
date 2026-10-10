@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Hi-Tek"
-        Height="450"
+        Height="500"
         Width="800">
     <Grid Background="WhiteSmoke" Height="450" Width="800">
-        <TextBlock x:Name="___MainWindows_Title_" HorizontalAlignment="Center" Margin="0,24,0,0" TextWrapping="Wrap" Text="Welcome!"
+        <TextBlock x:Name="mainWindowTitle" HorizontalAlignment="Center" Margin="0,24,0,0" TextWrapping="Wrap" Text="Welcome!"
                    VerticalAlignment="Top" FontFamily="Arial Black" FontSize="22" Height="37" Width="176" TextAlignment="Center" Foreground="#FF0079FF" />
 
-        <Frame Height ="235" Width="650" x:Name="MainWindowFrame" NavigationUIVisibility="Hidden" Margin="95,186,55,29"/>
-        <GroupBox x:Name="MainWindowGroupBox" Background="White" FontFamily="Arial Black" Header="Choose your Role" Padding="10" Margin="176,66,136,269" Foreground="Black">
-            <StackPanel  x:Name="MainWindowStackPanel" Height="50" Background="#FF0052FF">
-                <RadioButton x:Name="MainWindowNurseRadioButton" Content="Nurse" Foreground="White" Margin="4" Click="onNurseRadioButtonClicked"/>
-                <RadioButton x:Name="MainWindowAdminRadioButton" Content="Administrator" Foreground="White" Margin="4" Click="onAdminRadioButtonClicked"/>
+        <Frame Height ="235" Width="650" x:Name="mainWindowFrame" NavigationUIVisibility="Hidden" Margin="95,186,55,29"/>
+        <GroupBox x:Name="mainWindowGroupBox" Background="White" FontFamily="Arial Black" Header="Choose your Role" Padding="10" Margin="176,66,136,269" Foreground="Black">
+            <StackPanel  x:Name="mainWindowStackPanel" Height="50" Background="#FF0052FF">
+                <RadioButton x:Name="mainWindowNurseRadioButton" Content="Nurse" Foreground="White" Margin="4" Click="onNurseRadioButtonClicked"/>
+                <RadioButton x:Name="mainWindowAdminRadioButton" Content="Administrator" Foreground="White" Margin="4" Click="onAdminRadioButtonClicked"/>
             </StackPanel>
         </GroupBox>
 

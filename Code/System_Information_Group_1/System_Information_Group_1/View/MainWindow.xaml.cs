@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 
+
 namespace System_Information_Group_1.View;
 
 /// <summary>
@@ -11,9 +12,12 @@ public partial class MainWindow : Window
     /// <summary>
     /// Initializes a new instance of the <see cref="MainWindow"/> class.
     /// </summary>
+    
+    
     public MainWindow()
     {
         this.InitializeComponent();
+        
 
     }
 
@@ -22,13 +26,13 @@ public partial class MainWindow : Window
 
     private void onNurseRadioButtonClicked(object sender, RoutedEventArgs e)
     {
-        this.MainWindowFrame.Navigate(new NurseLoginPage());
+        this.mainWindowFrame.Navigate(new NurseLoginPage());
     }
 
     private void onAdminRadioButtonClicked(object sender, RoutedEventArgs e)
     {
-        //TODO implement admin login page
-        //this.MainWindowFrame.Navigate(new AdminLoginPage());
+        
+        this.mainWindowFrame.Navigate(new AdminLoginPage());
     }
 
 }

@@ -12,18 +12,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System_Information_Group_1.View;
+
 namespace System_Information_Group_1.View
 {
     /// <summary>
-    /// Interaction logic for NurseLoginPage.xaml
+    /// Interaction logic for AdminLoginPage.xaml
     /// </summary>
-    public partial class NurseLoginPage : Page
+    public partial class AdminLoginPage : Page
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NurseLoginPage"/> class.
+        /// Initializes a new instance of the <see cref="AdminLoginPage"/> class.
         /// </summary>
-        public NurseLoginPage()
+        public AdminLoginPage()
         {
             this.InitializeComponent();
         }
