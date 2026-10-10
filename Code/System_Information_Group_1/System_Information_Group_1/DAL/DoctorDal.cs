@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using System;
+using MySqlConnector;
 using System_Information_Group_1.Model;
 
 namespace System_Information_Group_1.DAL;
@@ -35,7 +36,7 @@ public class DoctorDal
         using var reader = command.ExecuteReader();
         var doctorIdOrdinal = reader.GetOrdinal("doctor_id");
         var personIdOrdinal = reader.GetOrdinal("person_id");
-        return createDoctor(reader, doctorIdOrdinal, personIdOrdinal);
+        return reader.Read() ? createDoctor(reader, doctorIdOrdinal, personIdOrdinal) : throw new ArgumentNullException(nameof(reader), "reader returned no results");
     }
     /// <summary>
     /// Gets the doctor with doctor identifier.
@@ -52,7 +53,7 @@ public class DoctorDal
         using var reader = command.ExecuteReader();
         var doctorIdOrdinal = reader.GetOrdinal("doctor_id");
         var personIdOrdinal = reader.GetOrdinal("person_id");
-        return createDoctor(reader, doctorIdOrdinal, personIdOrdinal);
+        return reader.Read() ? createDoctor(reader, doctorIdOrdinal, personIdOrdinal) : throw new ArgumentNullException(nameof(reader), "reader returned no results");
     }
 
     #endregion

@@ -89,6 +89,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Constants\AccountType.cs" />
+    <Compile Include="DAL\AccountDal.cs" />
+    <Compile Include="Model\Account.cs" />
+    <Compile Include="Model\PasswordHasher.cs" />
     <Compile Include="View\AdminLoginPage.xaml.cs">
       <DependentUpon>AdminLoginPage.xaml</DependentUpon>
     </Compile>

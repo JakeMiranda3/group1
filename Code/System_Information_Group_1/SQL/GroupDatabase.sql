@@ -77,6 +77,28 @@ CREATE TABLE appointment (
 	UNIQUE uq_appointment_patient_id_appointment_datetime (patient_id , appointment_datetime),
 	UNIQUE uq_appointment_doctor_id_appointment_datetime (doctor_id , appointment_datetime)
 );
+
+CREATE TABLE account(
+	person_id INT, 
+    account_type enum('Administrator', 'Nurse'),
+    username varchar(100), 
+    hashed_password varchar(100),
+    primary key (person_id, account_type),
+    constraint account_fk_person 
+    foreign key (person_id) references person(person_id), 
+    unique uq_account_username (username)
+);
+
+CREATE TABLE account(
+	person_id INT, 
+    account_type enum('Administrator', 'Nurse'),
+    username varchar(100), 
+    hashed_password varchar(100),
+    primary key (person_id, account_type),
+    constraint account_fk_person 
+    foreign key (person_id) references person(person_id), 
+    unique uq_account_username (username)
+);
 SET FOREIGN_KEY_CHECKS = 1;
 
 

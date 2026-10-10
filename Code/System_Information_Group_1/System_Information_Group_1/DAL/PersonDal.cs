@@ -38,10 +38,12 @@ public class PersonDal
         var cityOrdinal = reader.GetOrdinal("city");
         var stateOrdinal = reader.GetOrdinal("state");
 
-        // this should only return one person since this ID is a primary key
 
-        return createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
-            contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal);
+
+        return reader.Read()
+            ? createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
+                contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal)
+            : throw new ArgumentNullException(nameof(reader), "reader returned no results");
     }
 
     private static Person createPerson(MySqlDataReader reader, int personIdOrdinal, int firstNameOrdinal,

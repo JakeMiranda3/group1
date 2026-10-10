@@ -1,4 +1,5 @@
 ﻿using MySqlConnector;
+using System;
 using System_Information_Group_1.Model;
 
 namespace System_Information_Group_1.DAL;
@@ -24,8 +25,8 @@ public class NurseDal
         var nurseIdOrdinal = reader.GetOrdinal("nurse_id");
         var personIdOrdinal = reader.GetOrdinal("person_id");
 
-        // this should only return one nurse since this ID is a primary key
-        return createNurse(reader, nurseIdOrdinal, personIdOrdinal);
+        
+        return reader.Read() ? createNurse(reader, nurseIdOrdinal, personIdOrdinal) : throw new ArgumentNullException(nameof(reader), "reader returned no results");
     }
     /// <summary>
     /// Gets the nurse with nurse identifier.
@@ -43,7 +44,9 @@ public class NurseDal
         var personIdOrdinal = reader.GetOrdinal("person_id");
         var nurseIdOrdinal = reader.GetOrdinal("nurse_id");
 
-        return createNurse(reader, nurseIdOrdinal, personIdOrdinal);
+
+        return reader.Read() ? createNurse(reader, nurseIdOrdinal, personIdOrdinal) : throw new ArgumentNullException(nameof(reader), "reader returned no results");
+
     }
 
     private static Nurse createNurse(MySqlDataReader reader, int nurseIdOrdinal, int personIdOrdinal)
