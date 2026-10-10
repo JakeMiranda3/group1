@@ -1,4 +1,5 @@
 using System;
+using System.Windows;
 
 namespace System_Information_Group_1.Model;
 
@@ -50,7 +51,15 @@ public class Doctor
         this.DoctorId = doctorId != 0 ? doctorId : throw new ArgumentException("DoctorId cannot be zero");
     }
 
+    public override string ToString()
+    {
+        if (!String.IsNullOrEmpty(this.Person.FirstName) && !String.IsNullOrEmpty(this.Person.LastName))
+        {
+            return $"{this.Person.FirstName} {this.Person.LastName}";
+        }
 
+        return base.ToString();
+    }
 
 
 
