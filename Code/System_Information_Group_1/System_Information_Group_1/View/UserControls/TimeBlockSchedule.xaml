@@ -11,28 +11,17 @@
     <Grid Background="#FFDAECED">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="8*"></RowDefinition>
-            <RowDefinition Height="8*"></RowDefinition>
-            <RowDefinition Height="8*"></RowDefinition>
-            <RowDefinition Height="8*"></RowDefinition>
-            <RowDefinition Height="8*"></RowDefinition>
-            <RowDefinition Height="8*"></RowDefinition>
-            <RowDefinition Height="8*"></RowDefinition>
-            <RowDefinition Height="8*"></RowDefinition>
-            <RowDefinition Height="8*"></RowDefinition>
+            <RowDefinition Height="90*"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
         </Grid.RowDefinitions>
-        <cardControl:TimeCard Grid.Row="1"/>
-        <cardControl:TimeCard Grid.Row="2"/>
-        <cardControl:TimeCard Grid.Row="3"/>
-        <cardControl:TimeCard Grid.Row="4"/>
-        <cardControl:TimeCard Grid.Row="5"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="9" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Width="50" Height="30" Margin="0,0,5,0" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                Back
+        <ListBox Background="{x:Null}" BorderBrush="#FF434446">
+        </ListBox>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Style="{StaticResource BlueButtonStyle}"  Width="100" Height="30" Margin="0,0,10,0" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                Previous Day
             </Button>
-            <Button Width="50" Height="30" Margin="0,0,5,0" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                Next
+            <Button Style="{StaticResource BlueButtonStyle}" Width="100" Height="30" Margin="0,0,10,0" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                Next Day
             </Button>
 
         </StackPanel>

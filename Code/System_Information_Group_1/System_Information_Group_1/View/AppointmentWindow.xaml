@@ -64,7 +64,7 @@
                 </Border>
 
                 <Viewbox Grid.Row="2" StretchDirection="DownOnly">
-                    <Button Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5">Schedule Appointment At Selected Time Block</Button>
+                    <Button Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFF1F1F1">Schedule Appointment At Selected Time Block</Button>
                 </Viewbox>
             </Grid>
 
