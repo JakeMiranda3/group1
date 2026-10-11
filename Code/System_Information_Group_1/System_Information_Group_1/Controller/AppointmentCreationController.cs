@@ -30,6 +30,6 @@ public class AppointmentCreationController
             return new List<Appointment>();
         }
 
-        return this.appointmentDal.GetDoctorsAppointmentsByDoctorId(doctor.DoctorId);
+        return this.appointmentDal.GetAppointmentsContainingDoctorAndPatient(doctor.DoctorId);
     }
 }

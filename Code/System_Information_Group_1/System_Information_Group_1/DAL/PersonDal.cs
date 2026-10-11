@@ -40,9 +40,14 @@ public class PersonDal
         var stateOrdinal = reader.GetOrdinal("state");
 
         // this should only return one person since this ID is a primary key
+        if (reader.Read())
+        {
+            return createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
+                contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal);
+        }
 
-        return createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
-            contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal);
+        return null;
+
     }
 
     /// <summary>

@@ -34,11 +34,11 @@ namespace System_Information_Group_1.View.UserControls
         public void SetupSchedulesWithAppointments(IList<Appointment> appointments, DateTime selectedDay, string doctorName)
         {
             this.clearScheduleSlots();
-            this.fillAppointmentCards(appointments, doctorName);
+            this.fillAppointmentCards(appointments, selectedDay);
             var timeSlot = new TimeSpan(ClinicStartTime.Hours, ClinicStartTime.Minutes, ClinicStartTime.Seconds);
             while (timeSlot.Ticks < ClinicEndTime.Ticks)
             {
-                if (!appointments.Any(appointment => appointment.Date.TimeOfDay.Equals(timeSlot))) //No appointment in slot
+                if (!appointments.Any(appointment => appointment.Date.TimeOfDay.Equals(timeSlot)))
                 {
                     this.addEmptyScheduleSlot(selectedDay.Date.AddTicks(timeSlot.Ticks), doctorName);
                 }
@@ -54,6 +54,21 @@ namespace System_Information_Group_1.View.UserControls
             foreach (Appointment appointment in appointments)
             {
                 this.addScheduleSlotWithAppointmentFilled(appointment.Date, doctorName, appointment.PatientId.ToString(), "Phone");
+            }
+        }
+
+        private void fillAppointmentCards(IList<Appointment> appointments, DateTime selectedDay)
+        {
+            foreach (Appointment appointment in appointments)
+            {
+                if (!appointment.Date.Date.Equals(selectedDay.Date))
+                {
+                    continue;
+                }
+
+                string doctorName = $"{appointment.Doctor.FirstName} {appointment.Doctor.LastName}";
+                string patientName = $"{appointment.Patient.FirstName} {appointment.Patient.LastName}";
+                this.addScheduleSlotWithAppointmentFilled(appointment.Date, doctorName, patientName, appointment.Patient.ContactPhoneNumber);
             }
         }
 

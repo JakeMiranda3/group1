@@ -12,8 +12,8 @@ public class Appointment
     public int PatientId { get; set; }
     public string Reason { get; set; }
     public DateTime Date { get; set; }
-    public string doctorName { get; set; }
-    public string patientName { get; set; }
+    public Person Doctor { get; set; }
+    public Person Patient { get; set; }
 
     public Appointment(int appointmentId, int doctorId, int patientId, string reason, DateTime date)
     {
