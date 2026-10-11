@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System_Information_Group_1.Constants;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;

@@ -58,7 +58,7 @@ namespace System_Information_Group_1.DAL
             int accountTypeOrdinal = reader.GetOrdinal("account_type");
             int usernameOrdinal = reader.GetOrdinal("username");
             int hashedPasswordOrdinal = reader.GetOrdinal("hashed_password");
-            return reader.Read() ? createAccount(reader, personIdOrdinal, accountTypeOrdinal, usernameOrdinal, hashedPasswordOrdinal) : throw new ArgumentNullException(nameof(reader), "reader returned no results");
+            return reader.Read() ? createAccount(reader, personIdOrdinal, accountTypeOrdinal, usernameOrdinal, hashedPasswordOrdinal) : null;
         }
 
         #endregion
