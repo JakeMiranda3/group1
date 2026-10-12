@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using System;
+using MySqlConnector;
 using System_Information_Group_1.Model;
 using System;
 
@@ -58,7 +59,9 @@ public class AdministratorDal
         using var reader = command.ExecuteReader();
         var administratorIdOrdinal = reader.GetOrdinal("administrator_id");
         var personIdOrdinal = reader.GetOrdinal("person_id");
-        return createAdministrator(reader, administratorIdOrdinal, personIdOrdinal);
+        return reader.Read()
+            ? createAdministrator(reader, administratorIdOrdinal, personIdOrdinal)
+            : throw new ArgumentNullException(nameof(reader), "reader returned no results");
     }
     /// <summary>
     /// Gets the administrator with administrator identifier.
@@ -75,7 +78,9 @@ public class AdministratorDal
         using var reader = command.ExecuteReader();
         var administratorIdOrdinal = reader.GetOrdinal("administrator_id");
         var personIdOrdinal = reader.GetOrdinal("person_id");
-        return createAdministrator(reader, administratorIdOrdinal, personIdOrdinal);
+        return reader.Read()
+            ? createAdministrator(reader, administratorIdOrdinal, personIdOrdinal)
+            : throw new ArgumentNullException(nameof(reader), "reader returned no results");
     }
 
     #endregion

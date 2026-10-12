@@ -39,16 +39,14 @@ public class PersonDal
         var cityOrdinal = reader.GetOrdinal("city");
         var stateOrdinal = reader.GetOrdinal("state");
 
-        // this should only return one person since this ID is a primary key
-        if (reader.Read())
-        {
-            return createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
-                contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal);
-        }
 
-        return null;
 
+        return reader.Read()
+            ? createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
+                contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal)
+            : throw new ArgumentNullException(nameof(reader), "reader returned no results");
     }
+
 
     /// <summary>
     /// Creates a new person row and returns the created Person with generated person id.

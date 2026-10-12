@@ -26,6 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\System_Information_Group_1.xml</DocumentationFile>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -105,7 +106,33 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\MainWindow.xaml">
+    <Compile Include="Constants\AccountType.cs" />
+    <Compile Include="Authorization\AuthServiceSingleton.cs" />
+    <Compile Include="Authorization\IAuthService.cs" />
+    <Compile Include="Controller\LoginController.cs" />
+    <Compile Include="DAL\AccountDal.cs" />
+    <Compile Include="InputValidation\PasswordValidator.cs" />
+    <Compile Include="InputValidation\UsernameValidator.cs" />
+    <Compile Include="Model\Account.cs" />
+    <Compile Include="Model\PasswordHasher.cs" />
+    <Compile Include="View\AdminLoginPage.xaml.cs">
+      <DependentUpon>AdminLoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LoginUserControl.xaml.cs">
+      <DependentUpon>LoginUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NurseLoginPage.xaml.cs">
+      <DependentUpon>NurseLoginPage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\AdminLoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LoginUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -130,10 +157,14 @@
     <Compile Include="View\AppointmentCreationWindow.xaml.cs">
       <DependentUpon>AppointmentCreationWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="View\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\NurseLoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\UserControls\TimeBlockSchedule.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using System;
+using MySqlConnector;
 using System_Information_Group_1.Model;
 using System;
 using System.Collections;
