@@ -1,0 +1,211 @@
+﻿<Window x:Class="System_Information_Group_1.View.Dialog.PatientRegistrationDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Register Patient"
+        Height="620"
+        Width="600"
+        MinHeight="620"
+        MinWidth="600"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+    <Grid Background="LightBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="75" />
+        </Grid.RowDefinitions>
+
+        <!-- Window Header -->
+        <Border Grid.Row="0"
+                Background="White"
+                BorderBrush="Black"
+                BorderThickness="0,0,0,2">
+
+            <TextBlock Text="Register New Patient"
+                       FontSize="24"
+                       VerticalAlignment="Center"
+                       Margin="20,0,0,0" />
+        </Border>
+
+        <!-- Patient Information -->
+        <Grid Grid.Row="1" Margin="25,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- First Name -->
+            <StackPanel Grid.Row="0" Grid.Column="0"
+                        Margin="0,0,10,15">
+                <Label Content="First Name" FontSize="16" />
+                <TextBox x:Name="FirstNameTextBox"
+                         Height="32"
+                         FontSize="16"
+                         MaxLength="20" />
+            </StackPanel>
+
+            <!-- Last Name -->
+            <StackPanel Grid.Row="0" Grid.Column="1"
+                        Margin="10,0,0,15">
+                <Label Content="Last Name" FontSize="16" />
+                <TextBox x:Name="LastNameTextBox"
+                         Height="32"
+                         FontSize="16"
+                         MaxLength="20" />
+            </StackPanel>
+
+            <!-- Date of Birth -->
+            <StackPanel Grid.Row="1" Grid.Column="0"
+                        Margin="0,0,10,15">
+                <Label Content="Date of Birth" FontSize="16" />
+                <DatePicker x:Name="DateOfBirthPicker"
+                            Height="32"
+                            FontSize="16" />
+            </StackPanel>
+
+            <!-- Phone Number -->
+            <StackPanel Grid.Row="1" Grid.Column="1"
+                        Margin="10,0,0,15">
+                <Label Content="Phone Number (10 digits)"
+                       FontSize="16" />
+                <TextBox x:Name="PhoneNumberTextBox"
+                         Height="32"
+                         FontSize="16"
+                         MaxLength="10" />
+            </StackPanel>
+
+            <!-- Street Address -->
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2"
+                        Margin="0,0,0,15">
+                <Label Content="Street Address" FontSize="16" />
+                <TextBox x:Name="AddressTextBox"
+                         Height="32"
+                         FontSize="16"
+                         MaxLength="20" />
+            </StackPanel>
+
+            <!-- City -->
+            <StackPanel Grid.Row="3" Grid.Column="0"
+                        Margin="0,0,10,15">
+                <Label Content="City" FontSize="16" />
+                <TextBox x:Name="CityTextBox"
+                         Height="32"
+                         FontSize="16"
+                         MaxLength="20" />
+            </StackPanel>
+
+            <!-- State -->
+            <StackPanel Grid.Row="3" Grid.Column="1"
+                        Margin="10,0,0,15">
+                <Label Content="State" FontSize="16" />
+                <ComboBox x:Name="StateComboBox"
+                          Height="32"
+                          FontSize="16"
+                          IsEditable="False">
+                    <ComboBoxItem Content="AL" />
+                    <ComboBoxItem Content="AK" />
+                    <ComboBoxItem Content="AZ" />
+                    <ComboBoxItem Content="AR" />
+                    <ComboBoxItem Content="CA" />
+                    <ComboBoxItem Content="CO" />
+                    <ComboBoxItem Content="CT" />
+                    <ComboBoxItem Content="DE" />
+                    <ComboBoxItem Content="FL" />
+                    <ComboBoxItem Content="GA" />
+                    <ComboBoxItem Content="HI" />
+                    <ComboBoxItem Content="ID" />
+                    <ComboBoxItem Content="IL" />
+                    <ComboBoxItem Content="IN" />
+                    <ComboBoxItem Content="IA" />
+                    <ComboBoxItem Content="KS" />
+                    <ComboBoxItem Content="KY" />
+                    <ComboBoxItem Content="LA" />
+                    <ComboBoxItem Content="ME" />
+                    <ComboBoxItem Content="MD" />
+                    <ComboBoxItem Content="MA" />
+                    <ComboBoxItem Content="MI" />
+                    <ComboBoxItem Content="MN" />
+                    <ComboBoxItem Content="MS" />
+                    <ComboBoxItem Content="MO" />
+                    <ComboBoxItem Content="MT" />
+                    <ComboBoxItem Content="NE" />
+                    <ComboBoxItem Content="NV" />
+                    <ComboBoxItem Content="NH" />
+                    <ComboBoxItem Content="NJ" />
+                    <ComboBoxItem Content="NM" />
+                    <ComboBoxItem Content="NY" />
+                    <ComboBoxItem Content="NC" />
+                    <ComboBoxItem Content="ND" />
+                    <ComboBoxItem Content="OH" />
+                    <ComboBoxItem Content="OK" />
+                    <ComboBoxItem Content="OR" />
+                    <ComboBoxItem Content="PA" />
+                    <ComboBoxItem Content="RI" />
+                    <ComboBoxItem Content="SC" />
+                    <ComboBoxItem Content="SD" />
+                    <ComboBoxItem Content="TN" />
+                    <ComboBoxItem Content="TX" />
+                    <ComboBoxItem Content="UT" />
+                    <ComboBoxItem Content="VT" />
+                    <ComboBoxItem Content="VA" />
+                    <ComboBoxItem Content="WA" />
+                    <ComboBoxItem Content="WV" />
+                    <ComboBoxItem Content="WI" />
+                    <ComboBoxItem Content="WY" />
+                </ComboBox>
+            </StackPanel>
+
+            <!-- ZIP Code -->
+            <StackPanel Grid.Row="4" Grid.Column="0"
+                        Margin="0,0,10,15">
+                <Label Content="ZIP Code (5 or 9 digits)"
+                       FontSize="16" />
+                <TextBox x:Name="ZipTextBox"
+                         Height="32"
+                         FontSize="16"
+                         MaxLength="9" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Buttons -->
+        <Border Grid.Row="2"
+                BorderBrush="Black"
+                BorderThickness="0,2,0,0"
+                Background="White">
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="20,0">
+
+                <Button x:Name="CancelButton"
+                        Content="Cancel"
+                        Width="110"
+                        Height="38"
+                        FontSize="16"
+                        Margin="0,0,15,0"
+                        IsCancel="True"
+                        Style="{StaticResource BlueButtonStyle}"
+                        Background="#FFF1F1F1" />
+
+                <Button x:Name="RegisterButton"
+                        Content="Register Patient"
+                        Width="160"
+                        Height="38"
+                        FontSize="16"
+                        Style="{StaticResource BlueButtonStyle}"
+                        Background="#FFF1F1F1"
+                        Click="RegisterButton_OnClick" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
