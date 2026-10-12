@@ -74,7 +74,12 @@ namespace System_Information_Group_1.View.UserControls
 
         private void addScheduleSlotWithAppointmentFilled(DateTime date, String doctorName, String patientName, String patientPhone)
         {
-            this.scheduleListBox.Items.Add(new TimeCard(date, doctorName, patientName, patientPhone));
+            ListBoxItem itemCard = new ListBoxItem
+            {
+                Content = new TimeCard(date, doctorName, patientName, patientPhone),
+                IsEnabled = false
+            };
+            this.scheduleListBox.Items.Add(itemCard);
         }
 
         private void addEmptyScheduleSlot(DateTime date, String doctorName)
