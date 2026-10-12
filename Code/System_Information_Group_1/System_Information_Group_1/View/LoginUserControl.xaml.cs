@@ -1,7 +1,6 @@
 ﻿
 using System;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System_Information_Group_1.Controller;
 using System_Information_Group_1.InputValidation;
 
