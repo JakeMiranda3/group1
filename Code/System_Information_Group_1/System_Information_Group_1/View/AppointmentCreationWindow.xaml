@@ -59,7 +59,7 @@
                         <Viewbox HorizontalAlignment="Left" StretchDirection="DownOnly" Margin="10,0,0,0">
                             <Label FontSize="16" Content="View Doctors Appointments On Date"/>
                         </Viewbox>
-                        <DatePicker x:Name="appointmentTimePicker" VerticalAlignment="Center" Margin="15,0,10,0" FontSize="16" />
+                        <DatePicker x:Name="appointmentTimePicker" VerticalAlignment="Center" Margin="15,0,10,0" FontSize="16" SelectedDateChanged="appointmentTimePicker_SelectedDateChanged" />
                     </StackPanel>
                 </Border>
 

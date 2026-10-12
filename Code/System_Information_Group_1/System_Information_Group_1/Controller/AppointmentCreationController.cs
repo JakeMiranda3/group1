@@ -32,4 +32,13 @@ public class AppointmentCreationController
 
         return this.appointmentDal.GetAppointmentsContainingDoctorAndPatient(doctor.DoctorId);
     }
+
+    public string getDoctorsFullName(Doctor? doctor)
+    {
+        if (doctor == null)
+        {
+            return "Doctors name is unavailable...";
+        }
+        return this.doctorDal.GetDoctorsFullNameByDoctorId(doctor.DoctorId);
+    }
 }

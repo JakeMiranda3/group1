@@ -40,14 +40,24 @@ namespace System_Information_Group_1.View
 
         private void doctorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var date = this.appointmentTimePicker.SelectedDate;
-            if (date != null)
-            {
-                this.scheduleControl.SetupSchedulesWithAppointments(this.controller.GetDoctorsAppointments(this.doctorComboBox.SelectedItem as Doctor),
-                    date.Value,
-                    "Doctor name");
-            }
+            this.updateInformationWithNewDoctor();
 
+        }
+
+        private void appointmentTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.updateInformationWithNewDoctor();
+        }
+
+        private void updateInformationWithNewDoctor()
+        {
+            var date = this.appointmentTimePicker.SelectedDate;
+            if (date != null && this.doctorComboBox.SelectedItem is Doctor doctor)
+            {
+                this.scheduleControl.SetupSchedulesWithAppointments(this.controller.GetDoctorsAppointments(doctor),
+                    date.Value,
+                    this.controller.getDoctorsFullName(doctor));
+            }
         }
     }
 }

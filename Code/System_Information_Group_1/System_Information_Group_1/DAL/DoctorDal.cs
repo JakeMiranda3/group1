@@ -117,5 +117,24 @@ public class DoctorDal
         return doctorList;
     }
 
+    public string GetDoctorsFullNameByDoctorId(int doctorId)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+        var query = "select p.person_id from doctor d join person p on d.person_id = p.person_id where doctor_id = @id;";
+        using var command = new MySqlCommand(query, connection);
+        command.Parameters.Add("@id", MySqlDbType.Int32).Value = doctorId;
+        using var reader = command.ExecuteReader();
+        var personIdOrdinal = reader.GetOrdinal("person_id");
+        var personDal = new PersonDal();
+        if (reader.Read())
+        {
+            var doctorsPerson = personDal.GetPersonWithId(reader.GetFieldValueCheckNull<int>(personIdOrdinal));
+            return $"{doctorsPerson.FirstName} {doctorsPerson.LastName}";
+        }
+
+        return null;
+    }
+
     #endregion
 }
