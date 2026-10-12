@@ -93,6 +93,9 @@
     <Compile Include="Controller\AppointmentCreationController.cs" />
     <Compile Include="DAL\AppointmentDal.cs" />
     <Compile Include="Model\Appointment.cs" />
+    <Compile Include="View\PatientWindow.xaml.cs">
+      <DependentUpon>PatientWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\TimeBlockSchedule.xaml.cs">
       <DependentUpon>TimeBlockSchedule.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\NurseLoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PatientWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

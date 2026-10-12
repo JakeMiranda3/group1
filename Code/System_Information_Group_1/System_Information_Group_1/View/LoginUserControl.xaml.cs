@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System_Information_Group_1.Controller;
@@ -30,10 +31,16 @@ namespace System_Information_Group_1.View
             if (successfulLogin)
             {
                 // Navigate to the next page or perform any other action upon successful login
-                //AppointmentCreationWindow appointmentCreationWindow = new AppointmentCreationWindow();
-                //appointmentCreationWindow.Show();
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
+                AppointmentCreationWindow appointmentCreationWindow = new AppointmentCreationWindow();
+                appointmentCreationWindow.Show();
+                
+                //Close the login window
+                Window parentWindow = Window.GetWindow(this);
+                if (parentWindow != null)
+                {
+                    parentWindow?.Close();
+                }
+
             }
             else
             {
