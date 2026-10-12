@@ -6,7 +6,7 @@ using System_Information_Group_1.Controller;
 namespace System_Information_Group_1.View.Dialog;
 
 /// <summary>
-///     Interaction logic for PatientRegistrationDialog.xaml
+///     Interaction logic for registering a patient in the system.
 /// </summary>
 public partial class PatientRegistrationDialog : Window
 {
@@ -18,10 +18,13 @@ public partial class PatientRegistrationDialog : Window
 
     #region Constructors
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PatientRegistrationDialog"/> class.
+    /// </summary>
     public PatientRegistrationDialog()
     {
-        this.patientController = new PatientController();
         this.InitializeComponent();
+        this.patientController = new PatientController();
     }
 
     #endregion

@@ -6,6 +6,11 @@ using System_Information_Group_1.View.Dialog;
 
 namespace System_Information_Group_1.View;
 
+/// <summary>
+/// Patient window for searching, viewing, editing, and registering patients.
+/// </summary>
+/// <seealso cref="System.Windows.Window" />
+/// <seealso cref="System.Windows.Markup.IComponentConnector" />
 public partial class PatientWindow : Window
 {
     #region Fields
@@ -16,6 +21,9 @@ public partial class PatientWindow : Window
 
     #region Constructors
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PatientWindow"/> class.
+    /// </summary>
     public PatientWindow()
     {
         this.patientController = new PatientController();
@@ -59,8 +67,6 @@ public partial class PatientWindow : Window
         patientRegistrationDialog.ShowDialog();
     }
 
-    #endregion
-
     private void ViewPatientButton_OnClick(object sender, RoutedEventArgs e)
     {
         if (this.patientDataGrid.SelectedItem is Patient selectedPatient)
@@ -71,4 +77,6 @@ public partial class PatientWindow : Window
             this.patientDataGrid.Items.Refresh();
         }
     }
+
+    #endregion
 }

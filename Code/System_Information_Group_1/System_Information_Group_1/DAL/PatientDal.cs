@@ -73,13 +73,20 @@ public class PatientDal
         return patient;
     }
 
+    /// <summary>
+    ///     Searches the patients.
+    /// </summary>
+    /// <param name="firstName">The first name.</param>
+    /// <param name="lastName">The last name.</param>
+    /// <param name="dateOfBirth">The date of birth.</param>
+    /// <returns>List of matching patients.</returns>
     public List<Patient> SearchPatients(string firstName, string lastName, DateTime? dateOfBirth)
     {
         var patients = new List<Patient>();
 
         if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName) && !dateOfBirth.HasValue)
         {
-            return patients; 
+            return patients;
         }
 
         using var connection = new MySqlConnection(Connection.ConnectionString());
@@ -141,6 +148,10 @@ public class PatientDal
         return patients;
     }
 
+    /// <summary>
+    ///     Edits the patient.
+    /// </summary>
+    /// <param name="patient">The patient.</param>
     public void EditPatient(Patient patient)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());

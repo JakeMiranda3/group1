@@ -6,34 +6,75 @@ using System_Information_Group_1.Model;
 
 namespace System_Information_Group_1.Controller;
 
+/// <summary>
+///     Controller class for managing patient related operations, including registration, searching, and editing patient
+///     information.
+/// </summary>
 public class PatientController
 {
-    private readonly PersonDal personDal = new PersonDal();
-    private readonly PatientDal patientDal = new PatientDal();
+    #region Fields
 
+    private readonly PersonDal personDal = new();
+    private readonly PatientDal patientDal = new();
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    ///     Registers the patient.
+    /// </summary>
+    /// <param name="lastName">The last name.</param>
+    /// <param name="firstName">The first name.</param>
+    /// <param name="dateOfBirth">The date of birth.</param>
+    /// <param name="phoneNumber">The phone number.</param>
+    /// <param name="address">The address.</param>
+    /// <param name="zip">The zip.</param>
+    /// <param name="city">The city.</param>
+    /// <param name="state">The state.</param>
+    /// <returns>The registered patient.</returns>
     public Patient RegisterPatient(string lastName, string firstName, DateTime dateOfBirth, string phoneNumber,
         string address, string zip, string city, string state)
     {
+        lastName = lastName?.Trim() ?? "";
+        firstName = firstName?.Trim() ?? "";
+        phoneNumber = phoneNumber?.Trim() ?? "";
+        address = address?.Trim() ?? "";
+        zip = zip?.Trim() ?? "";
+        city = city?.Trim() ?? "";
+        state = state?.Trim() ?? "";
 
         this.checkFields(firstName, lastName, dateOfBirth, phoneNumber, zip, address, city, state);
-
-        phoneNumber = phoneNumber.Trim();
-        zip = zip.Trim();
-
         this.checkFieldLengths(firstName, lastName, address, city, state);
 
         var person = this.personDal.CreatePerson(
-            lastName.Trim(), firstName.Trim(), dateOfBirth.Date, phoneNumber, address.Trim(), zip, city.Trim(), state.Trim());
+            lastName, firstName, dateOfBirth.Date, phoneNumber, address, zip, city, state);
 
         var patient = this.patientDal.CreatePatient(person.PersonId);
         return patient;
     }
 
+    /// <summary>
+    ///     Searches the patients based off user defined parameters.
+    /// </summary>
+    /// <param name="firstName">The first name.</param>
+    /// <param name="lastName">The last name.</param>
+    /// <param name="dateOfBirth">The date of birth.</param>
+    /// <returns>List of matching patients.</returns>
     public List<Patient> SearchPatients(string firstName, string lastName, DateTime? dateOfBirth)
     {
         return this.patientDal.SearchPatients(firstName, lastName, dateOfBirth);
     }
 
+    /// <summary>
+    ///     Edits the patient.
+    /// </summary>
+    /// <param name="patient">The patient.</param>
+    /// <exception cref="ArgumentException">
+    ///     Invalid patient.
+    ///     or
+    ///     Data Mismatch: Person ID does not match.
+    /// </exception>
     public void EditPatient(Patient patient)
     {
         if (patient == null || patient.Person == null)
@@ -48,9 +89,6 @@ public class PatientController
             throw new ArgumentException("Data Mismatch: Person ID does not match.");
         }
 
-        this.checkFields(person.FirstName, person.LastName, person.DateOfBirth, person.ContactPhoneNumber, person.Zip, person.Address, person.City, person.State);
-        this.checkFieldLengths(person.FirstName, person.LastName, person.Address, person.City, person.State);
-
         person.FirstName = person.FirstName.Trim();
         person.LastName = person.LastName.Trim();
         person.ContactPhoneNumber = person.ContactPhoneNumber.Trim();
@@ -59,11 +97,16 @@ public class PatientController
         person.City = person.City.Trim();
         person.State = person.State.Trim();
 
+        this.checkFields(person.FirstName, person.LastName, person.DateOfBirth, person.ContactPhoneNumber, person.Zip,
+            person.Address, person.City, person.State);
+        this.checkFieldLengths(person.FirstName, person.LastName, person.Address, person.City, person.State);
+
         this.personDal.EditPerson(person);
         this.patientDal.EditPatient(patient);
     }
 
-    private void checkFields(string firstName, string lastName, DateTime dateOfBirth, string phoneNumber, string zip, string address, string city, string state)
+    private void checkFields(string firstName, string lastName, DateTime dateOfBirth, string phoneNumber, string zip,
+        string address, string city, string state)
     {
         if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
         {
@@ -117,7 +160,7 @@ public class PatientController
         {
             throw new ArgumentException("State cannot exceed 20 characters.");
         }
-
     }
- 
+
+    #endregion
 }

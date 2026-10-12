@@ -19,6 +19,10 @@ public partial class PatientInfoDialog : Window
 
     #region Constructors
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="PatientInfoDialog" /> class.
+    /// </summary>
+    /// <param name="patient">The patient.</param>
     public PatientInfoDialog(Patient patient)
     {
         this.InitializeComponent();

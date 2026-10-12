@@ -185,7 +185,7 @@
                             Margin="0,15,0,0"
                             Style="{StaticResource SelectedPatientButtonStyle}"
                             Background="#FFF1F1F1"
-                            Click="ViewPatientButton_OnClick"/>
+                            Click="ViewPatientButton_OnClick" />
                 </StackPanel>
             </Border>
 

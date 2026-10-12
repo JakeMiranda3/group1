@@ -9,9 +9,9 @@
 
     <Grid Background="LightBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="65"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="65"/>
+            <RowDefinition Height="65" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="65" />
         </Grid.RowDefinitions>
 
         <Border Background="White"
@@ -20,143 +20,142 @@
             <TextBlock Text="Patient Information"
                        FontSize="24"
                        VerticalAlignment="Center"
-                       Margin="20,0,0,0"/>
+                       Margin="20,0,0,0" />
         </Border>
 
         <Grid Grid.Row="1" Margin="25,20">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="160"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="160" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="35"/>
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
             </Grid.RowDefinitions>
 
             <Grid.Resources>
                 <Style TargetType="TextBlock">
-                    <Setter Property="FontSize" Value="16"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
                 </Style>
 
                 <Style x:Key="PatientTextBoxStyle" TargetType="TextBox">
-                    <Setter Property="FontSize" Value="16"/>
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    <Setter Property="IsReadOnly" Value="True"/>
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="BorderThickness" Value="0"/>
-                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="FontSize" Value="16" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="IsReadOnly" Value="True" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Padding" Value="0" />
 
                     <Style.Triggers>
                         <Trigger Property="IsReadOnly" Value="False">
-                            <Setter Property="Background" Value="White"/>
-                            <Setter Property="BorderThickness" Value="1"/>
-                            <Setter Property="Padding" Value="5,0"/>
+                            <Setter Property="Background" Value="White" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="Padding" Value="5,0" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
             </Grid.Resources>
 
-            <Border Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,0,0,1"/>
-            <Border Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1"/>
-            <Border Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1"/>
-            <Border Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1"/>
-            <Border Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1"/>
-            <Border Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1"/>
-            <Border Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1"/>
-            <Border Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1"/>
-            <Border Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1"/>
-            <Border Grid.Row="9" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1"/>
-            <Border Grid.Row="10" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1"/>
+            <Border Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,0,0,1" />
+            <Border Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
+            <Border Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
+            <Border Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
+            <Border Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
+            <Border Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
+            <Border Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
+            <Border Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
+            <Border Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
+            <Border Grid.Row="9" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
+            <Border Grid.Row="10" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
 
 
-
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Patient ID:"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Patient ID:" />
             <TextBlock Grid.Row="0" Grid.Column="1"
-           Text="{Binding PatientId}"/>
+                       Text="{Binding PatientId}" />
 
-             <TextBlock Grid.Row="1" Grid.Column="0" Text="Person ID:"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Person ID:" />
             <TextBlock Grid.Row="1" Grid.Column="1"
-           Text="{Binding PersonId}"/>
+                       Text="{Binding PersonId}" />
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="First Name:"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="First Name:" />
             <TextBox x:Name="firstNameTextBox"
-         Grid.Row="2" Grid.Column="1"
-         Text="{Binding Person.FirstName, Mode=OneWay}"
-         Style="{StaticResource PatientTextBoxStyle}"
-         MaxLength="20"/>
+                     Grid.Row="2" Grid.Column="1"
+                     Text="{Binding Person.FirstName, Mode=OneWay}"
+                     Style="{StaticResource PatientTextBoxStyle}"
+                     MaxLength="20" />
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Last Name:"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Last Name:" />
             <TextBox x:Name="lastNameTextBox"
-         Grid.Row="3" Grid.Column="1"
-         Text="{Binding Person.LastName, Mode=OneWay}"
-         Style="{StaticResource PatientTextBoxStyle}"
-         MaxLength="20"/>
+                     Grid.Row="3" Grid.Column="1"
+                     Text="{Binding Person.LastName, Mode=OneWay}"
+                     Style="{StaticResource PatientTextBoxStyle}"
+                     MaxLength="20" />
 
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="Date of Birth:"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Date of Birth:" />
             <TextBlock x:Name="dateOfBirthTextBlock"
-           Grid.Row="4" Grid.Column="1"
-           Text="{Binding Person.DateOfBirth, StringFormat=d}"/>
+                       Grid.Row="4" Grid.Column="1"
+                       Text="{Binding Person.DateOfBirth, StringFormat=d}" />
 
             <DatePicker x:Name="dateOfBirthPicker"
-            Grid.Row="4" Grid.Column="1"
-            Visibility="Collapsed"
-            VerticalAlignment="Center"/>
+                        Grid.Row="4" Grid.Column="1"
+                        Visibility="Collapsed"
+                        VerticalAlignment="Center" />
 
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="Phone Number:"/>
-            <TextBox x:Name="phoneNumberTextBox"            
-         Grid.Row="5" Grid.Column="1"
-         Text="{Binding Person.ContactPhoneNumber, Mode=OneWay}"
-         Style="{StaticResource PatientTextBoxStyle}"/>
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Phone Number:" />
+            <TextBox x:Name="phoneNumberTextBox"
+                     Grid.Row="5" Grid.Column="1"
+                     Text="{Binding Person.ContactPhoneNumber, Mode=OneWay}"
+                     Style="{StaticResource PatientTextBoxStyle}" />
 
-            <TextBlock Grid.Row="6" Grid.Column="0" Text="Address:"/>
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Address:" />
             <TextBox x:Name="addressTextBox"
-         Grid.Row="6" Grid.Column="1"
-         Text="{Binding Person.Address, Mode=OneWay}"
-         Style="{StaticResource PatientTextBoxStyle}"
-         MaxLength="20"/>
+                     Grid.Row="6" Grid.Column="1"
+                     Text="{Binding Person.Address, Mode=OneWay}"
+                     Style="{StaticResource PatientTextBoxStyle}"
+                     MaxLength="20" />
 
-            <TextBlock Grid.Row="7" Grid.Column="0" Text="City:"/>
+            <TextBlock Grid.Row="7" Grid.Column="0" Text="City:" />
             <TextBox x:Name="cityTextBox"
-         Grid.Row="7" Grid.Column="1"
-         Text="{Binding Person.City, Mode=OneWay}"
-         Style="{StaticResource PatientTextBoxStyle}"
-         MaxLength="20"/>
+                     Grid.Row="7" Grid.Column="1"
+                     Text="{Binding Person.City, Mode=OneWay}"
+                     Style="{StaticResource PatientTextBoxStyle}"
+                     MaxLength="20" />
 
-            <TextBlock Grid.Row="8" Grid.Column="0" Text="State:"/>
+            <TextBlock Grid.Row="8" Grid.Column="0" Text="State:" />
             <TextBlock x:Name="stateTextBlock"
-           Grid.Row="8" Grid.Column="1"
-           Text="{Binding Person.State}"/>
+                       Grid.Row="8" Grid.Column="1"
+                       Text="{Binding Person.State}" />
 
             <ComboBox x:Name="stateComboBox"
-          Grid.Row="8" Grid.Column="1"
-          Visibility="Collapsed"
-          VerticalAlignment="Center"/>
+                      Grid.Row="8" Grid.Column="1"
+                      Visibility="Collapsed"
+                      VerticalAlignment="Center" />
 
-            <TextBlock Grid.Row="9" Grid.Column="0" Text="ZIP Code:"/>
+            <TextBlock Grid.Row="9" Grid.Column="0" Text="ZIP Code:" />
             <TextBox x:Name="zipTextBox"
-         Grid.Row="9" Grid.Column="1"
-         Text="{Binding Person.Zip, Mode=OneWay}"
-         Style="{StaticResource PatientTextBoxStyle}"
-         MaxLength="9"/>
+                     Grid.Row="9" Grid.Column="1"
+                     Text="{Binding Person.Zip, Mode=OneWay}"
+                     Style="{StaticResource PatientTextBoxStyle}"
+                     MaxLength="9" />
 
-            <TextBlock Grid.Row="10" Grid.Column="0" Text="Active:"/>
+            <TextBlock Grid.Row="10" Grid.Column="0" Text="Active:" />
             <CheckBox x:Name="isActiveCheckBox"
-          Grid.Row="10" Grid.Column="1"
-          IsChecked="{Binding IsActive, Mode=OneWay}"
-          IsHitTestVisible="False"
-          Focusable="False"
-          VerticalAlignment="Center"/>
+                      Grid.Row="10" Grid.Column="1"
+                      IsChecked="{Binding IsActive, Mode=OneWay}"
+                      IsHitTestVisible="False"
+                      Focusable="False"
+                      VerticalAlignment="Center" />
 
         </Grid>
 
@@ -177,7 +176,7 @@
                         Margin="0,0,15,0"
                         Style="{StaticResource BlueButtonStyle}"
                         Background="#FFF1F1F1"
-                        Click="EditPatientButton_OnClick"/>
+                        Click="EditPatientButton_OnClick" />
 
                 <Button x:Name="saveChangesButton"
                         Content="Save Changes"
@@ -187,7 +186,7 @@
                         Visibility="Collapsed"
                         Style="{StaticResource BlueButtonStyle}"
                         Background="#FFF1F1F1"
-                        Click="SaveChangesButton_OnClick"/>
+                        Click="SaveChangesButton_OnClick" />
 
                 <Button x:Name="cancelEditButton"
                         Content="Cancel"
@@ -196,7 +195,7 @@
                         Visibility="Collapsed"
                         Style="{StaticResource BlueButtonStyle}"
                         Background="#FFF1F1F1"
-                        Click="CancelEditButton_OnClick"/>
+                        Click="CancelEditButton_OnClick" />
 
                 <Button x:Name="closeButton"
                         Content="Close"
@@ -204,7 +203,7 @@
                         Height="38"
                         Style="{StaticResource BlueButtonStyle}"
                         Background="#FFF1F1F1"
-                        IsCancel="True"/>
+                        IsCancel="True" />
 
             </StackPanel>
 

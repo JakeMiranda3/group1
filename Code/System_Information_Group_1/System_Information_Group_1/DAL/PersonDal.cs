@@ -12,9 +12,10 @@ namespace System_Information_Group_1.DAL;
 /// </summary>
 public class PersonDal
 {
-    #region Methods    
+    #region Methods
+
     /// <summary>
-    /// Gets the person with identifier.
+    ///     Gets the person with identifier.
     /// </summary>
     /// <param name="id">The identifier.</param>
     /// <returns>The person with the identifier</returns>
@@ -47,19 +48,20 @@ public class PersonDal
         }
 
         return null;
-
     }
 
     /// <summary>
-    /// Creates a new person row and returns the created Person with generated person id.
+    ///     Creates a new person row and returns the created Person with generated person id.
     /// </summary>
     /// <returns>Person with generated PersonId.</returns>
-    public Person CreatePerson(string lastName, string firstName, DateTime dateOfBirth, string contactPhoneNumber, string address, string zip, string city, string state)
+    public Person CreatePerson(string lastName, string firstName, DateTime dateOfBirth, string contactPhoneNumber,
+        string address, string zip, string city, string state)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
 
-        var insert = "insert into person (last_name, first_name, date_of_birth, contact_phone_number, address, zip, city, state) values (@last, @first, @dob, @phone, @address, @zip, @city, @state);";
+        var insert =
+            "insert into person (last_name, first_name, date_of_birth, contact_phone_number, address, zip, city, state) values (@last, @first, @dob, @phone, @address, @zip, @city, @state);";
         using (var command = new MySqlCommand(insert, connection))
         {
             command.Parameters.Add("@last", MySqlDbType.VarChar).Value = lastName;
@@ -81,7 +83,7 @@ public class PersonDal
     }
 
     /// <summary>
-    /// Gets all persons from the person table.
+    ///     Gets all persons from the person table.
     /// </summary>
     /// <returns>List of Person</returns>
     public List<Person> GetAllPersons()
@@ -113,7 +115,7 @@ public class PersonDal
     }
 
     /// <summary>
-    /// Returns which roles the person has (administrator, doctor, nurse).
+    ///     Returns which roles the person has (administrator, doctor, nurse).
     /// </summary>
     /// <param name="personId">person id to check.</param>
     /// <returns>Array of role names the person belongs to. Empty if none.</returns>
@@ -128,21 +130,30 @@ public class PersonDal
         {
             cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = personId;
             var count = Convert.ToInt32(cmd.ExecuteScalar());
-            if (count > 0) roles.Add("administrator");
+            if (count > 0)
+            {
+                roles.Add("administrator");
+            }
         }
 
         using (var cmd = new MySqlCommand("select count(*) from doctor where person_id = @id;", connection))
         {
             cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = personId;
             var count = Convert.ToInt32(cmd.ExecuteScalar());
-            if (count > 0) roles.Add("doctor");
+            if (count > 0)
+            {
+                roles.Add("doctor");
+            }
         }
 
         using (var cmd = new MySqlCommand("select count(*) from nurse where person_id = @id;", connection))
         {
             cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = personId;
             var count = Convert.ToInt32(cmd.ExecuteScalar());
-            if (count > 0) roles.Add("nurse");
+            if (count > 0)
+            {
+                roles.Add("nurse");
+            }
         }
 
         using (var cmd = new MySqlCommand("select count(*) from patient where person_id = @id;", connection))
@@ -175,12 +186,17 @@ public class PersonDal
         );
     }
 
+    /// <summary>
+    ///     Edits the person.
+    /// </summary>
+    /// <param name="person">The person.</param>
     public void EditPerson(Person person)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
 
-        var query = "update person set last_name = @last, first_name = @first, date_of_birth = @dob, contact_phone_number = @phone, address = @address, zip = @zip, city = @city, state = @state where person_id = @id;";
+        var query =
+            "update person set last_name = @last, first_name = @first, date_of_birth = @dob, contact_phone_number = @phone, address = @address, zip = @zip, city = @city, state = @state where person_id = @id;";
 
         using var command = new MySqlCommand(query, connection);
         command.Parameters.Add("@id", MySqlDbType.Int32).Value = person.PersonId;
@@ -197,4 +213,4 @@ public class PersonDal
     }
 
     #endregion
-    }
+}
