@@ -15,6 +15,56 @@ public class PatientController
         string address, string zip, string city, string state)
     {
 
+        this.checkFields(firstName, lastName, dateOfBirth, phoneNumber, zip, address, city, state);
+
+        phoneNumber = phoneNumber.Trim();
+        zip = zip.Trim();
+
+        this.checkFieldLengths(firstName, lastName, address, city, state);
+
+        var person = this.personDal.CreatePerson(
+            lastName.Trim(), firstName.Trim(), dateOfBirth.Date, phoneNumber, address.Trim(), zip, city.Trim(), state.Trim());
+
+        var patient = this.patientDal.CreatePatient(person.PersonId);
+        return patient;
+    }
+
+    public List<Patient> SearchPatients(string firstName, string lastName, DateTime? dateOfBirth)
+    {
+        return this.patientDal.SearchPatients(firstName, lastName, dateOfBirth);
+    }
+
+    public void EditPatient(Patient patient)
+    {
+        if (patient == null || patient.Person == null)
+        {
+            throw new ArgumentException("Invalid patient.");
+        }
+
+        var person = patient.Person;
+
+        if (patient.PersonId != person.PersonId)
+        {
+            throw new ArgumentException("Data Mismatch: Person ID does not match.");
+        }
+
+        this.checkFields(person.FirstName, person.LastName, person.DateOfBirth, person.ContactPhoneNumber, person.Zip, person.Address, person.City, person.State);
+        this.checkFieldLengths(person.FirstName, person.LastName, person.Address, person.City, person.State);
+
+        person.FirstName = person.FirstName.Trim();
+        person.LastName = person.LastName.Trim();
+        person.ContactPhoneNumber = person.ContactPhoneNumber.Trim();
+        person.Address = person.Address.Trim();
+        person.Zip = person.Zip.Trim();
+        person.City = person.City.Trim();
+        person.State = person.State.Trim();
+
+        this.personDal.EditPerson(person);
+        this.patientDal.EditPatient(patient);
+    }
+
+    private void checkFields(string firstName, string lastName, DateTime dateOfBirth, string phoneNumber, string zip, string address, string city, string state)
+    {
         if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
         {
             throw new ArgumentException("First name and last name cannot be empty.");
@@ -39,22 +89,6 @@ public class PatientController
         {
             throw new ArgumentException("Address, city, and state cannot be empty.");
         }
-
-        phoneNumber = phoneNumber.Trim();
-        zip = zip.Trim();
-
-        this.checkFieldLengths(firstName, lastName, address, city, state);
-
-        var person = this.personDal.CreatePerson(
-            lastName.Trim(), firstName.Trim(), dateOfBirth.Date, phoneNumber, address.Trim(), zip, city.Trim(), state.Trim());
-
-        var patient = this.patientDal.CreatePatient(person.PersonId);
-        return patient;
-    }
-
-    public List<Patient> SearchPatients(string firstName, string lastName, DateTime? dateOfBirth)
-    {
-        return this.patientDal.SearchPatients(firstName, lastName, dateOfBirth);
     }
 
     private void checkFieldLengths(string firstName, string lastName, string address, string city, string state)

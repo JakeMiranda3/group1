@@ -32,19 +32,19 @@ public partial class PatientRegistrationDialog : Window
     {
         try
         {
-            if (!this.DateOfBirthPicker.SelectedDate.HasValue)
+            if (!this.dateOfBirthPicker.SelectedDate.HasValue)
             {
                 throw new ArgumentException("Please select a date of birth.");
             }
 
-            if (this.StateComboBox.SelectedItem is not ComboBoxItem selectedState)
+            if (this.stateComboBox.SelectedItem is not ComboBoxItem selectedState)
             {
                 throw new ArgumentException("Please select a state.");
             }
 
-            var patient = this.patientController.RegisterPatient(this.LastNameTextBox.Text, this.FirstNameTextBox.Text,
-                this.DateOfBirthPicker.SelectedDate.Value, this.PhoneNumberTextBox.Text, this.AddressTextBox.Text,
-                this.ZipTextBox.Text, this.CityTextBox.Text,
+            var patient = this.patientController.RegisterPatient(this.lastNameTextBox.Text, this.firstNameTextBox.Text,
+                this.dateOfBirthPicker.SelectedDate.Value, this.phoneNumberTextBox.Text, this.addressTextBox.Text,
+                this.zipTextBox.Text, this.cityTextBox.Text,
                 selectedState.Content.ToString());
 
             MessageBox.Show(

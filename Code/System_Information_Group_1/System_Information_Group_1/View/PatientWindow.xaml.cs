@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System_Information_Group_1.Controller;
+using System_Information_Group_1.Model;
 using System_Information_Group_1.View.Dialog;
 
 namespace System_Information_Group_1.View;
@@ -27,12 +28,11 @@ public partial class PatientWindow : Window
 
     private void SearchButton_OnClick(object sender, RoutedEventArgs e)
     {
-
         try
         {
-            var firstName = this.FirstNameTextBox.Text;
-            var lastName = this.LastNameTextBox.Text;
-            var dateOfBirth = this.DateOfBirthPicker.SelectedDate;
+            var firstName = this.firstNameTextBox.Text;
+            var lastName = this.lastNameTextBox.Text;
+            var dateOfBirth = this.dateOfBirthPicker.SelectedDate;
             if (string.IsNullOrWhiteSpace(firstName) &&
                 string.IsNullOrWhiteSpace(lastName) &&
                 !dateOfBirth.HasValue)
@@ -44,7 +44,7 @@ public partial class PatientWindow : Window
             var patients = this.patientController.SearchPatients(
                 firstName, lastName, dateOfBirth);
 
-            this.PatientDataGrid.ItemsSource = patients;
+            this.patientDataGrid.ItemsSource = patients;
         }
         catch (Exception ex)
         {
@@ -53,11 +53,22 @@ public partial class PatientWindow : Window
         }
     }
 
-    #endregion
-
     private void MakePatientButton_OnClick(object sender, RoutedEventArgs e)
     {
         var patientRegistrationDialog = new PatientRegistrationDialog();
         patientRegistrationDialog.ShowDialog();
+    }
+
+    #endregion
+
+    private void ViewPatientButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (this.patientDataGrid.SelectedItem is Patient selectedPatient)
+        {
+            var dialog = new PatientInfoDialog(selectedPatient);
+            dialog.ShowDialog();
+
+            this.patientDataGrid.Items.Refresh();
+        }
     }
 }

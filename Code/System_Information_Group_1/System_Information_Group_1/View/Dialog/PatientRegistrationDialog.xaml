@@ -16,7 +16,6 @@
             <RowDefinition Height="75" />
         </Grid.RowDefinitions>
 
-        <!-- Window Header -->
         <Border Grid.Row="0"
                 Background="White"
                 BorderBrush="Black"
@@ -28,7 +27,6 @@
                        Margin="20,0,0,0" />
         </Border>
 
-        <!-- Patient Information -->
         <Grid Grid.Row="1" Margin="25,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -43,71 +41,64 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!-- First Name -->
             <StackPanel Grid.Row="0" Grid.Column="0"
                         Margin="0,0,10,15">
                 <Label Content="First Name" FontSize="16" />
-                <TextBox x:Name="FirstNameTextBox"
+                <TextBox x:Name="firstNameTextBox"
                          Height="32"
                          FontSize="16"
                          MaxLength="20" />
             </StackPanel>
 
-            <!-- Last Name -->
             <StackPanel Grid.Row="0" Grid.Column="1"
                         Margin="10,0,0,15">
                 <Label Content="Last Name" FontSize="16" />
-                <TextBox x:Name="LastNameTextBox"
+                <TextBox x:Name="lastNameTextBox"
                          Height="32"
                          FontSize="16"
                          MaxLength="20" />
             </StackPanel>
 
-            <!-- Date of Birth -->
             <StackPanel Grid.Row="1" Grid.Column="0"
                         Margin="0,0,10,15">
                 <Label Content="Date of Birth" FontSize="16" />
-                <DatePicker x:Name="DateOfBirthPicker"
+                <DatePicker x:Name="dateOfBirthPicker"
                             Height="32"
                             FontSize="16" />
             </StackPanel>
 
-            <!-- Phone Number -->
             <StackPanel Grid.Row="1" Grid.Column="1"
                         Margin="10,0,0,15">
                 <Label Content="Phone Number (10 digits)"
                        FontSize="16" />
-                <TextBox x:Name="PhoneNumberTextBox"
+                <TextBox x:Name="phoneNumberTextBox"
                          Height="32"
                          FontSize="16"
                          MaxLength="10" />
             </StackPanel>
 
-            <!-- Street Address -->
-            <StackPanel Grid.Row="2" Grid.ColumnSpan="2"
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
                         Margin="0,0,0,15">
                 <Label Content="Street Address" FontSize="16" />
-                <TextBox x:Name="AddressTextBox"
+                <TextBox x:Name="addressTextBox"
                          Height="32"
                          FontSize="16"
                          MaxLength="20" />
             </StackPanel>
 
-            <!-- City -->
             <StackPanel Grid.Row="3" Grid.Column="0"
                         Margin="0,0,10,15">
                 <Label Content="City" FontSize="16" />
-                <TextBox x:Name="CityTextBox"
+                <TextBox x:Name="cityTextBox"
                          Height="32"
                          FontSize="16"
                          MaxLength="20" />
             </StackPanel>
 
-            <!-- State -->
             <StackPanel Grid.Row="3" Grid.Column="1"
                         Margin="10,0,0,15">
                 <Label Content="State" FontSize="16" />
-                <ComboBox x:Name="StateComboBox"
+                <ComboBox x:Name="stateComboBox"
                           Height="32"
                           FontSize="16"
                           IsEditable="False">
@@ -164,19 +155,17 @@
                 </ComboBox>
             </StackPanel>
 
-            <!-- ZIP Code -->
             <StackPanel Grid.Row="4" Grid.Column="0"
                         Margin="0,0,10,15">
                 <Label Content="ZIP Code (5 or 9 digits)"
                        FontSize="16" />
-                <TextBox x:Name="ZipTextBox"
+                <TextBox x:Name="zipTextBox"
                          Height="32"
                          FontSize="16"
                          MaxLength="9" />
             </StackPanel>
         </Grid>
 
-        <!-- Buttons -->
         <Border Grid.Row="2"
                 BorderBrush="Black"
                 BorderThickness="0,2,0,0"
@@ -187,7 +176,7 @@
                         VerticalAlignment="Center"
                         Margin="20,0">
 
-                <Button x:Name="CancelButton"
+                <Button x:Name="cancelButton"
                         Content="Cancel"
                         Width="110"
                         Height="38"
@@ -197,7 +186,7 @@
                         Style="{StaticResource BlueButtonStyle}"
                         Background="#FFF1F1F1" />
 
-                <Button x:Name="RegisterButton"
+                <Button x:Name="registerButton"
                         Content="Register Patient"
                         Width="160"
                         Height="38"

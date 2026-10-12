@@ -175,5 +175,26 @@ public class PersonDal
         );
     }
 
+    public void EditPerson(Person person)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+
+        var query = "update person set last_name = @last, first_name = @first, date_of_birth = @dob, contact_phone_number = @phone, address = @address, zip = @zip, city = @city, state = @state where person_id = @id;";
+
+        using var command = new MySqlCommand(query, connection);
+        command.Parameters.Add("@id", MySqlDbType.Int32).Value = person.PersonId;
+        command.Parameters.Add("@last", MySqlDbType.VarChar).Value = person.LastName;
+        command.Parameters.Add("@first", MySqlDbType.VarChar).Value = person.FirstName;
+        command.Parameters.Add("@dob", MySqlDbType.DateTime).Value = person.DateOfBirth;
+        command.Parameters.Add("@phone", MySqlDbType.VarChar).Value = person.ContactPhoneNumber;
+        command.Parameters.Add("@address", MySqlDbType.VarChar).Value = person.Address;
+        command.Parameters.Add("@zip", MySqlDbType.VarChar).Value = person.Zip;
+        command.Parameters.Add("@city", MySqlDbType.VarChar).Value = person.City;
+        command.Parameters.Add("@state", MySqlDbType.VarChar).Value = person.State;
+
+        command.ExecuteNonQuery();
+    }
+
     #endregion
-}
+    }

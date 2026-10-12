@@ -141,6 +141,20 @@ public class PatientDal
         return patients;
     }
 
+    public void EditPatient(Patient patient)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+
+        var query = "update patient set is_active = @isActive where person_id = @personId;";
+        using var command = new MySqlCommand(query, connection);
+
+        command.Parameters.Add("@personId", MySqlDbType.Int32).Value = patient.PersonId;
+        command.Parameters.Add("@isActive", MySqlDbType.Bool).Value = patient.IsActive;
+
+        command.ExecuteNonQuery();
+    }
+
     private static Patient readPatient(MySqlDataReader reader, int personIdOrdinal, int patientIdOrdinal,
         int isActiveOrdinal)
     {
