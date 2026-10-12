@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MySqlConnector;
 using System_Information_Group_1.Model;
 
@@ -70,6 +71,74 @@ public class PatientDal
         patient.Person = personDal.GetPersonWithId(patient.PersonId);
 
         return patient;
+    }
+
+    public List<Patient> SearchPatients(string firstName, string lastName, DateTime? dateOfBirth)
+    {
+        var patients = new List<Patient>();
+
+        if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName) && !dateOfBirth.HasValue)
+        {
+            return patients; 
+        }
+
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+
+        var query = "select patient.* from patient inner join person on patient.person_id = person.person_id where 1=1";
+
+        if (!string.IsNullOrWhiteSpace(firstName))
+        {
+            query += " and person.first_name like @firstName";
+        }
+
+        if (!string.IsNullOrWhiteSpace(lastName))
+        {
+            query += " and person.last_name like @lastName";
+        }
+
+        if (dateOfBirth.HasValue)
+        {
+            query += " and date(person.date_of_birth) = @dateOfBirth";
+        }
+
+        query += " order by person.last_name, person.first_name;";
+
+        using var command = new MySqlCommand(query, connection);
+
+        if (!string.IsNullOrWhiteSpace(firstName))
+        {
+            command.Parameters.Add("@firstName", MySqlDbType.VarChar).Value = $"{firstName.Trim()}%";
+        }
+
+        if (!string.IsNullOrWhiteSpace(lastName))
+        {
+            command.Parameters.Add("@lastName", MySqlDbType.VarChar).Value = $"{lastName.Trim()}%";
+        }
+
+        if (dateOfBirth.HasValue)
+        {
+            command.Parameters.Add("@dateOfBirth", MySqlDbType.Date)
+                .Value = dateOfBirth.Value.Date;
+        }
+
+        using var reader = command.ExecuteReader();
+
+        var personIdOrdinal = reader.GetOrdinal("person_id");
+        var patientIdOrdinal = reader.GetOrdinal("patient_id");
+        var isActiveOrdinal = reader.GetOrdinal("is_active");
+
+        var personDal = new PersonDal();
+
+        while (reader.Read())
+        {
+            var patient = readPatient(reader, personIdOrdinal, patientIdOrdinal, isActiveOrdinal);
+
+            patient.Person = personDal.GetPersonWithId(patient.PersonId);
+            patients.Add(patient);
+        }
+
+        return patients;
     }
 
     private static Patient readPatient(MySqlDataReader reader, int personIdOrdinal, int patientIdOrdinal,
