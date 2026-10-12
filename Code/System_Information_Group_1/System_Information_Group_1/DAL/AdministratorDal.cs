@@ -18,7 +18,6 @@ public class AdministratorDal
             reader.GetFieldValueCheckNull<int>(administratorIdOrdinal)
         );
     }
-
     /// <summary>
     /// Creates an administrator row for the given person id and returns the created Administrator with generated id.
     /// </summary>

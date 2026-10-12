@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="System_Information_Group_1.View.UserControls.TimeCard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:System_Information_Group_1.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="800">
+    <Border BorderThickness="1,1,1,1" BorderBrush="Black">
+            <Grid>
+            <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" BorderThickness="0,1,2,1" BorderBrush="Black">
+                    <Viewbox StretchDirection="DownOnly" Stretch="Fill" >
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5,0,5,0">
+                            <Label x:Name="dateLabel" FontSize="16"></Label>
+                            <Label x:Name="timeLabel" HorizontalAlignment="Center" FontSize="16"></Label>
+                        </StackPanel>
+                    </Viewbox>
+                </Border>
+                <Border Grid.Column="1" BorderThickness="0,1,2,1" BorderBrush="Black">
+                    <Viewbox StretchDirection="DownOnly" Stretch="Fill" >
+                        <Label x:Name="doctorLabel" FontSize="16"></Label>
+                    </Viewbox>
+                </Border>
+                <Border Grid.Column="2" BorderThickness="0,1,2,1" BorderBrush="Black">
+                    <Viewbox StretchDirection="DownOnly" Stretch="Fill" >
+                        <StackPanel Margin="5,0,5,0">
+                            <Label x:Name="patientNameLabel" FontSize="16"></Label>
+                            <Label x:Name="patientPhoneLabel" HorizontalAlignment="Center" FontSize="16"></Label>
+                        </StackPanel>
+                    </Viewbox>
+                </Border>
+            </Grid>
+    </Border>
+</UserControl>

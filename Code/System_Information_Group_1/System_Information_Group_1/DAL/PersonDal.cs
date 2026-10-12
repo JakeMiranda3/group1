@@ -40,14 +40,14 @@ public class PersonDal
         var stateOrdinal = reader.GetOrdinal("state");
 
         // this should only return one person since this ID is a primary key
-
-        if (!reader.Read())
+        if (reader.Read())
         {
-            throw new InvalidOperationException("Person not found.");
+            return createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
+                contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal);
         }
 
-        return createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
-            contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal);
+        return null;
+
     }
 
     /// <summary>
@@ -158,7 +158,7 @@ public class PersonDal
         return roles.ToArray();
     }
 
-    private static Person createPerson(MySqlDataReader reader, int personIdOrdinal, int firstNameOrdinal,
+    public static Person createPerson(MySqlDataReader reader, int personIdOrdinal, int firstNameOrdinal,
         int lastNameOrdinal, int dateOfBirthOrdinal,
         int contactPhoneNumberOrdinal, int addressOrdinal, int zipOrdinal, int cityOrdinal, int stateOrdinal)
     {
