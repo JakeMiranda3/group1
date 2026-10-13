@@ -12,12 +12,13 @@ public class AppointmentCreationController
     private readonly AppointmentDal appointmentDal;
     private readonly PersonDal personDal;
     public int SelectedPatientId { get; private set; }
-    public AppointmentCreationController()
+    public AppointmentCreationController(int patiendId)
     {
         this.doctorDal = new DoctorDal();
         this.appointmentDal = new AppointmentDal();
         this.personDal = new PersonDal();
         this.SelectedPatientId = 1;
+        this.SelectedPatientId = patiendId;
     }
 
     public IList<Doctor> GetAvailableDoctors()

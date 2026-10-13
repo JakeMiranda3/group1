@@ -28,10 +28,10 @@ namespace System_Information_Group_1.View
         private readonly AppointmentCreationController controller;
 
         public ObservableCollection<Doctor> Doctors { get; set; }
-        public AppointmentCreationWindow()
+        public AppointmentCreationWindow(int patientId)
         {
             this.InitializeComponent();
-            this.controller = new AppointmentCreationController();
+            this.controller = new AppointmentCreationController(patientId);
             DataContext = this;
             this.regenerateDoctorComboBox();
         }
@@ -141,7 +141,23 @@ namespace System_Information_Group_1.View
             }
         }
 
+        private void exitAppointmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to exit?", "Confirm Exit",
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                var patientWindow = new PatientWindow();
+                patientWindow.Show();
 
 
+                var parentWindow = Window.GetWindow(this);
+                if (parentWindow != null)
+                {
+                    parentWindow?.Close();
+                }
+            }
+
+        }
     }
 }

@@ -36,7 +36,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
                     <RowDefinition Height="1*" />
-                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="6*" />
                 </Grid.RowDefinitions>
 
@@ -62,10 +62,14 @@
                         <DatePicker x:Name="appointmentTimePicker" VerticalAlignment="Center" Margin="15,0,10,0" FontSize="16" SelectedDateChanged="appointmentTimePicker_SelectedDateChanged" />
                     </StackPanel>
                 </Border>
-
-                <Viewbox Grid.Row="2" StretchDirection="DownOnly">
+                <StackPanel Grid.Row="2">
+                <Viewbox  StretchDirection="DownOnly" Margin="0,10,0,0">
                     <Button x:Name="createAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFF1F1F1" Click="createAppointmentButton_Click">Schedule Appointment At Selected Time Block</Button>
                 </Viewbox>
+                <Viewbox  StretchDirection="DownOnly" Margin="0,40,0,0">
+                        <Button x:Name="exitAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFE68181" Click="exitAppointmentButton_Click">Cancel Appointment Creation</Button>
+                </Viewbox>
+                </StackPanel>
             </Grid>
 
         </Border>

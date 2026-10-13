@@ -110,10 +110,10 @@
         <ListBox Grid.Row="1" ItemContainerStyle="{StaticResource ScheduleListItemTemplate}" x:Name="scheduleListBox" Background="{x:Null}" BorderBrush="#FF434446" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
         </ListBox>
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Style="{StaticResource BlueButtonStyle}"  Width="100" Height="30" Margin="0,0,10,0" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <Button Style="{StaticResource BlueButtonStyle}"  Width="100" Height="30" Margin="0,0,10,0" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Hidden">
                 Previous Day
             </Button>
-            <Button Style="{StaticResource BlueButtonStyle}" Width="100" Height="30" Margin="0,0,10,0" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <Button Style="{StaticResource BlueButtonStyle}" Width="100" Height="30" Margin="0,0,10,0" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Hidden">
                 Next Day
             </Button>
 
