@@ -1,5 +1,5 @@
 # group1
-## Nurse Account acces 1
+## Nurse Account access 1
 ### Username:
 william
 
@@ -7,19 +7,19 @@ william
 test1234
 
 
-## Nurse Account acces 2
+## Nurse Account access 2
 ### Username:
 colby
 
 ### Password:
 test1234
 
-## Admin Account acces 1
+## Admin Account access 1
 ### Username:
 colbyAdmin
 
 ### Password
 test1234
 
-## Mssing features
+## Missing features
 - For the moment we can't create a nurse
