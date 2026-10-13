@@ -48,6 +48,11 @@ public class AuthServiceSingleton : IAuthService
             return false;
         }
 
+        if (!account.Username.Equals(username, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
         bool passwordMatches = PasswordHasher.Verify(password, account.HashedPassword);
 
         if (passwordMatches)
