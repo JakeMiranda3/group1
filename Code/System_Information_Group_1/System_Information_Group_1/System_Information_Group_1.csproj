@@ -91,8 +91,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controller\AppointmentCreationController.cs" />
+    <Compile Include="Controller\PatientController.cs" />
     <Compile Include="DAL\AppointmentDal.cs" />
     <Compile Include="Model\Appointment.cs" />
+    <Compile Include="View\Dialog\PatientInfoDialog.xaml.cs">
+      <DependentUpon>PatientInfoDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialog\PatientRegistrationDialog.xaml.cs">
+      <DependentUpon>PatientRegistrationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PatientWindow.xaml.cs">
       <DependentUpon>PatientWindow.xaml</DependentUpon>
     </Compile>
@@ -130,6 +137,14 @@
     <Page Include="View\AdminLoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialog\PatientInfoDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Dialog\PatientRegistrationDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\LoginUserControl.xaml">
       <SubType>Designer</SubType>

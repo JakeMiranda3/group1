@@ -31,7 +31,7 @@ namespace System_Information_Group_1.View
             if (successfulLogin)
             {
                 // Navigate to the next page or perform any other action upon successful login
-                AppointmentCreationWindow appointmentCreationWindow = new AppointmentCreationWindow();
+                PatientWindow appointmentCreationWindow = new PatientWindow();
                 appointmentCreationWindow.Show();
                 
                 //Close the login window

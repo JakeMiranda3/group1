@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MySqlConnector;
 using System_Information_Group_1.Model;
 
@@ -70,6 +71,99 @@ public class PatientDal
         patient.Person = personDal.GetPersonWithId(patient.PersonId);
 
         return patient;
+    }
+
+    /// <summary>
+    ///     Searches the patients.
+    /// </summary>
+    /// <param name="firstName">The first name.</param>
+    /// <param name="lastName">The last name.</param>
+    /// <param name="dateOfBirth">The date of birth.</param>
+    /// <returns>List of matching patients.</returns>
+    public List<Patient> SearchPatients(string firstName, string lastName, DateTime? dateOfBirth)
+    {
+        var patients = new List<Patient>();
+
+        if (string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName) && !dateOfBirth.HasValue)
+        {
+            return patients;
+        }
+
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+
+        var query = "select patient.* from patient inner join person on patient.person_id = person.person_id where 1=1";
+
+        if (!string.IsNullOrWhiteSpace(firstName))
+        {
+            query += " and person.first_name like @firstName";
+        }
+
+        if (!string.IsNullOrWhiteSpace(lastName))
+        {
+            query += " and person.last_name like @lastName";
+        }
+
+        if (dateOfBirth.HasValue)
+        {
+            query += " and date(person.date_of_birth) = @dateOfBirth";
+        }
+
+        query += " order by person.last_name, person.first_name;";
+
+        using var command = new MySqlCommand(query, connection);
+
+        if (!string.IsNullOrWhiteSpace(firstName))
+        {
+            command.Parameters.Add("@firstName", MySqlDbType.VarChar).Value = $"{firstName.Trim()}%";
+        }
+
+        if (!string.IsNullOrWhiteSpace(lastName))
+        {
+            command.Parameters.Add("@lastName", MySqlDbType.VarChar).Value = $"{lastName.Trim()}%";
+        }
+
+        if (dateOfBirth.HasValue)
+        {
+            command.Parameters.Add("@dateOfBirth", MySqlDbType.Date)
+                .Value = dateOfBirth.Value.Date;
+        }
+
+        using var reader = command.ExecuteReader();
+
+        var personIdOrdinal = reader.GetOrdinal("person_id");
+        var patientIdOrdinal = reader.GetOrdinal("patient_id");
+        var isActiveOrdinal = reader.GetOrdinal("is_active");
+
+        var personDal = new PersonDal();
+
+        while (reader.Read())
+        {
+            var patient = readPatient(reader, personIdOrdinal, patientIdOrdinal, isActiveOrdinal);
+
+            patient.Person = personDal.GetPersonWithId(patient.PersonId);
+            patients.Add(patient);
+        }
+
+        return patients;
+    }
+
+    /// <summary>
+    ///     Edits the patient.
+    /// </summary>
+    /// <param name="patient">The patient.</param>
+    public void EditPatient(Patient patient)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+
+        var query = "update patient set is_active = @isActive where person_id = @personId;";
+        using var command = new MySqlCommand(query, connection);
+
+        command.Parameters.Add("@personId", MySqlDbType.Int32).Value = patient.PersonId;
+        command.Parameters.Add("@isActive", MySqlDbType.Bool).Value = patient.IsActive;
+
+        command.ExecuteNonQuery();
     }
 
     private static Patient readPatient(MySqlDataReader reader, int personIdOrdinal, int patientIdOrdinal,
