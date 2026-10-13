@@ -18,6 +18,27 @@ public class AdministratorDal
             reader.GetFieldValueCheckNull<int>(administratorIdOrdinal)
         );
     }
+    /// <summary>
+    /// Creates an administrator row for the given person id and returns the created Administrator with generated id.
+    /// </summary>
+    /// <param name="personId">Person id to assign administrator role to.</param>
+    /// <returns>Created Administrator object.</returns>
+    public Administrator CreateAdministrator(int personId)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+
+        var insert = "insert into administrator (person_id) values (@personId);";
+        using (var cmd = new MySqlCommand(insert, connection))
+        {
+            cmd.Parameters.Add("@personId", MySqlDbType.Int32).Value = personId;
+            cmd.ExecuteNonQuery();
+        }
+
+        using var idCmd = new MySqlCommand("select last_insert_id();", connection);
+        var newId = System.Convert.ToInt32(idCmd.ExecuteScalar());
+        return new Administrator(personId, newId);
+    }
 
     #endregion
 

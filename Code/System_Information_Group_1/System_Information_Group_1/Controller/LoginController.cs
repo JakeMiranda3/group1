@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace System_Information_Group_1.Controller
 {
     
+
     public class LoginController
     {
         private AuthServiceSingleton authService;
@@ -18,6 +19,11 @@ namespace System_Information_Group_1.Controller
         public bool AttemptLogin(string username, string password)
         {
             return this.authService.AttemptLogin(username, password);
+        }
+
+        public bool Logout()
+        {
+            return AuthServiceSingleton.LogoutUser();
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿
 using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System_Information_Group_1.Controller;
 using System_Information_Group_1.InputValidation;
 
@@ -12,6 +14,8 @@ namespace System_Information_Group_1.View
     public partial class LoginUserControl : UserControl
     {
         private LoginController controller;
+        private bool usernameValid = false;
+        private bool passwordValid = false;
         /// <summary>
         /// Initializes a new instance of the <see cref="LoginUserControl"/> class.
         /// </summary>
@@ -19,6 +23,7 @@ namespace System_Information_Group_1.View
         {
             this.InitializeComponent();
             this.controller = new LoginController();
+            this.loginButton.IsEnabled = false;
         }
 
         private void onLoginButtonClicked(object sender, System.Windows.RoutedEventArgs e)
@@ -29,7 +34,16 @@ namespace System_Information_Group_1.View
             if (successfulLogin)
             {
                 // Navigate to the next page or perform any other action upon successful login
-                System.Windows.MessageBox.Show("Login successful!");
+                PatientWindow patientWindow= new PatientWindow();
+                patientWindow.Show();
+                
+                //Close the login window
+                Window parentWindow = Window.GetWindow(this);
+                if (parentWindow != null)
+                {
+                    parentWindow?.Close();
+                }
+
             }
             else
             {
@@ -47,12 +61,16 @@ namespace System_Information_Group_1.View
 
             if (!validationResult.IsValid)
             {
+                this.usernameValid = false;
                 this.loginErrorMessage.Visibility = System.Windows.Visibility.Visible;
                 this.loginErrorMessage.Text = validationResult.ErrorContent.ToString();
+                this.loginButton.IsEnabled = false;
             }
             else
             {
+                this.usernameValid = true;
                 this.loginErrorMessage.Visibility = System.Windows.Visibility.Hidden;
+                this.loginButton.IsEnabled = this.passwordValid;
             }
         }
 
@@ -66,12 +84,16 @@ namespace System_Information_Group_1.View
 
             if (!validationResult.IsValid)
             {
+                this.passwordValid = false;
                 this.loginErrorMessage.Visibility = System.Windows.Visibility.Visible;
                 this.loginErrorMessage.Text = validationResult.ErrorContent.ToString();
+                this.loginButton.IsEnabled = false;
             }
             else
             {
+                this.passwordValid = true;
                 this.loginErrorMessage.Visibility = System.Windows.Visibility.Hidden;
+                this.loginButton.IsEnabled = this.usernameValid;
             }
         }
     }

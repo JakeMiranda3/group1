@@ -7,7 +7,7 @@ namespace System_Information_Group_1.Controller;
 
 /// <summary>
 /// The authentication singleton class that attempts login and stores the account persistently across the application.
-/// @author Matthew & Colby
+/// @author Matthew + Colby
 /// @version Fall 2026
 /// </summary>
 /// <seealso cref="System_Information_Group_1.Controller.IAuthService" />
@@ -48,6 +48,11 @@ public class AuthServiceSingleton : IAuthService
             return false;
         }
 
+        if (!account.Username.Equals(username, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
         bool passwordMatches = PasswordHasher.Verify(password, account.HashedPassword);
 
         if (passwordMatches)
@@ -79,4 +84,9 @@ public class AuthServiceSingleton : IAuthService
             : throw new AccessViolationException("user is not logged in ");
     }
 
+    public static bool LogoutUser()
+    {
+        AuthServiceSingleton.currentAccount = null;
+        return true;
+    }
 }

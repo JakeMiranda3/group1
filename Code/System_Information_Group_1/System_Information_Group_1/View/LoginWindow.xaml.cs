@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Linq;
+using System.Windows;
 
 
 namespace System_Information_Group_1.View;
@@ -6,18 +8,17 @@ namespace System_Information_Group_1.View;
 /// <summary>
 ///     Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class LoginWindow : Window
 {
-    #region Constructors    
+    #region Constructors        
+
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="MainWindow"/> class.
+    /// Initializes a new instance of the <see cref="LoginWindow"/> class.
     /// </summary>
-    
-    
-    public MainWindow()
+    public LoginWindow()
     {
         this.InitializeComponent();
-        
 
     }
 
@@ -26,13 +27,13 @@ public partial class MainWindow : Window
 
     private void onNurseRadioButtonClicked(object sender, RoutedEventArgs e)
     {
-        this.mainWindowFrame.Navigate(new NurseLoginPage());
+        this.LoginWindowFrame.Navigate(new NurseLoginPage());
     }
 
     private void onAdminRadioButtonClicked(object sender, RoutedEventArgs e)
     {
         
-        this.mainWindowFrame.Navigate(new AdminLoginPage());
+        this.LoginWindowFrame.Navigate(new AdminLoginPage());
     }
 
 

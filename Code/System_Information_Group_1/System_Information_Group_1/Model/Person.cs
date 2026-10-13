@@ -84,6 +84,19 @@ public class Person
     /// </value>
     public string State { get; set; }
 
+    /// <summary>
+    ///     Gets or sets the gender.
+    /// </summary>
+    /// <value>
+    ///     The gender.
+    /// </value>
+    public string Gender { get; set; }
+
+    /// <summary>
+    ///     Gets or sets roles assigned to the person (comma separated).
+    /// </summary>
+    public string Roles { get; set; }
+
     #endregion
 
     #region Constructors
@@ -100,6 +113,7 @@ public class Person
     /// <param name="zip">The zip.</param>
     /// <param name="city">The city.</param>
     /// <param name="state">The state.</param>
+    /// <param name="gender">The gender (optional).</param>
     /// <exception cref="System.ArgumentNullException">
     ///     personId
     ///     or
@@ -118,7 +132,7 @@ public class Person
     ///     state
     /// </exception>
     public Person(int personId, string lastName, string firstName, DateTime dateOfBirth, string contractPhoneNumber,
-        string address, string zip, string city, string state)
+        string address, string zip, string city, string state, string gender = "")
     {
         this.PersonId = personId != 0 ? personId : throw new ArgumentNullException(nameof(personId));
         this.LastName = lastName ?? throw new ArgumentNullException(nameof(lastName));
@@ -129,7 +143,7 @@ public class Person
         this.Zip = zip ?? throw new ArgumentNullException(nameof(zip));
         this.City = city ?? throw new ArgumentNullException(nameof(city));
         this.State = state ?? throw new ArgumentNullException(nameof(state));
+        this.Gender = gender ?? string.Empty;
     }
-
     #endregion
 }
