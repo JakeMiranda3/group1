@@ -92,6 +92,9 @@
     <Compile Include="Controller\AppointmentCreationController.cs" />
     <Compile Include="DAL\AppointmentDal.cs" />
     <Compile Include="Model\Appointment.cs" />
+    <Compile Include="View\Dialogs\ReasonDialog.xaml.cs">
+      <DependentUpon>ReasonDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\TimeBlockSchedule.xaml.cs">
       <DependentUpon>TimeBlockSchedule.xaml</DependentUpon>
     </Compile>
@@ -104,6 +107,10 @@
     <Page Include="View\AppointmentCreationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Dialogs\ReasonDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

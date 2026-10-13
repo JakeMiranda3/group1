@@ -95,5 +95,21 @@ public class AppointmentDal
         return appointments;
     }
 
+    public bool StoreNewAppointment(int doctorId, int patientId, DateTime appointmentDateTime, string reason)
+    {
     
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+
+        var insert = "insert into appointment (doctor_id, patient_id, reason, appointment_datetime) values (@doctorId, @patientId, @reason, @appointmentDateTime);";
+        using var cmd = new MySqlCommand(insert, connection);
+        cmd.Parameters.Add("@doctorId", MySqlDbType.Int32).Value = doctorId;
+        cmd.Parameters.Add("@patientId", MySqlDbType.Int32).Value = patientId;
+        cmd.Parameters.Add("@reason", MySqlDbType.VarChar).Value = reason;
+        cmd.Parameters.Add("@appointmentDateTime", MySqlDbType.DateTime).Value = appointmentDateTime;
+        return cmd.ExecuteNonQuery() > 0;
+    }
+
+
+
 }

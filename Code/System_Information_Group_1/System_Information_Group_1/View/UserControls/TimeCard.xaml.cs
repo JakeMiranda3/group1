@@ -22,6 +22,7 @@ namespace System_Information_Group_1.View.UserControls
     public partial class TimeCard : UserControl
     {
         private const String DefaultEmptyMessage = "Available";
+        public DateTime scheduledTime { get; private set; }
         public TimeCard()
         {
             InitializeComponent();
@@ -33,11 +34,13 @@ namespace System_Information_Group_1.View.UserControls
             this.dateLabel.Content = date.ToString("D", CultureInfo.CurrentCulture);
             this.timeLabel.Content = date.ToString("t", CultureInfo.CurrentCulture);
             this.patientNameLabel.Content = DefaultEmptyMessage;
+            this.scheduledTime = date;
         }
         public TimeCard(DateTime date, String doctorName, String patientName, String patientPhone) : this(date, doctorName)
         {
             this.patientNameLabel.Content = patientName;
             this.patientPhoneLabel.Content = patientPhone;
+            this.scheduledTime = date;
         }
     }
 }

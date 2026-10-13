@@ -22,15 +22,29 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsEnabled" Value="false">
                                 <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="Background" Value="#FFDC5A1C"></Setter>
+
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+
+
     </UserControl.Resources>
     <Border BorderThickness="1,1,1,1" BorderBrush="Black">
-            <Grid>
+        <Border.Style>
+            <Style TargetType="Border">
+                <Setter Property="Background" Value="Transparent"/>
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Background" Value="#FFDC5A1C"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+        <Grid>
             <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                     <ColumnDefinition Width="4*"></ColumnDefinition>

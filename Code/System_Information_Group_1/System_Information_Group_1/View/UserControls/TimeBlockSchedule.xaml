@@ -26,7 +26,7 @@
         <SolidColorBrush x:Key="Item.SelectedInactive.Border" Color="#FFDADADA"/>
         <SolidColorBrush x:Key="Item.Disabled.Background" Color="#FFDC5A1C"></SolidColorBrush>
         <Style x:Key="ScheduleListItemTemplate" TargetType="{x:Type ListBoxItem}">
-            <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
             <Setter Property="Padding" Value="4,1"/>
             <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
             <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>

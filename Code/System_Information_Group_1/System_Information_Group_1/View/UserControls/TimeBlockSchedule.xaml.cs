@@ -31,6 +31,8 @@ namespace System_Information_Group_1.View.UserControls
             InitializeComponent();
         }
 
+
+
         public void SetupSchedulesWithAppointments(IList<Appointment> appointments, DateTime selectedDay, string doctorName)
         {
             this.clearScheduleSlots();
@@ -45,51 +47,79 @@ namespace System_Information_Group_1.View.UserControls
 
                 timeSlot = timeSlot.Add(TimeSpan.FromMinutes(TimeIntervalInMinutes));
             }
+
+            this.sortCardsByDate();
+
         }
 
-
-
-        private void fillAppointmentCards(IList<Appointment> appointments, string doctorName)
+        private void sortCardsByDate()
         {
-            foreach (Appointment appointment in appointments)
+            var sortedCards = this.scheduleListBox.Items
+                .Cast<ListBoxItem>()
+                .OrderBy(item => ((TimeCard)item.Content).scheduledTime)
+                .ToList();
+
+            this.scheduleListBox.Items.Clear();
+
+            foreach (var item in sortedCards)
             {
-                this.addScheduleSlotWithAppointmentFilled(appointment.Date, doctorName, appointment.PatientId.ToString(), "Phone");
+                this.scheduleListBox.Items.Add(item);
             }
         }
+
 
         private void fillAppointmentCards(IList<Appointment> appointments, DateTime selectedDay)
         {
             foreach (Appointment appointment in appointments)
             {
-                if (!appointment.Date.Date.Equals(selectedDay.Date))
-                {
+                if (appointment.Date.Date != selectedDay.Date)
                     continue;
-                }
 
-                string doctorName = $"{appointment.Doctor.FirstName} {appointment.Doctor.LastName}";
-                string patientName = $"{appointment.Patient.FirstName} {appointment.Patient.LastName}";
-                this.addScheduleSlotWithAppointmentFilled(appointment.Date, doctorName, patientName, appointment.Patient.ContactPhoneNumber);
+                string doctorName =
+                    $"{appointment.Doctor.FirstName} {appointment.Doctor.LastName}";
+
+                string patientName =
+                    $"{appointment.Patient.FirstName} {appointment.Patient.LastName}";
+
+                this.addScheduleSlotWithAppointmentFilled(
+                    appointment.Date,
+                    doctorName,
+                    patientName,
+                    appointment.Patient.ContactPhoneNumber
+                );
             }
         }
 
         private void addScheduleSlotWithAppointmentFilled(DateTime date, String doctorName, String patientName, String patientPhone)
         {
-            ListBoxItem itemCard = new ListBoxItem
+            var item = new ListBoxItem
             {
                 Content = new TimeCard(date, doctorName, patientName, patientPhone),
                 IsEnabled = false
             };
-            this.scheduleListBox.Items.Add(itemCard);
+
+            this.scheduleListBox.Items.Add(item);
         }
 
         private void addEmptyScheduleSlot(DateTime date, String doctorName)
         {
-            this.scheduleListBox.Items.Add(new TimeCard(date, doctorName));
+            var item = new ListBoxItem
+            {
+                Content = new TimeCard(date, doctorName),
+                IsEnabled = true
+            };
+
+            this.scheduleListBox.Items.Add(item);
         }
 
         public void clearScheduleSlots()
         {
             this.scheduleListBox.Items.Clear();
+        }
+
+        public bool IsAnyCardSelected()
+        {
+            return this.scheduleListBox.SelectedItem is ListBoxItem item && item.IsEnabled;
         }
     }
 }
