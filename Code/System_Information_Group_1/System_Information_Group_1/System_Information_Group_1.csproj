@@ -91,18 +91,26 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controller\AppointmentCreationController.cs" />
+    <Compile Include="Controller\NurseController.cs" />
     <Compile Include="Controller\PatientController.cs" />
     <Compile Include="Controller\TopBarController.cs" />
     <Compile Include="DAL\AppointmentDal.cs" />
     <Compile Include="Model\Appointment.cs" />
+    <Compile Include="Model\NurseDisplay.cs" />
     <Compile Include="View\Dialogs\ReasonDialog.xaml.cs">
       <DependentUpon>ReasonDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialog\NurseEditWindow.xaml.cs">
+      <DependentUpon>NurseEditWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Dialog\PatientInfoDialog.xaml.cs">
       <DependentUpon>PatientInfoDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Dialog\PatientRegistrationDialog.xaml.cs">
       <DependentUpon>PatientRegistrationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NurseWindow.xaml.cs">
+      <DependentUpon>NurseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PatientWindow.xaml.cs">
       <DependentUpon>PatientWindow.xaml</DependentUpon>
@@ -149,6 +157,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Dialog\NurseEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Dialog\PatientInfoDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -191,6 +203,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\NurseLoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NurseWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

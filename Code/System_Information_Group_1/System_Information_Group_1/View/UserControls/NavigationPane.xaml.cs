@@ -122,5 +122,21 @@ namespace System_Information_Group_1.View.UserControls
                 this.Toggle();
             }
         }
+
+        private void onNurseButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var window = Window.GetWindow(this) ?? Application.Current.MainWindow;
+
+            if (window is not NurseWindow)
+            {
+                NurseWindow nurseWindow = new NurseWindow();
+                nurseWindow.Show();
+                window.Close();
+            }
+            else
+            {
+                this.Toggle();
+            }
+        }
     }
 }

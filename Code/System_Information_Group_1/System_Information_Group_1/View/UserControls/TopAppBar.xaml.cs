@@ -21,7 +21,7 @@ namespace System_Information_Group_1.View.UserControls
     /// </summary>
     public partial class TopAppBar : UserControl
     {
-        private readonly TopBarController controller;
+        private TopBarController controller;
         private const string DefaultUsernameAndRole = "Unknown User";
         /// <summary>
         /// Occurs when the hamburger menu is clicked.
