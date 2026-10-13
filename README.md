@@ -23,3 +23,6 @@ test1234
 
 ## Missing features
 - For the moment we can't create a nurse
+
+## Issues
+- Some commit were lost in feature branches due to git merging issues.
