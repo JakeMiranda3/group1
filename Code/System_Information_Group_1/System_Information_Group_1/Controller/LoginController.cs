@@ -20,5 +20,10 @@ namespace System_Information_Group_1.Controller
         {
             return this.authService.AttemptLogin(username, password);
         }
+
+        public bool Logout()
+        {
+            return AuthServiceSingleton.LogoutUser();
+        }
     }
 }

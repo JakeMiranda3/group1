@@ -23,6 +23,9 @@ namespace System_Information_Group_1.View.UserControls
     {
         private readonly TopBarController controller;
         private const string DefaultUsernameAndRole = "Unknown User";
+        /// <summary>
+        /// Occurs when the hamburger menu is clicked.
+        /// </summary>
 
         /// <summary>
         /// Gets or sets the bar header.
@@ -70,5 +73,9 @@ namespace System_Information_Group_1.View.UserControls
             }
         }
 
+        private void onHamburgerButtonClicked(object sender, RoutedEventArgs e)
+        {
+            this.navigationPane.Toggle();
+        }
     }
 }

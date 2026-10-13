@@ -79,4 +79,9 @@ public class AuthServiceSingleton : IAuthService
             : throw new AccessViolationException("user is not logged in ");
     }
 
+    public static bool LogoutUser()
+    {
+        AuthServiceSingleton.currentAccount = null;
+        return true;
+    }
 }

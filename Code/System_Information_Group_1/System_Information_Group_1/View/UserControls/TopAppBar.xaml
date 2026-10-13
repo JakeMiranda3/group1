@@ -17,9 +17,9 @@
             <TextBlock x:Name="roleAndUsernameTextblock" Margin="0,0,10,0" TextWrapping="Wrap" Text="ROLE FIRSTNAME LASTNAME" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="18"/>
         </Viewbox>
         <StackPanel Grid.Column="0" Orientation="Horizontal">
-
+        <local:NavigationPane x:Name="navigationPane"></local:NavigationPane>
         <Viewbox Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Left">
-            <Button Style="{StaticResource BlueButtonStyle}" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,0,0,0" Width="50" Height="50" BorderBrush="Black" BorderThickness="3,3,3,3">
+            <Button x:Name="AppBarNavigationButton" Style="{StaticResource BlueButtonStyle}" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,0,0,0" Width="50" Height="50" BorderBrush="Black" BorderThickness="3,3,3,3" Click="onHamburgerButtonClicked">
 
                 <Grid Margin="5,0,5,0" >
                     <Grid.RowDefinitions>
@@ -43,6 +43,5 @@
                 <TextBlock x:Name="barTitle" Margin="0,0,0,0" TextWrapping="Wrap" Text="{Binding BarHeader, ElementName=root}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
             </Viewbox>
         </StackPanel>
-
     </Grid>
 </UserControl>

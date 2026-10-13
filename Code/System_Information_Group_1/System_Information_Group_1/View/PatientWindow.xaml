@@ -10,7 +10,7 @@
         MinWidth="1280"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip">
-
+    
     <Grid Background="LightBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70*" />
@@ -27,11 +27,12 @@
                 BorderThickness="0,0,0,2"
                 BorderBrush="Black">
 
-            <barUserControl:TopAppBar x:Name="TopAppBarControl" BarHeader="Patient Information"/>
-
+            <barUserControl:TopAppBar x:Name="TopAppBarControl" BarHeader="Patient Information"></barUserControl:TopAppBar>
+            
+            
         </Border>
 
-
+        
         <Border Grid.Row="1"
                 Grid.Column="0"
                 BorderBrush="Black"

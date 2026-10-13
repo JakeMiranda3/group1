@@ -107,6 +107,9 @@
     <Compile Include="View\PatientWindow.xaml.cs">
       <DependentUpon>PatientWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\NavigationPane.xaml.cs">
+      <DependentUpon>NavigationPane.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\TimeBlockSchedule.xaml.cs">
       <DependentUpon>TimeBlockSchedule.xaml</DependentUpon>
     </Compile>
@@ -192,6 +195,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PatientWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\NavigationPane.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
