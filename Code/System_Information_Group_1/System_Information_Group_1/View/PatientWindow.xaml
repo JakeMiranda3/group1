@@ -186,6 +186,14 @@
                             Style="{StaticResource SelectedPatientButtonStyle}"
                             Background="#FFF1F1F1"
                             Click="ViewPatientButton_OnClick" />
+                    <Button x:Name="createAppointmentButton"
+                            Content="Schedule Patient Appointment"
+                            FontSize="16"
+                            Height="45"
+                            Margin="0,15,0,0"
+                            Style="{StaticResource SelectedPatientButtonStyle}"
+                            Background="#FFF1F1F1"
+                            Click="CreateAppointmentButton_OnClick" />
                 </StackPanel>
             </Border>
 

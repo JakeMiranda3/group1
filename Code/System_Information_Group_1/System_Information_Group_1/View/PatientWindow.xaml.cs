@@ -95,4 +95,12 @@ public partial class PatientWindow : Window
     }
 
     #endregion
+
+    private void CreateAppointmentButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (this.patientDataGrid.SelectedItem is Patient selectedPatient)
+        {
+            var patientId = selectedPatient.PatientId;
+        }
+    }
 }
