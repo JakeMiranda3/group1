@@ -14,6 +14,8 @@ namespace System_Information_Group_1.View
     public partial class LoginUserControl : UserControl
     {
         private LoginController controller;
+        private bool usernameValid = false;
+        private bool passwordValid = false;
         /// <summary>
         /// Initializes a new instance of the <see cref="LoginUserControl"/> class.
         /// </summary>
@@ -21,6 +23,7 @@ namespace System_Information_Group_1.View
         {
             this.InitializeComponent();
             this.controller = new LoginController();
+            this.loginButton.IsEnabled = false;
         }
 
         private void onLoginButtonClicked(object sender, System.Windows.RoutedEventArgs e)
@@ -58,12 +61,16 @@ namespace System_Information_Group_1.View
 
             if (!validationResult.IsValid)
             {
+                this.usernameValid = false;
                 this.loginErrorMessage.Visibility = System.Windows.Visibility.Visible;
                 this.loginErrorMessage.Text = validationResult.ErrorContent.ToString();
+                this.loginButton.IsEnabled = false;
             }
             else
             {
+                this.usernameValid = true;
                 this.loginErrorMessage.Visibility = System.Windows.Visibility.Hidden;
+                this.loginButton.IsEnabled = this.passwordValid;
             }
         }
 
@@ -77,12 +84,16 @@ namespace System_Information_Group_1.View
 
             if (!validationResult.IsValid)
             {
+                this.passwordValid = false;
                 this.loginErrorMessage.Visibility = System.Windows.Visibility.Visible;
                 this.loginErrorMessage.Text = validationResult.ErrorContent.ToString();
+                this.loginButton.IsEnabled = false;
             }
             else
             {
+                this.passwordValid = true;
                 this.loginErrorMessage.Visibility = System.Windows.Visibility.Hidden;
+                this.loginButton.IsEnabled = this.usernameValid;
             }
         }
     }
