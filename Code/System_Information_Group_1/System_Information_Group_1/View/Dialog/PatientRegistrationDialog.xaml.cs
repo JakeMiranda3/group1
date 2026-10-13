@@ -45,10 +45,15 @@ public partial class PatientRegistrationDialog : Window
                 throw new ArgumentException("Please select a state.");
             }
 
+            if (this.genderComboBox.SelectedItem is not ComboBoxItem selectedGender)
+            {
+                throw new ArgumentException("Please select a gender.");
+            }
+
             var patient = this.patientController.RegisterPatient(this.lastNameTextBox.Text, this.firstNameTextBox.Text,
                 this.dateOfBirthPicker.SelectedDate.Value, this.phoneNumberTextBox.Text, this.addressTextBox.Text,
                 this.zipTextBox.Text, this.cityTextBox.Text,
-                selectedState.Content.ToString());
+                selectedState.Content.ToString(), selectedGender.Content.ToString());
 
             MessageBox.Show(
                 $"Patient registered successfully. Patient ID: {patient.PatientId}",

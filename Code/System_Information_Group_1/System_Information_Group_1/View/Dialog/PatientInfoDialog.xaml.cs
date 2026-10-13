@@ -41,6 +41,7 @@ public partial class PatientInfoDialog : Window
             "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV",
             "WI", "WY"
         };
+        this.genderComboBox.ItemsSource = new[] { "Male", "Female", "Other" };
     }
 
     #endregion
@@ -67,10 +68,15 @@ public partial class PatientInfoDialog : Window
                 throw new ArgumentException("Please select a state.");
             }
 
+            if (this.genderComboBox.SelectedItem is not string gender)
+            {
+                throw new ArgumentException("Please select a gender.");
+            }
+
             var editedPerson = new Person(this.patient.PersonId, this.lastNameTextBox.Text, this.firstNameTextBox.Text,
                 this.dateOfBirthPicker.SelectedDate.Value, this.phoneNumberTextBox.Text, this.addressTextBox.Text,
                 this.zipTextBox.Text, this.cityTextBox.Text,
-                state);
+                state, gender);
 
             var editedPatient = new Patient(this.patient.PersonId, this.patient.PatientId,
                 this.isActiveCheckBox.IsChecked == true);
@@ -115,6 +121,7 @@ public partial class PatientInfoDialog : Window
     {
         this.dateOfBirthPicker.SelectedDate = this.patient.Person.DateOfBirth;
         this.stateComboBox.SelectedItem = this.patient.Person.State;
+        this.genderComboBox.SelectedItem = this.patient.Person.Gender;
     }
 
     private void setEditMode(bool editing)
@@ -139,6 +146,14 @@ public partial class PatientInfoDialog : Window
             : Visibility.Visible;
 
         this.stateComboBox.Visibility = editing
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+
+        this.genderTextBlock.Visibility = editing
+            ? Visibility.Collapsed
+            : Visibility.Visible;
+
+        this.genderComboBox.Visibility = editing
             ? Visibility.Visible
             : Visibility.Collapsed;
 

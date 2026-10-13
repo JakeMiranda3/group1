@@ -39,12 +39,13 @@ public class PersonDal
         var zipOrdinal = reader.GetOrdinal("zip");
         var cityOrdinal = reader.GetOrdinal("city");
         var stateOrdinal = reader.GetOrdinal("state");
+        var genderOrdinal = reader.GetOrdinal("gender");
 
         // this should only return one person since this ID is a primary key
         if (reader.Read())
         {
             return createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
-                contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal);
+                contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal, genderOrdinal);
         }
 
         return null;
@@ -55,13 +56,13 @@ public class PersonDal
     /// </summary>
     /// <returns>Person with generated PersonId.</returns>
     public Person CreatePerson(string lastName, string firstName, DateTime dateOfBirth, string contactPhoneNumber,
-        string address, string zip, string city, string state)
+        string address, string zip, string city, string state, string gender = "")
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
 
         var insert =
-            "insert into person (last_name, first_name, date_of_birth, contact_phone_number, address, zip, city, state) values (@last, @first, @dob, @phone, @address, @zip, @city, @state);";
+            "insert into person (last_name, first_name, date_of_birth, contact_phone_number, address, zip, city, state, gender) values (@last, @first, @dob, @phone, @address, @zip, @city, @state, @gender);";
         using (var command = new MySqlCommand(insert, connection))
         {
             command.Parameters.Add("@last", MySqlDbType.VarChar).Value = lastName;
@@ -72,6 +73,7 @@ public class PersonDal
             command.Parameters.Add("@zip", MySqlDbType.VarChar).Value = zip;
             command.Parameters.Add("@city", MySqlDbType.VarChar).Value = city;
             command.Parameters.Add("@state", MySqlDbType.VarChar).Value = state;
+            command.Parameters.Add("@gender", MySqlDbType.VarChar).Value = gender ?? string.Empty;
 
             command.ExecuteNonQuery();
         }
@@ -79,7 +81,7 @@ public class PersonDal
         using var idCmd = new MySqlCommand("select last_insert_id();", connection);
         var newId = Convert.ToInt32(idCmd.ExecuteScalar());
 
-        return new Person(newId, lastName, firstName, dateOfBirth, contactPhoneNumber, address, zip, city, state);
+        return new Person(newId, lastName, firstName, dateOfBirth, contactPhoneNumber, address, zip, city, state, gender);
     }
 
     /// <summary>
@@ -104,11 +106,12 @@ public class PersonDal
         var zipOrdinal = reader.GetOrdinal("zip");
         var cityOrdinal = reader.GetOrdinal("city");
         var stateOrdinal = reader.GetOrdinal("state");
+        var genderOrdinal = reader.GetOrdinal("gender");
 
         while (reader.Read())
         {
             list.Add(createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
-                contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal));
+                contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal, genderOrdinal));
         }
 
         return list;
@@ -171,7 +174,7 @@ public class PersonDal
 
     public static Person createPerson(MySqlDataReader reader, int personIdOrdinal, int firstNameOrdinal,
         int lastNameOrdinal, int dateOfBirthOrdinal,
-        int contactPhoneNumberOrdinal, int addressOrdinal, int zipOrdinal, int cityOrdinal, int stateOrdinal)
+        int contactPhoneNumberOrdinal, int addressOrdinal, int zipOrdinal, int cityOrdinal, int stateOrdinal, int genderOrdinal)
     {
         return new Person(
             reader.GetFieldValueCheckNull<int>(personIdOrdinal),
@@ -182,7 +185,8 @@ public class PersonDal
             reader.GetFieldValueCheckNull<string>(addressOrdinal),
             reader.GetFieldValueCheckNull<string>(zipOrdinal),
             reader.GetFieldValueCheckNull<string>(cityOrdinal),
-            reader.GetFieldValueCheckNull<string>(stateOrdinal)
+            reader.GetFieldValueCheckNull<string>(stateOrdinal),
+            reader.GetFieldValueCheckNull<string>(genderOrdinal)
         );
     }
 
@@ -196,7 +200,7 @@ public class PersonDal
         connection.Open();
 
         var query =
-            "update person set last_name = @last, first_name = @first, date_of_birth = @dob, contact_phone_number = @phone, address = @address, zip = @zip, city = @city, state = @state where person_id = @id;";
+            "update person set last_name = @last, first_name = @first, date_of_birth = @dob, contact_phone_number = @phone, address = @address, zip = @zip, city = @city, state = @state, gender = @gender where person_id = @id;";
 
         using var command = new MySqlCommand(query, connection);
         command.Parameters.Add("@id", MySqlDbType.Int32).Value = person.PersonId;
@@ -208,6 +212,7 @@ public class PersonDal
         command.Parameters.Add("@zip", MySqlDbType.VarChar).Value = person.Zip;
         command.Parameters.Add("@city", MySqlDbType.VarChar).Value = person.City;
         command.Parameters.Add("@state", MySqlDbType.VarChar).Value = person.State;
+        command.Parameters.Add("@gender", MySqlDbType.VarChar).Value = person.Gender ?? string.Empty;
 
         command.ExecuteNonQuery();
     }

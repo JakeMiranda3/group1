@@ -41,6 +41,7 @@
                 <RowDefinition Height="35" />
                 <RowDefinition Height="35" />
                 <RowDefinition Height="35" />
+                <RowDefinition Height="35" />
             </Grid.RowDefinitions>
 
             <Grid.Resources>
@@ -78,6 +79,7 @@
             <Border Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
             <Border Grid.Row="9" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
             <Border Grid.Row="10" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
+            <Border Grid.Row="11" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
 
 
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Patient ID:" />
@@ -142,16 +144,26 @@
                       Visibility="Collapsed"
                       VerticalAlignment="Center" />
 
-            <TextBlock Grid.Row="9" Grid.Column="0" Text="ZIP Code:" />
+            <TextBlock Grid.Row="9" Grid.Column="0" Text="Gender:" />
+            <TextBlock x:Name="genderTextBlock"
+                       Grid.Row="9" Grid.Column="1"
+                       Text="{Binding Person.Gender}" />
+
+            <ComboBox x:Name="genderComboBox"
+                      Grid.Row="9" Grid.Column="1"
+                      Visibility="Collapsed"
+                      VerticalAlignment="Center" />
+
+            <TextBlock Grid.Row="10" Grid.Column="0" Text="ZIP Code:" />
             <TextBox x:Name="zipTextBox"
-                     Grid.Row="9" Grid.Column="1"
+                     Grid.Row="10" Grid.Column="1"
                      Text="{Binding Person.Zip, Mode=OneWay}"
                      Style="{StaticResource PatientTextBoxStyle}"
                      MaxLength="9" />
 
-            <TextBlock Grid.Row="10" Grid.Column="0" Text="Active:" />
+            <TextBlock Grid.Row="11" Grid.Column="0" Text="Active:" />
             <CheckBox x:Name="isActiveCheckBox"
-                      Grid.Row="10" Grid.Column="1"
+                      Grid.Row="11" Grid.Column="1"
                       IsChecked="{Binding IsActive, Mode=OneWay}"
                       IsHitTestVisible="False"
                       Focusable="False"

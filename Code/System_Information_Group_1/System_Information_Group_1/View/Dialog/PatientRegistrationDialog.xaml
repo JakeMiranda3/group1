@@ -39,6 +39,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Grid.Column="0"
@@ -157,12 +158,18 @@
 
             <StackPanel Grid.Row="4" Grid.Column="0"
                         Margin="0,0,10,15">
-                <Label Content="ZIP Code (5 or 9 digits)"
-                       FontSize="16" />
-                <TextBox x:Name="zipTextBox"
-                         Height="32"
-                         FontSize="16"
-                         MaxLength="9" />
+                <Label Content="ZIP Code (5 or 9 digits)" FontSize="16" />
+                <TextBox x:Name="zipTextBox" Height="32" FontSize="16" MaxLength="9" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="4" Grid.Column="1"
+                        Margin="10,0,0,15">
+                <Label Content="Gender" FontSize="16" />
+                <ComboBox x:Name="genderComboBox" Height="32" FontSize="16" IsEditable="False">
+                    <ComboBoxItem Content="Male" />
+                    <ComboBoxItem Content="Female" />
+                    <ComboBoxItem Content="Other" />
+                </ComboBox>
             </StackPanel>
         </Grid>
 

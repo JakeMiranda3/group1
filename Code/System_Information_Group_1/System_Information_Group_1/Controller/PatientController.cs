@@ -32,9 +32,10 @@ public class PatientController
     /// <param name="zip">The zip.</param>
     /// <param name="city">The city.</param>
     /// <param name="state">The state.</param>
+    /// <param name="gender">The gender.</param>
     /// <returns>The registered patient.</returns>
     public Patient RegisterPatient(string lastName, string firstName, DateTime dateOfBirth, string phoneNumber,
-        string address, string zip, string city, string state)
+        string address, string zip, string city, string state, string gender)
     {
         lastName = lastName?.Trim() ?? "";
         firstName = firstName?.Trim() ?? "";
@@ -43,12 +44,13 @@ public class PatientController
         zip = zip?.Trim() ?? "";
         city = city?.Trim() ?? "";
         state = state?.Trim() ?? "";
+        gender = gender?.Trim() ?? "";
 
         this.checkFields(firstName, lastName, dateOfBirth, phoneNumber, zip, address, city, state);
         this.checkFieldLengths(firstName, lastName, address, city, state);
 
         var person = this.personDal.CreatePerson(
-            lastName, firstName, dateOfBirth.Date, phoneNumber, address, zip, city, state);
+            lastName, firstName, dateOfBirth.Date, phoneNumber, address, zip, city, state, gender);
 
         var patient = this.patientDal.CreatePatient(person.PersonId);
         return patient;

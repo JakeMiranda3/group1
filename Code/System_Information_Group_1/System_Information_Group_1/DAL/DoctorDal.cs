@@ -95,7 +95,7 @@ public class DoctorDal
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
         var query = "select d.doctor_id, d.person_id, p.last_name, p.first_name, p.date_of_birth," +
-                    "p.contact_phone_number, p.address, p.zip, p.city, p.state from doctor d JOIN person p ON d.person_id = p.person_id";
+                    "p.contact_phone_number, p.address, p.zip, p.city, p.state, p.gender from doctor d JOIN person p ON d.person_id = p.person_id";
         using var command = new MySqlCommand(query, connection);
         using var reader = command.ExecuteReader();
 
@@ -109,12 +109,13 @@ public class DoctorDal
         var zipOrdinal = reader.GetOrdinal("zip");
         var cityOrdinal = reader.GetOrdinal("city");
         var stateOrdinal = reader.GetOrdinal("state");
+        var genderOrdinal = reader.GetOrdinal("gender");
 
         while (reader.Read())
         {
             var doctor = createDoctorWithoutPerson(reader, doctorIdOrdinal, personIdOrdinal);
             doctor.Person = PersonDal.createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal,
-                dateOfBirthOrdinal, contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal);
+                dateOfBirthOrdinal, contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal, genderOrdinal);
             doctorList.Add(doctor);
         }
 
