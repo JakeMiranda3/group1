@@ -8,13 +8,13 @@
         x:Class="System_Information_Group_1.View.NurseWindow"
         mc:Ignorable="d"
         Title="NurseWindow"
-        MinHeight="720"
-        MinWidth="1280">
-    <Grid>
+        Height="720"
+        Width="1280" ResizeMode="NoResize">
+    <Grid Background="LightBlue">
 
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
