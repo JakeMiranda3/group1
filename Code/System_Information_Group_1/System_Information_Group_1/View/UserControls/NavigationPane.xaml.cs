@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System_Information_Group_1.Constants;
 using System_Information_Group_1.Controller;
 using System_Information_Group_1.Model;
 
@@ -16,6 +18,18 @@ namespace System_Information_Group_1.View.UserControls
             Loaded += NavigationPane_Loaded;
             Unloaded += NavigationPane_Unloaded;
             this.loginController = new LoginController();
+
+
+            // You can only navigate to the nurse window if you are an admin. 
+            AuthServiceSingleton authService = new AuthServiceSingleton();
+            AccountType role = authService.GetUserRole();
+
+            if (role == AccountType.Administrator)
+            {
+                this.nurseNavigationButton.Visibility = Visibility.Visible;
+                this.nurseNavigationButton.IsEnabled = true;
+            }
+
 
         }
 
