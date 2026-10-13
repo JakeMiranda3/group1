@@ -20,3 +20,6 @@ colbyAdmin
 
 ### Password
 test1234
+
+## Mssing features
+- For the moment we can't create a nurse
