@@ -94,6 +94,9 @@
     <Compile Include="Controller\PatientController.cs" />
     <Compile Include="DAL\AppointmentDal.cs" />
     <Compile Include="Model\Appointment.cs" />
+    <Compile Include="View\Dialogs\ReasonDialog.xaml.cs">
+      <DependentUpon>ReasonDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Dialog\PatientInfoDialog.xaml.cs">
       <DependentUpon>PatientInfoDialog.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,10 @@
     <Page Include="View\AppointmentCreationWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Dialogs\ReasonDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="Constants\AccountType.cs" />
     <Compile Include="Authorization\AuthServiceSingleton.cs" />

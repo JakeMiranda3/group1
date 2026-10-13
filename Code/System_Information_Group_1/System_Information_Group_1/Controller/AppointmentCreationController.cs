@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Documents;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
@@ -10,11 +11,13 @@ public class AppointmentCreationController
     private readonly DoctorDal doctorDal;
     private readonly AppointmentDal appointmentDal;
     private readonly PersonDal personDal;
+    public int SelectedPatientId { get; private set; }
     public AppointmentCreationController()
     {
         this.doctorDal = new DoctorDal();
         this.appointmentDal = new AppointmentDal();
         this.personDal = new PersonDal();
+        this.SelectedPatientId = 1;
     }
 
     public IList<Doctor> GetAvailableDoctors()
@@ -40,5 +43,10 @@ public class AppointmentCreationController
             return "Doctors name is unavailable...";
         }
         return this.doctorDal.GetDoctorsFullNameByDoctorId(doctor.DoctorId);
+    }
+
+    public bool StoreAppointment(DateTime date, int doctorId, int patientId, string reason)
+    {
+        return this.appointmentDal.StoreNewAppointment(doctorId, patientId, date, reason);
     }
 }

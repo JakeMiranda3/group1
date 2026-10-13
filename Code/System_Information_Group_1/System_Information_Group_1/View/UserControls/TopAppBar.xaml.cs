@@ -33,7 +33,6 @@ namespace System_Information_Group_1.View.UserControls
 
         public void setUsernameAndRole(String role, String displayName, String username)
         {
-            // Show role, display name (first + last) and login username
             this.roleAndUsernameTextblock.Text = $"{role}: {displayName} ({username})";
         }
     }
