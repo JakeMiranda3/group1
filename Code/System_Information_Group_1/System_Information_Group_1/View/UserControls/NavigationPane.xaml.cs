@@ -64,7 +64,7 @@ namespace System_Information_Group_1.View.UserControls
         {
             if (window == null) return;
             // Make the pane match window height so it can span beyond its parent container.
-            this.rootBorder.Height = window.ActualHeight;
+            this.rootBorder.Height = window.ActualHeight - 37; //adjust for the title bar height
             this.partPopup.HorizontalOffset = 0;
             this.partPopup.VerticalOffset = 0;
         }
