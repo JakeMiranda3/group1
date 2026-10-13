@@ -26,13 +26,22 @@ namespace System_Information_Group_1.View.UserControls
         private static readonly TimeSpan ClinicStartTime = new (8, 0, 0);
         private static readonly TimeSpan ClinicEndTime = new (17, 0, 0);
         private const int TimeIntervalInMinutes = 15;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimeBlockSchedule"/> class.
+        /// </summary>
         public TimeBlockSchedule()
         {
             InitializeComponent();
         }
 
 
-
+        /// <summary>
+        /// Setups the schedules with appointments.
+        /// </summary>
+        /// <param name="appointments">The appointments.</param>
+        /// <param name="selectedDay">The selected day.</param>
+        /// <param name="doctorName">Name of the doctor.</param>
         public void SetupSchedulesWithAppointments(IList<Appointment> appointments, DateTime selectedDay, string doctorName)
         {
             this.clearScheduleSlots();
@@ -112,11 +121,20 @@ namespace System_Information_Group_1.View.UserControls
             this.scheduleListBox.Items.Add(item);
         }
 
+        /// <summary>
+        /// Clears the schedule slots.
+        /// </summary>
         public void clearScheduleSlots()
         {
             this.scheduleListBox.Items.Clear();
         }
 
+        /// <summary>
+        /// Determines whether [is any card selected].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is any card selected]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsAnyCardSelected()
         {
             return this.scheduleListBox.SelectedItem is ListBoxItem item && item.IsEnabled;

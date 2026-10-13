@@ -28,6 +28,13 @@ public class Doctor
     /// </value>
     public int DoctorId { get; set; }
 
+
+    /// <summary>
+    /// Gets or sets the person.
+    /// </summary>
+    /// <value>
+    /// The person.
+    /// </value>
     public Person Person { get; set; }
 
     #endregion
@@ -39,8 +46,7 @@ public class Doctor
     /// </summary>
     /// <param name="personId">The person identifier.</param>
     /// <param name="doctorId">The doctor identifier.</param>
-    /// <param name="person">The person.</param>
-    /// <exception cref="ArgumentException">
+    /// <exception cref="System.ArgumentException">
     /// PersonId cannot be zero.
     /// or
     /// DoctorId cannot be zero
@@ -51,6 +57,12 @@ public class Doctor
         this.DoctorId = doctorId != 0 ? doctorId : throw new ArgumentException("DoctorId cannot be zero");
     }
 
+    /// <summary>
+    /// Converts to string.
+    /// </summary>
+    /// <returns>
+    /// A <see cref="System.String" /> that represents this instance.
+    /// </returns>
     public override string ToString()
     {
         if (!String.IsNullOrEmpty(this.Person.FirstName) && !String.IsNullOrEmpty(this.Person.LastName))

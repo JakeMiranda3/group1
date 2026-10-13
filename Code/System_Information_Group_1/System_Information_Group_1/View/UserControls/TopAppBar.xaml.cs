@@ -24,6 +24,12 @@ namespace System_Information_Group_1.View.UserControls
         private readonly TopBarController controller;
         private const string DefaultUsernameAndRole = "Unknown User";
 
+        /// <summary>
+        /// Gets or sets the bar header.
+        /// </summary>
+        /// <value>
+        /// The bar header.
+        /// </value>
         public string BarHeader
         {
             get => (string)GetValue(BarHeaderProperty);
@@ -31,6 +37,9 @@ namespace System_Information_Group_1.View.UserControls
         }
 
 
+        /// <summary>
+        /// The bar header property
+        /// </summary>
         public static readonly DependencyProperty BarHeaderProperty =
             DependencyProperty.Register(
                 name: nameof(BarHeader),
@@ -38,6 +47,10 @@ namespace System_Information_Group_1.View.UserControls
                 ownerType: typeof(TopAppBar),
                 new PropertyMetadata("Default Title")
             );
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TopAppBar"/> class.
+        /// </summary>
         public TopAppBar()
         {
             this.InitializeComponent();
@@ -51,7 +64,7 @@ namespace System_Information_Group_1.View.UserControls
             {
                 this.roleAndUsernameTextblock.Text = this.controller.GetAccountTypeAndUsernameString();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 this.roleAndUsernameTextblock.Text = DefaultUsernameAndRole;
             }

@@ -10,12 +10,12 @@ namespace System_Information_Group_1.View;
 /// </summary>
 public partial class LoginWindow : Window
 {
-    #region Constructors    
+    #region Constructors        
+
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="MainWindow"/> class.
+    /// Initializes a new instance of the <see cref="LoginWindow"/> class.
     /// </summary>
-    
-    
     public LoginWindow()
     {
         this.InitializeComponent();

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace System_Information_Group_1.Controller
 {
     
+
     public class LoginController
     {
         private AuthServiceSingleton authService;

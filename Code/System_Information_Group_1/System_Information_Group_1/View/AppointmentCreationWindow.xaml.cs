@@ -27,7 +27,18 @@ namespace System_Information_Group_1.View
         private const int MaxReasonLength = 100;
         private readonly AppointmentCreationController controller;
 
+        /// <summary>
+        /// Gets or sets the doctors.
+        /// </summary>
+        /// <value>
+        /// The doctors.
+        /// </value>
         public ObservableCollection<Doctor> Doctors { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppointmentCreationWindow"/> class.
+        /// </summary>
+        /// <param name="patientId">The patient identifier.</param>
         public AppointmentCreationWindow(int patientId)
         {
             this.InitializeComponent();
@@ -38,7 +49,7 @@ namespace System_Information_Group_1.View
 
         private void regenerateDoctorComboBox()
         {
-            this.Doctors = new ObservableCollection<Doctor>(this.controller.GetAvailableDoctors());
+            this.Doctors = [..this.controller.GetAvailableDoctors()];
         }
 
         private void doctorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -84,7 +95,7 @@ namespace System_Information_Group_1.View
                 return;
             }
 
-            DateTime selectedDate = selectedCard.scheduledTime;
+            var selectedDate = selectedCard.scheduledTime;
             if (this.doctorComboBox.SelectedItem is not Doctor currentDoctor)
             {
                 MessageBox.Show("Please select a doctor.", "Missing Information", MessageBoxButton.OK,
@@ -103,7 +114,7 @@ namespace System_Information_Group_1.View
 
             if (reasonDialog.ShowDialog() == true)
             {
-                string reason = reasonDialog.Reason;
+                var reason = reasonDialog.Reason;
 
                 if (reason.Length > MaxReasonLength)
                 {
@@ -112,7 +123,7 @@ namespace System_Information_Group_1.View
                     return;
                 }
 
-                bool wasAdded =
+                var wasAdded =
                     this.controller.StoreAppointment(selectedDate, currentDoctor.DoctorId, this.controller.SelectedPatientId, reason);
                 if (wasAdded)
                 {
@@ -137,7 +148,7 @@ namespace System_Information_Group_1.View
             {
                 this.scheduleControl.SetupSchedulesWithAppointments(this.controller.GetDoctorsAppointments(doctor),
                     date.Value,
-                    this.controller.getDoctorsFullName(doctor));
+                    this.controller.GetDoctorsFullName(doctor));
             }
         }
 

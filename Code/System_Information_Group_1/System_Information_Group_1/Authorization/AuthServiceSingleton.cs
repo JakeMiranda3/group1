@@ -7,7 +7,7 @@ namespace System_Information_Group_1.Controller;
 
 /// <summary>
 /// The authentication singleton class that attempts login and stores the account persistently across the application.
-/// @author Matthew & Colby
+/// @author Matthew + Colby
 /// @version Fall 2026
 /// </summary>
 /// <seealso cref="System_Information_Group_1.Controller.IAuthService" />

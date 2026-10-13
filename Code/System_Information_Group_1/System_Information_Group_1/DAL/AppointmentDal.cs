@@ -5,6 +5,9 @@ using System_Information_Group_1.Model;
 
 namespace System_Information_Group_1.DAL;
 
+/// <summary>
+/// The data access layer for the appointment table. This class provides methods to retrieve and store appointments.
+/// </summary>
 public class AppointmentDal
 {
 
@@ -21,7 +24,7 @@ public class AppointmentDal
     private static Appointment createAppointment(MySqlDataReader reader, PersonDal personDal, int appointmentIdOrdinal, int doctorIdOrdinal, int patientIdOrdinal,
         int reasonOrdinal, int appointmentDatetimeOrdinal, int doctorPersonIdOrdinal, int patientPersonIdOrdinal)
     {
-        var appointment = AppointmentDal.createAppointment(reader, appointmentIdOrdinal, doctorIdOrdinal, patientIdOrdinal,
+        var appointment = createAppointment(reader, appointmentIdOrdinal, doctorIdOrdinal, patientIdOrdinal,
             reasonOrdinal, appointmentDatetimeOrdinal);
         var doctorPersonId = reader.GetFieldValueCheckNull<int>(doctorPersonIdOrdinal);
         var patientPersonId = reader.GetFieldValueCheckNull<int>(patientPersonIdOrdinal);
@@ -31,6 +34,11 @@ public class AppointmentDal
     }
 
 
+    /// <summary>
+    /// Gets the appointment by appointment identifier.
+    /// </summary>
+    /// <param name="appointmentId">The appointment identifier.</param>
+    /// <returns>The requested appointment</returns>
     public Appointment GetAppointmentByAppointmentId(int appointmentId)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
@@ -47,6 +55,11 @@ public class AppointmentDal
         return createAppointment(reader, appointmentIdOrdinal, doctorIdOrdinal, patientIdOrdinal, reasonOrdinal, appointmentDateTimeOrdinal);
     }
 
+    /// <summary>
+    /// Gets the doctors appointments by doctor identifier.
+    /// </summary>
+    /// <param name="doctorId">The doctor identifier.</param>
+    /// <returns>The list of appointments for the given doctors id</returns>
     public IList<Appointment> GetDoctorsAppointmentsByDoctorId(int doctorId)
     {
         IList<Appointment> appointments = new List<Appointment>();
@@ -68,6 +81,11 @@ public class AppointmentDal
         return appointments;
     }
 
+    /// <summary>
+    /// Gets the appointments containing doctor and patient.
+    /// </summary>
+    /// <param name="doctorId">The doctor identifier.</param>
+    /// <returns>Gets the list of appointments by doctor, with patient and doctors values stored</returns>
     public IList<Appointment> GetAppointmentsContainingDoctorAndPatient(int doctorId)
     {
         IList<Appointment> appointments = new List<Appointment>();
@@ -95,6 +113,14 @@ public class AppointmentDal
         return appointments;
     }
 
+    /// <summary>
+    /// Stores the new appointment.
+    /// </summary>
+    /// <param name="doctorId">The doctor identifier.</param>
+    /// <param name="patientId">The patient identifier.</param>
+    /// <param name="appointmentDateTime">The appointment date time.</param>
+    /// <param name="reason">The reason.</param>
+    /// <returns>True if the appointment was stored</returns>
     public bool StoreNewAppointment(int doctorId, int patientId, DateTime appointmentDateTime, string reason)
     {
     

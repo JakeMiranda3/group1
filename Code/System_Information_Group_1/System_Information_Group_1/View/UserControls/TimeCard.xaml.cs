@@ -22,13 +22,29 @@ namespace System_Information_Group_1.View.UserControls
     public partial class TimeCard : UserControl
     {
         private const String DefaultEmptyMessage = "Available";
+
+        /// <summary>
+        /// Gets the scheduled time.
+        /// </summary>
+        /// <value>
+        /// The scheduled time.
+        /// </value>
         public DateTime scheduledTime { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimeCard"/> class.
+        /// </summary>
         public TimeCard()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
-        public TimeCard(DateTime date, String doctorName) : this()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimeCard"/> class.
+        /// </summary>
+        /// <param name="date">The date.</param>
+        /// <param name="doctorName">Name of the doctor.</param>
+        public TimeCard(DateTime date, string doctorName) : this()
         {
             this.doctorLabel.Content = doctorName;
             this.dateLabel.Content = date.ToString("D", CultureInfo.CurrentCulture);
@@ -36,7 +52,15 @@ namespace System_Information_Group_1.View.UserControls
             this.patientNameLabel.Content = DefaultEmptyMessage;
             this.scheduledTime = date;
         }
-        public TimeCard(DateTime date, String doctorName, String patientName, String patientPhone) : this(date, doctorName)
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimeCard"/> class.
+        /// </summary>
+        /// <param name="date">The date.</param>
+        /// <param name="doctorName">Name of the doctor.</param>
+        /// <param name="patientName">Name of the patient.</param>
+        /// <param name="patientPhone">The patient phone.</param>
+        public TimeCard(DateTime date, string doctorName, string patientName, string patientPhone) : this(date, doctorName)
         {
             this.patientNameLabel.Content = patientName;
             this.patientPhoneLabel.Content = patientPhone;

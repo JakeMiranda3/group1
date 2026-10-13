@@ -1,8 +1,7 @@
-﻿using System;
+﻿
 using MySqlConnector;
 using System_Information_Group_1.Model;
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 
 namespace System_Information_Group_1.DAL;
@@ -85,6 +84,10 @@ public class DoctorDal
         return createDoctorWithoutPerson(reader, doctorIdOrdinal, personIdOrdinal);
     }
 
+    /// <summary>
+    /// Gets all doctors.
+    /// </summary>
+    /// <returns>The list of doctors</returns>
     public IList<Doctor> GetAllDoctors()
     {
 
@@ -118,6 +121,11 @@ public class DoctorDal
         return doctorList;
     }
 
+    /// <summary>
+    /// Gets the doctors full name by doctor identifier.
+    /// </summary>
+    /// <param name="doctorId">The doctor identifier.</param>
+    /// <returns>the doctors full name</returns>
     public string GetDoctorsFullNameByDoctorId(int doctorId)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());

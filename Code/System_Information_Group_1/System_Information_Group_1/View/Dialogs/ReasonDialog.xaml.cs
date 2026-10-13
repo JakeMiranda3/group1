@@ -20,10 +20,20 @@ namespace System_Information_Group_1.View.Dialogs
     public partial class ReasonDialog : Window
     {
 
+        /// <summary>
+        /// Gets the reason.
+        /// </summary>
+        /// <value>
+        /// The reason.
+        /// </value>
         public string Reason { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReasonDialog"/> class.
+        /// </summary>
         public ReasonDialog()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.Reason = "";
         }
 
