@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System_Information_Group_1.Controller;
 
 namespace System_Information_Group_1.View.UserControls
 {
@@ -20,20 +21,41 @@ namespace System_Information_Group_1.View.UserControls
     /// </summary>
     public partial class TopAppBar : UserControl
     {
+        private readonly TopBarController controller;
+        private const string DefaultUsernameAndRole = "Unknown User";
+
+        public string BarHeader
+        {
+            get => (string)GetValue(BarHeaderProperty);
+            set => SetValue(BarHeaderProperty, value);
+        }
+
+
+        public static readonly DependencyProperty BarHeaderProperty =
+            DependencyProperty.Register(
+                name: nameof(BarHeader),
+                propertyType: typeof(string),
+                ownerType: typeof(TopAppBar),
+                new PropertyMetadata("Default Title")
+            );
         public TopAppBar()
         {
             this.InitializeComponent();
+            this.controller = new TopBarController();
+            this.populateComponents();
         }
 
-        public String AppBarTitle
+        private void populateComponents()
         {
-            get => this.barTitle.Text;
-            set => this.barTitle.Text = value;
+            try
+            {
+                this.roleAndUsernameTextblock.Text = this.controller.GetAccountTypeAndUsernameString();
+            }
+            catch (Exception ex)
+            {
+                this.roleAndUsernameTextblock.Text = DefaultUsernameAndRole;
+            }
         }
 
-        public void setUsernameAndRole(String role, String displayName, String username)
-        {
-            this.roleAndUsernameTextblock.Text = $"{role}: {displayName} ({username})";
-        }
     }
 }

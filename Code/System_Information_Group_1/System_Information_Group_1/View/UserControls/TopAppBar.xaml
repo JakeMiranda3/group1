@@ -5,22 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:System_Information_Group_1.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="1200">
+             d:DesignHeight="100" d:DesignWidth="1200"
+             x:Name="root">
 
     <Grid Background="White" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="25*"/>
-            <ColumnDefinition Width="40*"/>
-            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <Viewbox Grid.Column="3" HorizontalAlignment="Right" StretchDirection="DownOnly">
+        <Viewbox Grid.Column="1" HorizontalAlignment="Right" StretchDirection="DownOnly">
             <TextBlock x:Name="roleAndUsernameTextblock" Margin="0,0,10,0" TextWrapping="Wrap" Text="ROLE FIRSTNAME LASTNAME" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="18"/>
         </Viewbox>
-        <Viewbox Grid.Column="1" StretchDirection="DownOnly">
-            <TextBlock x:Name="barTitle" Margin="0,0,0,0" TextWrapping="Wrap" Text="Appointment Schedules" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+        <StackPanel Grid.Column="0" Orientation="Horizontal">
 
-        </Viewbox>
         <Viewbox Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Left">
             <Button Style="{StaticResource BlueButtonStyle}" Background="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,0,0,0" Width="50" Height="50" BorderBrush="Black" BorderThickness="3,3,3,3">
 
@@ -42,7 +39,10 @@
                 </Grid>
             </Button>
         </Viewbox>
-
+            <Viewbox Grid.Column="1" StretchDirection="DownOnly">
+                <TextBlock x:Name="barTitle" Margin="0,0,0,0" TextWrapping="Wrap" Text="{Binding BarHeader, ElementName=root}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+            </Viewbox>
+        </StackPanel>
 
     </Grid>
 </UserControl>

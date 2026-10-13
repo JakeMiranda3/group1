@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
         <Border Grid.ColumnSpan="3" BorderThickness="0,0,0,2" BorderBrush="Black">
 
-            <barUserControl:TopAppBar/>
+            <barUserControl:TopAppBar BarHeader="Appointment Schedules"/>
         </Border>
 
         <barUserControl:TimeBlockSchedule x:Name="scheduleControl" Grid.Column="0" Grid.Row="1"></barUserControl:TimeBlockSchedule>

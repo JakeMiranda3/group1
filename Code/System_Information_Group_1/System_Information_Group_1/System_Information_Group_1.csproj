@@ -92,6 +92,7 @@
     </ApplicationDefinition>
     <Compile Include="Controller\AppointmentCreationController.cs" />
     <Compile Include="Controller\PatientController.cs" />
+    <Compile Include="Controller\TopBarController.cs" />
     <Compile Include="DAL\AppointmentDal.cs" />
     <Compile Include="Model\Appointment.cs" />
     <Compile Include="View\Dialogs\ReasonDialog.xaml.cs">
