@@ -31,9 +31,10 @@ namespace System_Information_Group_1.View.UserControls
             set => this.barTitle.Text = value;
         }
 
-        public void setUsernameAndRole(String role, String username)
+        public void setUsernameAndRole(String role, String displayName, String username)
         {
-            this.roleAndUsernameTextblock.Text = $"{role}: {username}";
+            // Show role, display name (first + last) and login username
+            this.roleAndUsernameTextblock.Text = $"{role}: {displayName} ({username})";
         }
     }
 }

@@ -27,7 +27,7 @@
                 BorderThickness="0,0,0,2"
                 BorderBrush="Black">
 
-            <barUserControl:TopAppBar />
+            <barUserControl:TopAppBar x:Name="TopAppBarControl" />
 
         </Border>
 

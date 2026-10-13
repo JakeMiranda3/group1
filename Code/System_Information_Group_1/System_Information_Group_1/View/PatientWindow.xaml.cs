@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Windows;
 using System_Information_Group_1.Controller;
 using System_Information_Group_1.Model;
@@ -28,6 +29,21 @@ public partial class PatientWindow : Window
     {
         this.patientController = new PatientController();
         this.InitializeComponent();
+
+        try
+        {
+            var account = AuthServiceSingleton.GetAccount();
+            var personDal = new System_Information_Group_1.DAL.PersonDal();
+            var person = personDal.GetPersonWithId(account.PersonId);
+            var role = account.AccountType.ToString();
+            var displayName = person != null ? $"{person.FirstName} {person.LastName}" : account.Username;
+            var loginUsername = account.Username;
+            this.TopAppBarControl.setUsernameAndRole(role, displayName, loginUsername);
+        }
+        catch (Exception)
+        {
+            this.TopAppBarControl.setUsernameAndRole("Unknown", "Unknown User", "unknown");
+        }
     }
 
     #endregion
