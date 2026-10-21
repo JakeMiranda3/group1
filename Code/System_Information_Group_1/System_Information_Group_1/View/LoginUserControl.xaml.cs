@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System_Information_Group_1.Constants;
 using System_Information_Group_1.Controller;
 using System_Information_Group_1.InputValidation;
 
@@ -34,9 +35,16 @@ namespace System_Information_Group_1.View
             if (successfulLogin)
             {
                 // Navigate to the next page or perform any other action upon successful login
-                PatientWindow patientWindow= new PatientWindow();
-                patientWindow.Show();
-                
+                if (AuthServiceSingleton.GetAccount().AccountType == AccountType.Nurse)
+                {
+                    PatientWindow patientWindow = new PatientWindow();
+                    patientWindow.Show();
+                } else if (AuthServiceSingleton.GetAccount().AccountType == AccountType.Administrator)
+                {
+                    NurseWindow nurseWindow = new NurseWindow(); 
+                    nurseWindow.Show();
+                }
+
                 //Close the login window
                 Window parentWindow = Window.GetWindow(this);
                 if (parentWindow != null)

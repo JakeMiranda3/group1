@@ -20,7 +20,7 @@ namespace System_Information_Group_1.View.UserControls
             this.loginController = new LoginController();
 
 
-            // You can only navigate to the nurse window if you are an admin. 
+            // You can only navigate to the nurse window if you are an admin and hide the Patient Page
             AuthServiceSingleton authService = new AuthServiceSingleton();
             AccountType role = authService.GetUserRole();
 
@@ -28,6 +28,9 @@ namespace System_Information_Group_1.View.UserControls
             {
                 this.nurseNavigationButton.Visibility = Visibility.Visible;
                 this.nurseNavigationButton.IsEnabled = true;
+
+                this.patientNavigationButton.Visibility = Visibility.Collapsed;
+                this.patientNavigationButton.IsEnabled = false;
             }
 
 
