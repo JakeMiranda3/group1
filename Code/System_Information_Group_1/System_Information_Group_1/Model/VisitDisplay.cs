@@ -10,7 +10,7 @@ namespace System_Information_Group_1.Model
 {
     public class VisitDisplay : Visit, INotifyPropertyChanged
     {
-        public VisitDisplay(int appointmentId, string symptoms, int nurseId, int systolicBloodPressure, int diastolicBloodPressure, double temperature, int pulse, int height, int weight, string initialDiagnosis, string finalDiagnosis) : base(appointmentId, symptoms, nurseId, systolicBloodPressure, diastolicBloodPressure, temperature, pulse, height, weight, initialDiagnosis, finalDiagnosis)
+        public VisitDisplay(int appointmentId, string symptoms, int nurseId, int systolicBloodPressure, int diastolicBloodPressure, double temperature, int pulse, double height, double weight, string initialDiagnosis, string finalDiagnosis) : base(appointmentId, symptoms, nurseId, systolicBloodPressure, diastolicBloodPressure, temperature, pulse, height, weight, initialDiagnosis, finalDiagnosis)
         {
         }
 

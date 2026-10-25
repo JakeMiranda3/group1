@@ -58,14 +58,14 @@ public class Visit
     /// <value>
     /// The height.
     /// </value>
-    public int Height { get; set; }
+    public double Height { get; set; }
     /// <summary>
     /// Gets or sets the weight.
     /// </summary>
     /// <value>
     /// The weight.
     /// </value>
-    public int Weight { get; set; }
+    public double Weight { get; set; }
     /// <summary>
     /// Gets or sets the initial diagnosis.
     /// </summary>
@@ -99,7 +99,7 @@ public class Visit
     /// <param name="initialDiagnosis">The initial diagnosis.</param>
     /// <param name="finalDiagnosis">The final diagnosis.</param>
     public Visit(int appointmentId, string symptoms, int nurseId, int systolicBloodPressure,
-        int diastolicBloodPressure, double temperature, int pulse, int height, int weight, string initialDiagnosis,
+        int diastolicBloodPressure, double temperature, int pulse, double height, double weight, string initialDiagnosis,
         string finalDiagnosis)
     {
         this.AppointmentId = appointmentId;

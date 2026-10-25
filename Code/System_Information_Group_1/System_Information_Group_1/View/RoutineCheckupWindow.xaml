@@ -28,41 +28,41 @@
 
         
         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Symptoms:</TextBlock>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Symptoms, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" Height="60" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" MaxLength="200" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="symptomsTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding Symptoms, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" Height="60" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" MaxLength="200" VerticalContentAlignment="Center"/>
 
-        
+
         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Systolic Blood Pressure:</TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SystolicBloodPressure, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="systolicTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding SystolicBloodPressure, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
 
-        
+
         <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Diastolic Blood Pressure:</TextBlock>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding DiastolicBloodPressure, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="diastolicTextBox" Grid.Row="2" Grid.Column="1" Text="{Binding DiastolicBloodPressure, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
 
-        
+
         <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Temperature (°F):</TextBlock>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Temperature, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="temperatureTextBox" Grid.Row="3" Grid.Column="1" Text="{Binding Temperature, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
 
-        
+
         <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Pulse:</TextBlock>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Pulse, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="pulseTextBox" Grid.Row="4" Grid.Column="1" Text="{Binding Pulse, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
 
-        
+
         <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Height (inches):</TextBlock>
-        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="heightTextBox" Grid.Row="5" Grid.Column="1" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
 
-       
+
         <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Weight (lbs):</TextBlock>
-        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="weightTextBox" Grid.Row="6" Grid.Column="1" Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
 
-        
+
         <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Initial Diagnosis:</TextBlock>
-        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding InitialDiagnosis, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" Height="40" AcceptsReturn="True" MaxLength="200" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="initialDiagnosisTextBox" Grid.Row="7" Grid.Column="1" Text="{Binding InitialDiagnosis, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" Height="40" AcceptsReturn="True" MaxLength="200" VerticalContentAlignment="Center"/>
 
-        
+
         <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Final Diagnosis:</TextBlock>
-        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding FinalDiagnosis, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" Height="40" AcceptsReturn="True" MaxLength="200" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="finalDiagnosisTextBox" Grid.Row="8" Grid.Column="1" Text="{Binding FinalDiagnosis, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" Height="40" AcceptsReturn="True" MaxLength="200" VerticalContentAlignment="Center"/>
 
         <Rectangle Grid.Row="9" Grid.ColumnSpan="2" Height="10" Fill="Transparent"/>
-        <Button Grid.Column="1" Style="{StaticResource BlueButtonStyle}" Content="Submit" HorizontalAlignment="Left" Margin="45,58,0,0" Grid.Row="10" VerticalAlignment="Top" Click="SubmitButton_OnClick"/>
+        <Button x:Name="submitButton" Grid.Column="1" Style="{StaticResource BlueButtonStyle}" Content="Submit" HorizontalAlignment="Left" Margin="45,58,0,0" Grid.Row="10" VerticalAlignment="Top" Click="SubmitButton_OnClick"/>
     </Grid>
 </Window>
