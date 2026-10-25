@@ -93,9 +93,16 @@
     <Compile Include="Controller\AppointmentCreationController.cs" />
     <Compile Include="Controller\NurseController.cs" />
     <Compile Include="Controller\PatientController.cs" />
+    <Compile Include="Controller\RoutineCheckupController.cs" />
     <Compile Include="Controller\TopBarController.cs" />
     <Compile Include="DAL\AppointmentDal.cs" />
+    <Compile Include="DAL\VisitDal.cs" />
     <Compile Include="Model\Appointment.cs" />
+    <Compile Include="Model\Visit.cs" />
+    <Compile Include="Model\VisitDisplay.cs" />
+    <Compile Include="View\Dialog\AppointmentSelectionDialog.xaml.cs">
+      <DependentUpon>AppointmentSelectionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Dialogs\ReasonDialog.xaml.cs">
       <DependentUpon>ReasonDialog.xaml</DependentUpon>
     </Compile>
@@ -116,6 +123,9 @@
     </Compile>
     <Compile Include="View\PatientWindow.xaml.cs">
       <DependentUpon>PatientWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RoutineCheckupWindow.xaml.cs">
+      <DependentUpon>RoutineCheckupWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\NavigationPane.xaml.cs">
       <DependentUpon>NavigationPane.xaml</DependentUpon>
@@ -157,6 +167,9 @@
     </Compile>
     <Page Include="View\AdminLoginPage.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialog\AppointmentSelectionDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Dialog\CreateNurseDialog.xaml">
@@ -217,6 +230,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PatientWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RoutineCheckupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

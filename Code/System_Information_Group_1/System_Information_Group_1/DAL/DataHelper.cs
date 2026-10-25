@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Globalization;
 using MySqlConnector;
 
 namespace System_Information_Group_1.DAL;
@@ -21,14 +22,24 @@ public static class DataHelper
     /// <returns></returns>
     public static T GetFieldValueCheckNull<T>(this MySqlDataReader reader, int columnOrdinal)
     {
-        T returnValue = default;
-
-        if (!reader[columnOrdinal].Equals(DBNull.Value))
+        if (reader.IsDBNull(columnOrdinal))
         {
-            returnValue = (T)reader[columnOrdinal];
+            return default;
         }
 
-        return returnValue;
+        var value = reader[columnOrdinal];
+        if (value is T typedValue)
+        {
+            return typedValue;
+        }
+
+        var targetType = Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T);
+        if (value == null)
+        {
+            return default;
+        }
+
+        return (T)Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture);
     }
 
     /// <summary>

@@ -66,5 +66,7 @@ namespace System_Information_Group_1.View.UserControls
             this.patientPhoneLabel.Content = patientPhone;
             this.scheduledTime = date;
         }
+
+        
     }
 }
