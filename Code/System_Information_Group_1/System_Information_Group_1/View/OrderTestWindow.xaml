@@ -1,0 +1,37 @@
+﻿<Window x:Class="System_Information_Group_1.View.OrderTestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Order Test" Height="400" Width="700" WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        
+        <GroupBox Header="Available Tests" Grid.Column="0" Grid.Row="1" Margin="0,0,10,0">
+            <ListView x:Name="AllTestsListView" DisplayMemberPath="Name" SelectionMode="Single" />
+        </GroupBox>
+
+        
+        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
+            <Button x:Name="AddTestButton" Content="&gt;" Width="40" Margin="0,0,0,10" />
+            <Button x:Name="RemoveTestButton" Content="&lt;" Width="40" />
+        </StackPanel>
+
+        
+        <GroupBox Header="Ordered Tests" Grid.Column="2" Grid.Row="1" Margin="10,0,0,0">
+            <ListView x:Name="OrderedTestsListView" DisplayMemberPath="Name" SelectionMode="Single" />
+        </GroupBox>
+
+        
+        <Button x:Name="SubmitButton" Content="Submit" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right"
+                Width="100" Margin="0,10,0,0" />
+    </Grid>
+</Window>

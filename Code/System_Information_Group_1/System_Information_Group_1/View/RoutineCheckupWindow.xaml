@@ -26,7 +26,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        
+
         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Symptoms:</TextBlock>
         <TextBox x:Name="symptomsTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding Symptoms, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" Height="60" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" MaxLength="200" VerticalContentAlignment="Center"/>
 
@@ -64,5 +64,6 @@
 
         <Rectangle Grid.Row="9" Grid.ColumnSpan="2" Height="10" Fill="Transparent"/>
         <Button x:Name="submitButton" Grid.Column="1" Style="{StaticResource BlueButtonStyle}" Content="Submit" HorizontalAlignment="Left" Margin="45,58,0,0" Grid.Row="10" VerticalAlignment="Top" Click="SubmitButton_OnClick"/>
+        <Button x:Name="orderTestButton" Style="{StaticResource BlueButtonStyle}" Content="Order Test" HorizontalAlignment="Left" Margin="62,58,0,0" Grid.Row="10" VerticalAlignment="Top" Click="OnOrderTestClick"/>
     </Grid>
 </Window>
