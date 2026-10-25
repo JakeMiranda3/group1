@@ -70,7 +70,6 @@
                         <Button x:Name="exitAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFE68181" Click="exitAppointmentButton_Click">Cancel Appointment Creation</Button>
                 </Viewbox>
                 </StackPanel>
-                <Button x:Name="viewVisitInfoButton" Content="View Visit Information" Style="{StaticResource BlueButtonStyle}" HorizontalAlignment="Left" Margin="191,126,0,0" Grid.Row="3" VerticalAlignment="Top" Click="onVisitInfoButtonClicked"/>
             </Grid>
 
         </Border>

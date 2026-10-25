@@ -63,6 +63,6 @@
         <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding FinalDiagnosis, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" Height="40" AcceptsReturn="True" MaxLength="200" VerticalContentAlignment="Center"/>
 
         <Rectangle Grid.Row="9" Grid.ColumnSpan="2" Height="10" Fill="Transparent"/>
-        <Button Grid.Column="1" Style="{StaticResource BlueButtonStyle}" Content="Submit" HorizontalAlignment="Left" Margin="45,58,0,0" Grid.Row="10" VerticalAlignment="Top"/>
+        <Button Grid.Column="1" Style="{StaticResource BlueButtonStyle}" Content="Submit" HorizontalAlignment="Left" Margin="45,58,0,0" Grid.Row="10" VerticalAlignment="Top" Click="SubmitButton_OnClick"/>
     </Grid>
 </Window>

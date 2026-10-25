@@ -1,0 +1,68 @@
+<Window x:Class="System_Information_Group_1.View.Dialog.AppointmentSelectionDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Select Appointment"
+        Height="430"
+        Width="760"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="Select the appointment for this visit"
+                   FontSize="18"
+                   Margin="0,0,0,12" />
+
+        <DataGrid x:Name="appointmentDataGrid"
+                  Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  RowHeight="32"
+                  ColumnHeaderHeight="36">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Date"
+                                    Binding="{Binding Date, StringFormat=g}"
+                                    Width="2*" />
+                <DataGridTextColumn Header="Doctor First Name"
+                                    Binding="{Binding Doctor.FirstName}"
+                                    Width="2*" />
+                <DataGridTextColumn Header="Doctor Last Name"
+                                    Binding="{Binding Doctor.LastName}"
+                                    Width="2*" />
+                <DataGridTextColumn Header="Reason"
+                                    Binding="{Binding Reason}"
+                                    Width="3*" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,12,0,0">
+            <Button x:Name="cancelButton"
+                    Content="Cancel"
+                    Width="100"
+                    Height="34"
+                    Margin="0,0,10,0"
+                    Style="{StaticResource BlueButtonStyle}"
+                    Background="#FFF1F1F1"
+                    Click="CancelButton_OnClick" />
+            <Button x:Name="selectButton"
+                    Content="Select"
+                    Width="100"
+                    Height="34"
+                    Style="{StaticResource BlueButtonStyle}"
+                    Background="#FFF1F1F1"
+                    Click="SelectButton_OnClick" />
+        </StackPanel>
+    </Grid>
+</Window>

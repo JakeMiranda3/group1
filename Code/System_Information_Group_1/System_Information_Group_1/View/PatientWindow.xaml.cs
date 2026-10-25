@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows;
 using System_Information_Group_1.Controller;
+using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 using System_Information_Group_1.View.Dialog;
 
@@ -17,6 +18,8 @@ public partial class PatientWindow : Window
     #region Fields
 
     private readonly PatientController patientController;
+    private readonly AppointmentDal appointmentDal;
+    private readonly NurseDal nurseDal;
 
     #endregion
 
@@ -28,6 +31,8 @@ public partial class PatientWindow : Window
     public PatientWindow()
     {
         this.patientController = new PatientController();
+        this.appointmentDal = new AppointmentDal();
+        this.nurseDal = new NurseDal();
         this.InitializeComponent();
 
     }
@@ -99,5 +104,50 @@ public partial class PatientWindow : Window
         }
     }
 
-    
+    private void EnterVisitInformationButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (this.patientDataGrid.SelectedItem is not Patient selectedPatient)
+        {
+            MessageBox.Show("Please select a patient first.", "Missing Information", MessageBoxButton.OK,
+                MessageBoxImage.Warning);
+            return;
+        }
+
+        var appointments = this.appointmentDal.GetAppointmentsContainingDoctorAndPatientByPatientId(selectedPatient.PatientId);
+        if (appointments.Count == 0)
+        {
+            MessageBox.Show("No appointments found for the selected patient.", "Missing Information", MessageBoxButton.OK,
+                MessageBoxImage.Information);
+            return;
+        }
+
+        var dialog = new AppointmentSelectionDialog(appointments)
+        {
+            Owner = this
+        };
+
+        if (dialog.ShowDialog() != true || !dialog.SelectedAppointmentId.HasValue)
+        {
+            return;
+        }
+
+        try
+        {
+            var personIdOfLoggedInUser = AuthServiceSingleton.GetAccount().PersonId;
+            var nurseId = this.nurseDal.GetNurseWithPersonId(personIdOfLoggedInUser).NurseId;
+
+            var visitDisplay = new VisitDisplay(dialog.SelectedAppointmentId.Value, nurseId);
+            var routineCheckupWindow = new RoutineCheckupWindow(visitDisplay)
+            {
+                Owner = this
+            };
+
+            routineCheckupWindow.ShowDialog();
+        }
+        catch (Exception)
+        {
+            MessageBox.Show("Only a nurse account can enter visit information.", "Access Error", MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+    }
 }

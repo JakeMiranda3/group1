@@ -30,5 +30,21 @@ namespace System_Information_Group_1.View
             this.DataContext = this.controller.Visit;
 
         }
+
+        private void SubmitButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                this.controller.SubmitVisit();
+                MessageBox.Show("Visit information saved successfully.", "Success", MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                this.DialogResult = true;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

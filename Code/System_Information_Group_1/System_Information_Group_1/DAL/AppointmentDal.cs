@@ -114,6 +114,40 @@ public class AppointmentDal
     }
 
     /// <summary>
+    /// Gets the appointments for a patient including doctor and patient people details.
+    /// </summary>
+    /// <param name="patientId">The patient identifier.</param>
+    /// <returns>List of appointments for the selected patient.</returns>
+    public IList<Appointment> GetAppointmentsContainingDoctorAndPatientByPatientId(int patientId)
+    {
+        IList<Appointment> appointments = new List<Appointment>();
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+        var query = "select a.*, d.person_id as doctor_person_id, p.person_id as patient_person_id from appointment a " +
+                    "join doctor d on a.doctor_id = d.doctor_id join patient p on a.patient_id = p.patient_id " +
+                    "where a.patient_id = @patientId order by a.appointment_datetime desc;";
+        using var command = new MySqlCommand(query, connection);
+        command.Parameters.Add("@patientId", MySqlDbType.Int32).Value = patientId;
+        using var reader = command.ExecuteReader();
+        var appointmentIdOrdinal = reader.GetOrdinal("appointment_id");
+        var doctorIdOrdinal = reader.GetOrdinal("doctor_id");
+        var patientIdOrdinal = reader.GetOrdinal("patient_id");
+        var reasonOrdinal = reader.GetOrdinal("reason");
+        var appointmentDateTimeOrdinal = reader.GetOrdinal("appointment_datetime");
+        var doctorPersonIdOrdinal = reader.GetOrdinal("doctor_person_id");
+        var patientPersonIdOrdinal = reader.GetOrdinal("patient_person_id");
+        var personDal = new PersonDal();
+        while (reader.Read())
+        {
+            var currentAppointment = createAppointment(reader, personDal, appointmentIdOrdinal, doctorIdOrdinal, patientIdOrdinal,
+                reasonOrdinal, appointmentDateTimeOrdinal, doctorPersonIdOrdinal, patientPersonIdOrdinal);
+            appointments.Add(currentAppointment);
+        }
+
+        return appointments;
+    }
+
+    /// <summary>
     /// Stores the new appointment.
     /// </summary>
     /// <param name="doctorId">The doctor identifier.</param>

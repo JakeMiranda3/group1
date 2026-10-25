@@ -27,7 +27,7 @@ namespace System_Information_Group_1.DAL
             
             connection.Open();
             using var command = new MySqlCommand(
-                "INSERT INTO visit (appointment_id, symptoms, nurse_id, SystolicBloodPressure, DiastolicBloodPressure, Temperature, Pulse, Height, Weight, InitialDiagnosis, FinalDiagnosis) " +
+                "INSERT INTO visit (appointment_id, symptoms, nurse_id, systolic_blood_pressure, diastolic_blood_pressure, temperature, pulse, height, weight, initial_diagnosis, final_diagnosis) " +
                 "VALUES (@appointment_id, @symptoms, @nurse_id, @systolic_blood_pressure, @diastolic_blood_pressure, @temperature, @pulse, @height, @weight, @initial_diagnosis, @final_diagnosis)", 
                 connection);
             command.Parameters.AddWithValue("@appointment_id", visit.AppointmentId);
