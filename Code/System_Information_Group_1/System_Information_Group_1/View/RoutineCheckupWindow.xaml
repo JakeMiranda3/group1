@@ -1,0 +1,69 @@
+﻿<Window x:Class="System_Information_Group_1.View.RoutineCheckupWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Routine Checkup Entry" Background="White"
+      Height="600"
+      Width="600"
+      WindowStartupLocation="CenterScreen"
+      >
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Symptoms -->
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Symptoms:</TextBlock>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Symptoms, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" Height="60" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" MaxLength="200" VerticalContentAlignment="Center"/>
+
+        <!-- Systolic Blood Pressure -->
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Systolic Blood Pressure:</TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SystolicBloodPressure, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
+
+        <!-- Diastolic Blood Pressure -->
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Diastolic Blood Pressure:</TextBlock>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding DiastolicBloodPressure, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
+
+        <!-- Temperature -->
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Temperature (°F):</TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Temperature, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
+
+        <!-- Pulse -->
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Pulse:</TextBlock>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Pulse, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
+
+        <!-- Height -->
+        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Height (inches):</TextBlock>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
+
+        <!-- Weight -->
+        <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Weight (lbs):</TextBlock>
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" VerticalContentAlignment="Center"/>
+
+        <!-- Initial Diagnosis -->
+        <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Initial Diagnosis:</TextBlock>
+        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding InitialDiagnosis, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" Height="40" AcceptsReturn="True" MaxLength="200" VerticalContentAlignment="Center"/>
+
+        <!-- Final Diagnosis -->
+        <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="0,4">Final Diagnosis:</TextBlock>
+        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding FinalDiagnosis, UpdateSourceTrigger=PropertyChanged}" Margin="0,4" Height="40" AcceptsReturn="True" MaxLength="200" VerticalContentAlignment="Center"/>
+
+        <!-- Spacer -->
+        <Rectangle Grid.Row="9" Grid.ColumnSpan="2" Height="10" Fill="Transparent"/>
+        <Button Grid.Column="1" Style="{StaticResource BlueButtonStyle}" Content="Submit" HorizontalAlignment="Left" Margin="45,58,0,0" Grid.Row="10" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
