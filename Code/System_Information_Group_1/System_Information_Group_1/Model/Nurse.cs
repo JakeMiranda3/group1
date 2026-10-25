@@ -27,6 +27,14 @@ public class Nurse
     /// </value>
     public int NurseId { get; set; }
 
+    /// <summary>
+    /// Gets or sets the person.
+    /// </summary>
+    /// <value>
+    /// The person.
+    /// </value>
+    public Person Person { get; set; }
+
     #endregion
 
     #region Constructors

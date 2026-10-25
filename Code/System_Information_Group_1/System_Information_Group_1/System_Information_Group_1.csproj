@@ -96,12 +96,14 @@
     <Compile Include="Controller\TopBarController.cs" />
     <Compile Include="DAL\AppointmentDal.cs" />
     <Compile Include="Model\Appointment.cs" />
-    <Compile Include="Model\NurseDisplay.cs" />
     <Compile Include="View\Dialogs\ReasonDialog.xaml.cs">
       <DependentUpon>ReasonDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Dialog\NurseEditWindow.xaml.cs">
-      <DependentUpon>NurseEditWindow.xaml</DependentUpon>
+    <Compile Include="View\Dialog\CreateNurseDialog.xaml.cs">
+      <DependentUpon>CreateNurseDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Dialog\NurseInfoDialog.xaml.cs">
+      <DependentUpon>NurseInfoDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Dialog\PatientInfoDialog.xaml.cs">
       <DependentUpon>PatientInfoDialog.xaml</DependentUpon>
@@ -157,7 +159,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Dialog\NurseEditWindow.xaml">
+    <Page Include="View\Dialog\CreateNurseDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialog\NurseInfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

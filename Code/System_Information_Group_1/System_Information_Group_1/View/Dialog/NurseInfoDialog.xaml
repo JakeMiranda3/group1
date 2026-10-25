@@ -1,0 +1,255 @@
+﻿<Window x:Class="System_Information_Group_1.View.Dialog.NurseInfoDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Nurse Information"
+        Height="650"
+        Width="500"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="LightBlue">
+
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="4" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+
+            <Style.Triggers>
+                <Trigger Property="IsReadOnly" Value="True">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Focusable" Value="False" />
+                    <Setter Property="IsTabStop" Value="False" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="Nurse Information"
+                   FontSize="24"
+                   Margin="0,0,0,20" />
+
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Content="Nurse ID:" />
+
+                <TextBlock Grid.Row="0"
+                           Grid.Column="1"
+                           Text="{Binding NurseId}"
+                           VerticalAlignment="Center"
+                           Margin="4,0,0,10" />
+
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Content="Person ID:" />
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding PersonId}"
+                           VerticalAlignment="Center"
+                           Margin="4,0,0,10" />
+
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Content="First Name:" />
+
+                <TextBox x:Name="firstNameTextBox"
+                         Grid.Row="2"
+                         Grid.Column="1"
+                         Text="{Binding Person.FirstName, Mode=OneWay}"
+                         Height="30"
+                         Margin="0,0,0,10"
+                         IsReadOnly="True" />
+
+                <Label Grid.Row="3"
+                       Grid.Column="0"
+                       Content="Last Name:" />
+
+                <TextBox x:Name="lastNameTextBox"
+                         Grid.Row="3"
+                         Grid.Column="1"
+                         Text="{Binding Person.LastName, Mode=OneWay}"
+                         Height="30"
+                         Margin="0,0,0,10"
+                         IsReadOnly="True" />
+
+                <Label Grid.Row="4"
+                       Grid.Column="0"
+                       Content="Date of Birth:" />
+
+                <Grid Grid.Row="4"
+                      Grid.Column="1"
+                      Margin="0,0,0,10">
+
+                    <TextBlock x:Name="dateOfBirthTextBlock"
+                               Text="{Binding Person.DateOfBirth, StringFormat=d}"
+                               VerticalAlignment="Center"
+                               Margin="4,0" />
+
+                    <DatePicker x:Name="dateOfBirthPicker"
+                                SelectedDate="{Binding Person.DateOfBirth, Mode=OneWay}"
+                                Height="30"
+                                Visibility="Collapsed" />
+                </Grid>
+
+                <Label Grid.Row="5"
+                       Grid.Column="0"
+                       Content="Phone Number:" />
+
+                <TextBox x:Name="phoneNumberTextBox"
+                         Grid.Row="5"
+                         Grid.Column="1"
+                         Text="{Binding Person.ContactPhoneNumber, Mode=OneWay}"
+                         Height="30"
+                         Margin="0,0,0,10"
+                         IsReadOnly="True" />
+
+                <Label Grid.Row="6"
+                       Grid.Column="0"
+                       Content="Address:" />
+
+                <TextBox x:Name="addressTextBox"
+                         Grid.Row="6"
+                         Grid.Column="1"
+                         Text="{Binding Person.Address, Mode=OneWay}"
+                         Height="30"
+                         Margin="0,0,0,10"
+                         IsReadOnly="True" />
+
+                <Label Grid.Row="7"
+                       Grid.Column="0"
+                       Content="Zip Code:" />
+
+                <TextBox x:Name="zipTextBox"
+                         Grid.Row="7"
+                         Grid.Column="1"
+                         Text="{Binding Person.Zip, Mode=OneWay}"
+                         Height="30"
+                         Margin="0,0,0,10"
+                         IsReadOnly="True" />
+
+                <Label Grid.Row="8"
+                       Grid.Column="0"
+                       Content="City:" />
+
+                <TextBox x:Name="cityTextBox"
+                         Grid.Row="8"
+                         Grid.Column="1"
+                         Text="{Binding Person.City, Mode=OneWay}"
+                         Height="30"
+                         Margin="0,0,0,10"
+                         IsReadOnly="True" />
+
+                <Label Grid.Row="9"
+                       Grid.Column="0"
+                       Content="State:" />
+
+                <Grid Grid.Row="9"
+                      Grid.Column="1"
+                      Margin="0,0,0,10">
+
+                    <TextBlock x:Name="stateTextBlock"
+                               Text="{Binding Person.State}"
+                               VerticalAlignment="Center"
+                               Margin="4,0" />
+
+                    <ComboBox x:Name="stateComboBox"
+                              SelectedItem="{Binding Person.State, Mode=OneWay}"
+                              Height="30"
+                              Visibility="Collapsed" />
+                </Grid>
+
+                <Label Grid.Row="10"
+                       Grid.Column="0"
+                       Content="Gender:" />
+
+                <Grid Grid.Row="10"
+                      Grid.Column="1"
+                      Margin="0,0,0,10">
+
+                    <TextBlock x:Name="genderTextBlock"
+                               Text="{Binding Person.Gender}"
+                               VerticalAlignment="Center"
+                               Margin="4,0" />
+
+                    <ComboBox x:Name="genderComboBox"
+                              SelectedItem="{Binding Person.Gender, Mode=OneWay}"
+                              Height="30"
+                              Visibility="Collapsed" />
+                </Grid>
+
+            </Grid>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,15,0,0">
+
+            <Button x:Name="editButton"
+                    Content="Edit"
+                    Width="100"
+                    Height="35"
+                    Margin="0,0,10,0"
+                    Style="{StaticResource BlueButtonStyle}"
+                    Click="EditButton_OnClick" />
+
+            <Button x:Name="saveButton"
+                    Content="Save"
+                    Width="100"
+                    Height="35"
+                    Margin="0,0,10,0"
+                    Visibility="Collapsed"
+                    Style="{StaticResource BlueButtonStyle}"
+                    Click="SaveButton_OnClick" />
+
+            <Button x:Name="cancelEditButton"
+                    Content="Cancel Edit"
+                    Width="100"
+                    Height="35"
+                    Margin="0,0,10,0"
+                    Visibility="Collapsed"
+                    Click="CancelEditButton_OnClick" />
+
+            <Button x:Name="closeButton"
+                    Content="Close"
+                    Width="100"
+                    Height="35"
+                    Click="CloseButton_OnClick" />
+
+        </StackPanel>
+    </Grid>
+</Window>
