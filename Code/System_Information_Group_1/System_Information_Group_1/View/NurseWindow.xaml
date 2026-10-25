@@ -1,71 +1,209 @@
-﻿<Window
+﻿<Window x:Class="System_Information_Group_1.View.NurseWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:System_Information_Group_1.View"
-        xmlns:UserControls="clr-namespace:System_Information_Group_1.View.UserControls"
-        x:Class="System_Information_Group_1.View.NurseWindow"
+        xmlns:barUserControl="clr-namespace:System_Information_Group_1.View.UserControls"
         mc:Ignorable="d"
-        Title="NurseWindow"
-        Height="720"
-        Width="1280" ResizeMode="NoResize">
-    <Grid Background="LightBlue">
+        Title="Nurse Management"
+        MinHeight="720"
+        MinWidth="1280"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResizeWithGrip">
 
+    <Grid Background="LightBlue">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70*" />
+            <ColumnDefinition Width="30*" />
+        </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <Border Grid.Row="0"
+                Grid.ColumnSpan="2"
+                BorderThickness="0,0,0,2"
+                BorderBrush="Black">
 
-        <UserControls:TopAppBar Grid.Row="0"
-                                HorizontalAlignment="Stretch"
+            <barUserControl:TopAppBar
+                x:Name="topAppBarControl"
+                BarHeader="Nurse Information" />
+
+        </Border>
+
+        <Border Grid.Row="1"
+                Grid.Column="0"
+                BorderBrush="Black"
+                BorderThickness="0,0,2,0">
+
+            <Grid Margin="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Text="Search Nurses"
+                           FontSize="24"
+                           Margin="0,0,0,15" />
+
+                <Border Grid.Row="1"
+                        BorderBrush="Black"
+                        BorderThickness="0,0,0,2"
+                        Padding="0,0,0,15"
+                        Margin="0,0,0,15">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0"
+                                    Margin="0,0,10,0">
+                            <Label Content="First Name"
+                                   FontSize="16" />
+                            <TextBox x:Name="firstNameTextBox"
+                                     FontSize="16"
+                                     Height="32" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1"
+                                    Margin="0,0,10,0">
+                            <Label Content="Last Name"
+                                   FontSize="16" />
+                            <TextBox x:Name="lastNameTextBox"
+                                     FontSize="16"
+                                     Height="32" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2"
+                                    Margin="0,0,10,0">
+                            <Label Content="Date of Birth"
+                                   FontSize="16" />
+                            <DatePicker x:Name="dateOfBirthPicker"
+                                        FontSize="16"
+                                        Height="32" />
+                        </StackPanel>
+
+                        <Button x:Name="searchButton"
+                                Grid.Column="3"
+                                Content="Search"
+                                Width="100"
+                                Height="35"
                                 VerticalAlignment="Top"
-                                BarHeader="Search Nurses"
-                                />
+                                Style="{StaticResource BlueButtonStyle}"
+                                Background="#FFF1F1F1"
+                                Click="SearchButton_OnClick"
+                                Margin="0,28,0,0" />
+                    </Grid>
+                </Border>
 
+                <DataGrid x:Name="nurseDataGrid"
+                          Grid.Row="2"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          SelectionMode="Single"
+                          FontSize="15"
+                          Background="White"
+                          BorderBrush="Black"
+                          BorderThickness="1"
+                          RowHeight="35"
+                          ColumnHeaderHeight="38">
 
-        <StackPanel Grid.Row="1"
-                    Orientation="Horizontal"
-                    Margin="24,12"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Left"
-                    SnapsToDevicePixels="True"
-                    >
+                    <DataGrid.Columns>
 
-            <StackPanel Orientation="Vertical" Margin="0,0,20,0">
-                <TextBlock Text="First Name" Margin="4,0"/>
-                <TextBox x:Name="FirstNameTextBox" Width="160"/>
-            </StackPanel>
+                        <DataGridTextColumn Header="Nurse ID"
+                                            Binding="{Binding NurseId}"
+                                            Width="*" />
 
-            <StackPanel Orientation="Vertical" Margin="0,0,20,0">
-                <TextBlock Text="Last Name" Margin="4,0"/>
-                <TextBox x:Name="LastNameTextBox" Width="160"/>
-            </StackPanel>
+                        <DataGridTextColumn Header="First Name"
+                                            Binding="{Binding Person.FirstName}"
+                                            Width="*" />
 
-            <StackPanel Orientation="Vertical" Margin="0,0,20,0">
-                <TextBlock Text="Date of Birth" Margin="4,0"/>
-                <DatePicker x:Name="DateOfBirthPicker" Width="160"/>
-            </StackPanel>
+                        <DataGridTextColumn Header="Last Name"
+                                            Binding="{Binding Person.LastName}"
+                                            Width="*" />
 
-            <Button x:Name="SearchButton"
-                    Content="Search"
-                    Width="100"
-                    VerticalAlignment="Bottom"
-                    Click="SearchButton_Click"/>
+                        <DataGridTextColumn Header="DOB"
+                                            Binding="{Binding Person.DateOfBirth, StringFormat=d}"
+                                            Width="*" />
 
-        </StackPanel>
+                        <DataGridTextColumn Header="Phone"
+                                            Binding="{Binding Person.ContactPhoneNumber}"
+                                            Width="*" />
 
+                        <DataGridTextColumn Header="Gender"
+                                            Binding="{Binding Person.Gender}"
+                                            Width="*" />
 
-        <DataGrid Grid.Row="2"
-                  x:Name="NurseDataGrid"
-                  Margin="24,24,410,24"
-                  AutoGenerateColumns="True"
-                  IsReadOnly="False"
-                  FontFamily="Segoe UI"/>
-        <Button x:Name="EditNurseButton" Content="Edit" HorizontalAlignment="Left" Margin="973,58,0,0" Grid.Row="2" VerticalAlignment="Top" Height="32" Width="149" FontFamily="Arial Black" Click="EditButton_Click"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
 
+        <Grid Grid.Row="1"
+              Grid.Column="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Text="Nurse Navigation"
+                       FontSize="24"
+                       Margin="15,15,0,15" />
+
+            <Border Grid.Row="1"
+                    BorderBrush="Black"
+                    BorderThickness="0,2,0,2"
+                    Padding="15">
+
+                <Border.Resources>
+                    <Style x:Key="SelectedNurseButtonStyle"
+                           TargetType="Button"
+                           BasedOn="{StaticResource BlueButtonStyle}">
+
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding SelectedItem, ElementName=nurseDataGrid}"
+                                         Value="{x:Null}">
+                                <Setter Property="IsEnabled"
+                                        Value="False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+
+                    </Style>
+                </Border.Resources>
+
+                <StackPanel>
+
+                    <Button x:Name="makeNurseButton"
+                            Content="Make Nurse"
+                            FontSize="16"
+                            Height="45"
+                            Style="{StaticResource BlueButtonStyle}"
+                            Background="#FFF1F1F1"
+                            Click="MakeNurseButton_OnClick" />
+
+                    <Button x:Name="viewNurseButton"
+                            Content="View Full Info"
+                            FontSize="16"
+                            Height="45"
+                            Margin="0,15,0,0"
+                            Style="{StaticResource SelectedNurseButtonStyle}"
+                            Background="#FFF1F1F1"
+                            Click="ViewNurseButton_OnClick" />
+
+                </StackPanel>
+            </Border>
+
+        </Grid>
     </Grid>
 </Window>
