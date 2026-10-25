@@ -183,24 +183,25 @@
                         VerticalAlignment="Center"
                         Margin="20,0">
 
-                <Button x:Name="cancelButton"
-                        Content="Cancel"
-                        Width="110"
-                        Height="38"
-                        FontSize="16"
-                        Margin="0,0,15,0"
-                        IsCancel="True"
-                        Style="{StaticResource BlueButtonStyle}"
-                        Background="#FFF1F1F1" />
 
                 <Button x:Name="registerButton"
                         Content="Register Patient"
                         Width="160"
                         Height="38"
                         FontSize="16"
+                        Margin="0,0,15,0"
                         Style="{StaticResource BlueButtonStyle}"
                         Background="#FFF1F1F1"
                         Click="RegisterButton_OnClick" />
+
+                <Button x:Name="cancelButton"
+                        Content="Cancel"
+                        Width="110"
+                        Height="38"
+                        FontSize="16"
+                        IsCancel="True"
+                        Style="{StaticResource BlueButtonStyle}"
+                        Background="#FFF1F1F1" />
             </StackPanel>
         </Border>
     </Grid>
