@@ -38,8 +38,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.1.89\lib\net461\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.8, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.8\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=8.0.0.2, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.8.0.2\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
@@ -92,6 +95,7 @@
     </ApplicationDefinition>
     <Compile Include="Controller\AppointmentCreationController.cs" />
     <Compile Include="Controller\NurseController.cs" />
+    <Compile Include="Controller\PatientAppointmentViewController.cs" />
     <Compile Include="Controller\PatientController.cs" />
     <Compile Include="Controller\TopBarController.cs" />
     <Compile Include="DAL\AppointmentDal.cs" />
@@ -111,6 +115,9 @@
     </Compile>
     <Compile Include="View\NurseWindow.xaml.cs">
       <DependentUpon>NurseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PatientAppointmentWindow.xaml.cs">
+      <DependentUpon>PatientAppointmentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PatientWindow.xaml.cs">
       <DependentUpon>PatientWindow.xaml</DependentUpon>
@@ -207,6 +214,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\NurseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PatientAppointmentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -32,7 +32,7 @@ namespace System_Information_Group_1.View.UserControls
         /// </summary>
         public TimeBlockSchedule()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
 
@@ -61,6 +61,27 @@ namespace System_Information_Group_1.View.UserControls
 
         }
 
+        public void SetupScheduleWithScheduledAppointments(IList<Appointment> appointments)
+        {
+            this.clearScheduleSlots();
+            foreach (var appointment in appointments)
+            {
+
+                var doctorName =
+                    $"{appointment.Doctor.Person.FirstName} {appointment.Doctor.Person.LastName}";
+
+                var patientName =
+                    $"{appointment.Patient.Person.FirstName} {appointment.Patient.Person.LastName}";
+
+                this.addScheduleSlotWithAppointmentFilled(
+                    appointment.Date,
+                    doctorName,
+                    patientName,
+                    appointment.Patient.Person.ContactPhoneNumber
+                );
+            }
+        }
+
         private void sortCardsByDate()
         {
             var sortedCards = this.scheduleListBox.Items
@@ -85,16 +106,16 @@ namespace System_Information_Group_1.View.UserControls
                     continue;
 
                 string doctorName =
-                    $"{appointment.Doctor.FirstName} {appointment.Doctor.LastName}";
+                    $"{appointment.Doctor.Person.FirstName} {appointment.Doctor.Person.LastName}";
 
                 string patientName =
-                    $"{appointment.Patient.FirstName} {appointment.Patient.LastName}";
+                    $"{appointment.Patient.Person.FirstName} {appointment.Patient.Person.LastName}";
 
                 this.addScheduleSlotWithAppointmentFilled(
                     appointment.Date,
                     doctorName,
                     patientName,
-                    appointment.Patient.ContactPhoneNumber
+                    appointment.Patient.Person.ContactPhoneNumber
                 );
             }
         }

@@ -57,6 +57,8 @@ public class Doctor
         this.DoctorId = doctorId != 0 ? doctorId : throw new ArgumentException("DoctorId cannot be zero");
     }
 
+    public Doctor() {}
+
     /// <summary>
     /// Converts to string.
     /// </summary>
