@@ -122,10 +122,12 @@ namespace System_Information_Group_1.View.UserControls
 
         private void addScheduleSlotWithAppointmentFilled(DateTime date, String doctorName, String patientName, String patientPhone)
         {
+            var card = new TimeCard(date, doctorName, patientName, patientPhone);
+            card.State = TimeCardState.Open;
             var item = new ListBoxItem
             {
-                Content = new TimeCard(date, doctorName, patientName, patientPhone),
-                IsEnabled = false
+                Content = card,
+                IsEnabled = false,
             };
 
             this.scheduleListBox.Items.Add(item);

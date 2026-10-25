@@ -87,7 +87,7 @@ public class AppointmentDal
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
-        var query = "select app.appointment_id as AppointmentId, doc.doctor_id as DoctorId, docPerson.person_id as PersonId, docPerson.first_name as FirstName, docPerson.last_name as LastName, " +
+        var query = "select app.appointment_id as AppointmentId, app.appointment_datetime as `Date`, doc.doctor_id as DoctorId, docPerson.person_id as PersonId, docPerson.first_name as FirstName, docPerson.last_name as LastName, " +
                     "pat.patient_id as PatientId, patPerson.person_id as PersonId, patPerson.first_name as FirstName, patPerson.last_name as LastName " +
                     "from appointment as app " +
                     "join doctor doc on app.doctor_id = doc.doctor_id " +

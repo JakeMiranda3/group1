@@ -87,7 +87,7 @@ public partial class PatientWindow : Window
         if (this.patientDataGrid.SelectedItem is Patient selectedPatient)
         {
             var patientId = selectedPatient.PatientId;
-            AppointmentCreationWindow appointmentCreationWindow = new AppointmentCreationWindow(patientId);
+            PatientAppointmentWindow appointmentCreationWindow = new PatientAppointmentWindow(patientId);
             appointmentCreationWindow.Show();
 
 

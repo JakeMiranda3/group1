@@ -23,6 +23,18 @@ namespace System_Information_Group_1.View.UserControls
     {
         private const String DefaultEmptyMessage = "Available";
 
+        public TimeCardState State
+        {
+            get => (TimeCardState)GetValue(StateProperty);
+            set => SetValue(StateProperty, value);
+        }
+
+        public static readonly DependencyProperty StateProperty = DependencyProperty.Register(
+            name: nameof(State),
+            propertyType: typeof(TimeCardState),
+            ownerType: typeof(TimeCard),
+            new PropertyMetadata(TimeCardState.Open));
+
         /// <summary>
         /// Gets the scheduled time.
         /// </summary>

@@ -131,6 +131,7 @@
     <Compile Include="View\UserControls\TimeCard.xaml.cs">
       <DependentUpon>TimeCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\TimeCardState.cs" />
     <Compile Include="View\UserControls\TopAppBar.xaml.cs">
       <DependentUpon>TopAppBar.xaml</DependentUpon>
     </Compile>
