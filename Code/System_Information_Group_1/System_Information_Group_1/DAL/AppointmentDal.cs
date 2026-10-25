@@ -136,6 +136,26 @@ public class AppointmentDal
         return cmd.ExecuteNonQuery() > 0;
     }
 
+    public int GetAppointmentIdByPatientIdWithDate(int patientId, DateTime date)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
 
+        var query = "select appointment_id from appointment where patient_id = @patientId and appointment_datetime = @date;";
 
+        using var cmd = new MySqlCommand(query, connection);
+        cmd.Parameters.Add("@patientId", MySqlDbType.Int32).Value = patientId;
+        cmd.Parameters.Add("@date", MySqlDbType.DateTime).Value = date;
+
+        var reader = cmd.ExecuteReader();
+
+        if (reader.Read())
+        {
+            return reader.GetFieldValueCheckNull<int>(reader.GetOrdinal("appointment_id"));
+        }
+        else
+        {
+            throw new Exception("No appointment found for the given patient ID and date.");
+        }
+    }
 }

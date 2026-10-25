@@ -67,12 +67,6 @@ namespace System_Information_Group_1.View.UserControls
             this.scheduledTime = date;
         }
 
-        private void onClick(object sender, MouseButtonEventArgs e)
-        {
-            /// TODO Only activate if the time card is not empty and has a booking attatched to it
-            /// Get the appointment ID from the DB and the nurse ID from DB and then create the appointment model with only that information
-            /// Open the window with the passed in VisitDisplay model
-            
-        }
+        
     }
 }

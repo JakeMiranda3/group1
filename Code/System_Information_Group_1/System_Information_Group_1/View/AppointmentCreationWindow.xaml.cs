@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System_Information_Group_1.Controller;
+using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 using System_Information_Group_1.View.Dialogs;
 using System_Information_Group_1.View.UserControls;
@@ -26,6 +27,7 @@ namespace System_Information_Group_1.View
     {
         private const int MaxReasonLength = 100;
         private readonly AppointmentCreationController controller;
+        private NurseDal nurseDal;
 
         /// <summary>
         /// Gets or sets the doctors.
@@ -45,6 +47,7 @@ namespace System_Information_Group_1.View
             this.controller = new AppointmentCreationController(patientId);
             DataContext = this;
             this.regenerateDoctorComboBox();
+            this.nurseDal = new NurseDal();
         }
 
         private void regenerateDoctorComboBox()
@@ -168,6 +171,39 @@ namespace System_Information_Group_1.View
                     parentWindow?.Close();
                 }
             }
+
+        }
+
+        private void onVisitInfoButtonClicked(object sender, RoutedEventArgs e)
+        {
+            // TODO : CHANGE THIS TO BE WHENEVER A BOOKED TIME SLOT IS CLICKED, BECAUSE THEY CANNNOT BE SELECTED IF THEY ARE BOOKED, SO THIS WILL NOT WORK FOR NOW
+            if (this.scheduleControl.scheduleListBox.SelectedItem is not ListBoxItem item ||
+                item.Content is not TimeCard selectedCard)
+            {
+                MessageBox.Show("Please select a time slot.", "Missing Information",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            ListBoxItem listBoxItem = (ListBoxItem) this.scheduleControl.scheduleListBox.SelectedItem;
+            TimeCard timeCardSelected = (TimeCard) listBoxItem.Content;
+            DateTime timeSelected = DateTime.MinValue;
+            if (timeCardSelected != null)
+            {
+                timeSelected = timeCardSelected.scheduledTime;
+            }
+
+            int appointmentId = this.controller.GetAppointmentId(this.controller.SelectedPatientId, timeSelected);
+
+            int personIdOfNurseLoggedIn = AuthServiceSingleton.GetAccount().PersonId;
+
+            int nurseId = this.nurseDal.GetNurseWithPersonId(personIdOfNurseLoggedIn).NurseId;
+
+            Visit visitDisplay = new VisitDisplay(appointmentId, nurseId);
+
+            RoutineCheckupWindow routineCheckupWindow = new RoutineCheckupWindow(visitDisplay);
+
+            routineCheckupWindow.Show();
 
         }
     }

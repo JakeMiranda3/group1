@@ -22,7 +22,7 @@ namespace System_Information_Group_1.View
     public partial class RoutineCheckupWindow : Window
     {
         private RoutineCheckupController controller;
-        public RoutineCheckupWindow(VisitDisplay visitDisplay)
+        public RoutineCheckupWindow(Visit visitDisplay)
         {
 
             InitializeComponent();
