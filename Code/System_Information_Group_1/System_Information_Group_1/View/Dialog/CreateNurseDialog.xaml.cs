@@ -30,7 +30,7 @@ public partial class CreateNurseDialog : Window
 
     #region Methods
 
-    private void RegisterButton_OnClick(object sender, RoutedEventArgs e)
+    private void CreateButton_OnClick(object sender, RoutedEventArgs e)
     {
         try
         {
