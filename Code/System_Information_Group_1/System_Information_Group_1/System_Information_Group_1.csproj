@@ -92,12 +92,17 @@
     </ApplicationDefinition>
     <Compile Include="Controller\AppointmentCreationController.cs" />
     <Compile Include="Controller\NurseController.cs" />
+    <Compile Include="Controller\OrderTestController.cs" />
     <Compile Include="Controller\PatientController.cs" />
     <Compile Include="Controller\RoutineCheckupController.cs" />
     <Compile Include="Controller\TopBarController.cs" />
     <Compile Include="DAL\AppointmentDal.cs" />
+    <Compile Include="DAL\TestDal.cs" />
+    <Compile Include="DAL\TestOrderDal.cs" />
     <Compile Include="DAL\VisitDal.cs" />
     <Compile Include="Model\Appointment.cs" />
+    <Compile Include="Model\Test.cs" />
+    <Compile Include="Model\TestOrder.cs" />
     <Compile Include="Model\Visit.cs" />
     <Compile Include="Model\VisitDisplay.cs" />
     <Compile Include="View\Dialog\AppointmentSelectionDialog.xaml.cs">
@@ -120,6 +125,9 @@
     </Compile>
     <Compile Include="View\NurseWindow.xaml.cs">
       <DependentUpon>NurseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OrderTestWindow.xaml.cs">
+      <DependentUpon>OrderTestWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PatientWindow.xaml.cs">
       <DependentUpon>PatientWindow.xaml</DependentUpon>
@@ -226,6 +234,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\NurseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OrderTestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

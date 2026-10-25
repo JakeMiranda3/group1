@@ -83,5 +83,11 @@ namespace System_Information_Group_1.View
             this.submitButton.IsEnabled = false;
             this.submitButton.Content = "Finalized";
         }
+
+        private void OnOrderTestClick(object sender, RoutedEventArgs e)
+        {
+            OrderTestWindow orderTestWindow = new OrderTestWindow(this.controller.Visit.AppointmentId);
+            orderTestWindow.Show();
+        }
     }
 }
