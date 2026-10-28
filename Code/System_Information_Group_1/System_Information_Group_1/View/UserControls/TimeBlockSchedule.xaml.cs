@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
 namespace System_Information_Group_1.View.UserControls
@@ -77,9 +78,16 @@ namespace System_Information_Group_1.View.UserControls
                     appointment.Date,
                     doctorName,
                     patientName,
-                    appointment.Patient.Person.ContactPhoneNumber
+                    appointment.Patient.Person.ContactPhoneNumber,
+                    true
                 );
             }
+        }
+
+        public void SetupScheduleWithScheduledAppointments(IList<Appointment> appointments, DateTime time)
+        {
+            var timeAppointments = appointments.Where(app => app.Date.Date == time.Date).ToList();
+            this.SetupScheduleWithScheduledAppointments(timeAppointments);
         }
 
         private void sortCardsByDate()
@@ -115,19 +123,20 @@ namespace System_Information_Group_1.View.UserControls
                     appointment.Date,
                     doctorName,
                     patientName,
-                    appointment.Patient.Person.ContactPhoneNumber
+                    appointment.Patient.Person.ContactPhoneNumber,
+                    false
                 );
             }
         }
 
-        private void addScheduleSlotWithAppointmentFilled(DateTime date, String doctorName, String patientName, String patientPhone)
+        private void addScheduleSlotWithAppointmentFilled(DateTime date, String doctorName, String patientName, String patientPhone, bool isEnabled)
         {
             var card = new TimeCard(date, doctorName, patientName, patientPhone);
             card.State = TimeCardState.Open;
             var item = new ListBoxItem
             {
                 Content = card,
-                IsEnabled = false,
+                IsEnabled = isEnabled,
             };
 
             this.scheduleListBox.Items.Add(item);
@@ -135,10 +144,12 @@ namespace System_Information_Group_1.View.UserControls
 
         private void addEmptyScheduleSlot(DateTime date, String doctorName)
         {
+            var card = new TimeCard(date, doctorName);
+            card.State = TimeCardState.Available;
             var item = new ListBoxItem
             {
-                Content = new TimeCard(date, doctorName),
-                IsEnabled = true
+                Content = card,
+                IsEnabled = true,
             };
 
             this.scheduleListBox.Items.Add(item);

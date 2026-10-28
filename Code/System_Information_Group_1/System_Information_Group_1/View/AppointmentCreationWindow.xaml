@@ -48,7 +48,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Viewbox StretchDirection="DownOnly" Margin="10,0,0,0">
-                        <Label Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
+                        <Label x:Name="doctorComboBoxLabel" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
                                MinWidth="50" Content="Selected Doctor:"/>
                     </Viewbox>
                     <ComboBox x:Name="doctorComboBox" ItemsSource="{Binding Doctors}" Grid.Column="1" MinWidth="100" Margin="5,0,20,0" FontSize="16" VerticalAlignment="Center" SelectionChanged="doctorComboBox_SelectionChanged"/>
@@ -57,7 +57,7 @@
                 <Border Grid.Row="1" BorderThickness="0,0,0,2" BorderBrush="Black">
                     <StackPanel  VerticalAlignment="Top">
                         <Viewbox HorizontalAlignment="Left" StretchDirection="DownOnly" Margin="10,0,0,0">
-                            <Label FontSize="16" Content="View Doctors Appointments On Date"/>
+                            <Label FontSize="16" Content="View Appointments By Date"/>
                         </Viewbox>
                         <DatePicker x:Name="appointmentTimePicker" VerticalAlignment="Center" Margin="15,0,10,0" FontSize="16" SelectedDateChanged="appointmentTimePicker_SelectedDateChanged" />
                     </StackPanel>
@@ -67,7 +67,7 @@
                     <Button x:Name="createAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFF1F1F1" Click="createAppointmentButton_Click">Schedule Appointment At Selected Time Block</Button>
                 </Viewbox>
                 <Viewbox  StretchDirection="DownOnly" Margin="0,40,0,0">
-                        <Button x:Name="exitAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFE68181" Click="exitAppointmentButton_Click">Cancel Appointment Creation</Button>
+                        <Button x:Name="exitAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFE68181" Click="exitAppointmentButton_Click">Exit Appointment Page</Button>
                 </Viewbox>
                 </StackPanel>
             </Grid>

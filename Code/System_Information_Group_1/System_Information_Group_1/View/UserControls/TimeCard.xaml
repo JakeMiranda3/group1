@@ -21,13 +21,6 @@
                         <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Setter Property="Background" Value="#FFDC5A1C"></Setter>
-
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -37,7 +30,13 @@
             <Setter Property="IsEnabled" Value="True"/>
 
             <Style.Triggers>
+                <DataTrigger
+                    Binding="{Binding State, RelativeSource={RelativeSource Self}}"
+                    Value="{x:Static local:TimeCardState.Available}">
 
+                    <Setter Property="Background" Value="#FFFFFFFB"/>
+
+                </DataTrigger>
                 <DataTrigger
                     Binding="{Binding State, RelativeSource={RelativeSource Self}}"
                     Value="{x:Static local:TimeCardState.Pending}">
@@ -60,17 +59,8 @@
 
 
     </UserControl.Resources>
-    <Border BorderThickness="1,1,1,1" BorderBrush="Black">
-        <Border.Style>
-            <Style TargetType="Border">
-                <Setter Property="Background" Value="Transparent"/>
-                <Style.Triggers>
-                    <Trigger Property="IsEnabled" Value="False">
-                        <Setter Property="Background" Value="#FFDC5A1C"/>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-        </Border.Style>
+    <Border BorderThickness="1,1,1,1" BorderBrush="Black" Background="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type local:TimeCard}}}">
+
         <Grid>
             <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"></ColumnDefinition>

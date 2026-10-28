@@ -83,6 +83,16 @@ public class AppointmentDal
         return appointments;
     }
 
+    public bool DoesPatientHaveAppointments(int patientId)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+        var query = "select exists (select 1 from appointment where patient_id = @id)";
+
+        bool exists = connection.ExecuteScalar<bool>(query, new { id = patientId });
+        return exists;
+    }
+
     public IList<Appointment> GetAllAppointmentsByPatientId(int patientId)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());

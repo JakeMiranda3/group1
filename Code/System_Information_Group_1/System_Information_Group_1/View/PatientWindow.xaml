@@ -195,7 +195,13 @@
                             Style="{StaticResource SelectedPatientButtonStyle}"
                             Background="#FFF1F1F1"
                             Click="CreateAppointmentButton_OnClick" />
-
+                    <Button x:Name="viewPatientAppointmentButton"
+                            Content="View Patients Appointments"
+                            FontSize="16"
+                            Height="45"
+                            Margin="0,15,0,0"
+                            Style="{StaticResource SelectedPatientButtonStyle}"
+                            Background="#FFF1F1F1" Click="viewPatientAppointmentButton_Click"/>
                     <Button x:Name="enterVisitInformationButton"
                             Content="Enter Visit Information"
                             FontSize="16"

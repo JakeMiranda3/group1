@@ -2,6 +2,7 @@
 
 public enum TimeCardState
 {
+    Available,
     Open,
     Pending,
     Complete

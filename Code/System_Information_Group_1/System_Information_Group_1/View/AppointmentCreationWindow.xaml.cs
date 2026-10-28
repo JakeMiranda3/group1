@@ -37,18 +37,38 @@ namespace System_Information_Group_1.View
         /// </value>
         public ObservableCollection<Doctor> Doctors { get; set; }
 
+        public AppointmentWindowState State { get; private set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AppointmentCreationWindow"/> class.
         /// </summary>
         /// <param name="patientId">The patient identifier.</param>
-        public AppointmentCreationWindow(int patientId)
+        public AppointmentCreationWindow(int patientId, AppointmentWindowState state)
         {
             this.InitializeComponent();
             this.controller = new AppointmentCreationController(patientId);
             DataContext = this;
-            this.regenerateDoctorComboBox();
             this.nurseDal = new NurseDal();
+            this.State = state;
+            if (state == AppointmentWindowState.PatientView)
+            {
+                this.setupComponentsForPatientView();
+            } else if (state == AppointmentWindowState.DoctorView)
+            {
+                this.regenerateDoctorComboBox();
+            }
+
+
         }
+
+        private void setupComponentsForPatientView()
+        {
+            this.doctorComboBox.Visibility = Visibility.Collapsed;
+            this.createAppointmentButton.Visibility = Visibility.Collapsed;
+            this.doctorComboBoxLabel.Visibility = Visibility.Collapsed;
+            this.scheduleControl.SetupScheduleWithScheduledAppointments(this.controller.GetPatientAppointments());
+        }
+
 
         private void regenerateDoctorComboBox()
         {
@@ -63,7 +83,13 @@ namespace System_Information_Group_1.View
 
         private void appointmentTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.updateInformationWithNewDoctor();
+            if (this.State == AppointmentWindowState.PatientView)
+            {
+                this.refreshSchedulesByPatientAndDate();
+            } else if (this.State == AppointmentWindowState.DoctorView)
+            {
+                this.updateInformationWithNewDoctor();
+            }
         }
 
         private void updateInformationWithNewDoctor()
@@ -153,6 +179,15 @@ namespace System_Information_Group_1.View
                     date.Value,
                     this.controller.GetDoctorsFullName(doctor));
             }
+        }
+
+        private void refreshSchedulesByPatientAndDate()
+        {
+            if (this.appointmentTimePicker.SelectedDate != null)
+            {
+                this.scheduleControl.SetupScheduleWithScheduledAppointments(this.controller.GetPatientAppointments(), this.appointmentTimePicker.SelectedDate.Value);
+            }
+
         }
 
         private void exitAppointmentButton_Click(object sender, RoutedEventArgs e)

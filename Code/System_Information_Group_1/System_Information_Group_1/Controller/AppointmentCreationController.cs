@@ -92,4 +92,9 @@ public class AppointmentCreationController
     {
         return this.appointmentDal.GetAppointmentIdByPatientIdWithDate(patientId, date);
     }
+
+    public IList<Appointment> GetPatientAppointments()
+    {
+        return this.appointmentDal.GetAllAppointmentsByPatientId(this.SelectedPatientId);
+    }
 }
