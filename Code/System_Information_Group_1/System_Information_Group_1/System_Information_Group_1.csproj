@@ -247,6 +247,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PatientAppointmentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OrderTestWindow.xaml">
       <SubType>Designer</SubType>
