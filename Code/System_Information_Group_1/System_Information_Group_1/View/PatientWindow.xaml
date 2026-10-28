@@ -10,7 +10,7 @@
         MinWidth="1280"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip">
-    
+
     <Grid Background="LightBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70*" />
@@ -27,12 +27,12 @@
                 BorderThickness="0,0,0,2"
                 BorderBrush="Black">
 
-            <barUserControl:TopAppBar x:Name="TopAppBarControl" BarHeader="Patient Information"></barUserControl:TopAppBar>
-            
-            
+            <barUserControl:TopAppBar x:Name="topAppBarControl" BarHeader="Patient Information" />
+
+
         </Border>
 
-        
+
         <Border Grid.Row="1"
                 Grid.Column="0"
                 BorderBrush="Black"
@@ -195,6 +195,15 @@
                             Style="{StaticResource SelectedPatientButtonStyle}"
                             Background="#FFF1F1F1"
                             Click="CreateAppointmentButton_OnClick" />
+
+                    <Button x:Name="enterVisitInformationButton"
+                            Content="Enter Visit Information"
+                            FontSize="16"
+                            Height="45"
+                            Margin="0,15,0,0"
+                            Style="{StaticResource SelectedPatientButtonStyle}"
+                            Background="#FFF1F1F1"
+                            Click="EnterVisitInformationButton_OnClick" />
                 </StackPanel>
             </Border>
 

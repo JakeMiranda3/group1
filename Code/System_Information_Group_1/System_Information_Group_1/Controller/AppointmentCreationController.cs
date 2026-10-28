@@ -87,4 +87,9 @@ public class AppointmentCreationController
     {
         return this.appointmentDal.StoreNewAppointment(doctorId, patientId, date, reason);
     }
+
+    public int GetAppointmentId(int patientId, DateTime date)
+    {
+        return this.appointmentDal.GetAppointmentIdByPatientIdWithDate(patientId, date);
+    }
 }
