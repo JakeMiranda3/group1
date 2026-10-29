@@ -44,14 +44,23 @@
                 <Grid Grid.Row="0">
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
                     <Viewbox StretchDirection="DownOnly" Margin="10,0,0,0">
                         <Label x:Name="doctorComboBoxLabel" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
                                MinWidth="50" Content="Selected Doctor:"/>
                     </Viewbox>
-                    <ComboBox x:Name="doctorComboBox" ItemsSource="{Binding Doctors}" Grid.Column="1" MinWidth="100" Margin="5,0,20,0" FontSize="16" VerticalAlignment="Center" SelectionChanged="doctorComboBox_SelectionChanged"/>
+                    <ComboBox Grid.Row ="0"  x:Name="doctorComboBox" ItemsSource="{Binding Doctors}" Grid.Column="1" MinWidth="100" Margin="5,0,20,0" FontSize="16" VerticalAlignment="Center" SelectionChanged="doctorComboBox_SelectionChanged"/>
+                    <Viewbox Grid.Row="1"  StretchDirection="DownOnly" Margin="10,0,0,0">
+                        <Label x:Name="patientCondenseLabel" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
+                               MinWidth="50" Content="Filter Scheduled?"/>
+                    </Viewbox>
+                    <CheckBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
                 </Grid>
 
                 <Border Grid.Row="1" BorderThickness="0,0,0,2" BorderBrush="Black">
@@ -66,7 +75,10 @@
                 <Viewbox  StretchDirection="DownOnly" Margin="0,10,0,0">
                     <Button x:Name="createAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFF1F1F1" Click="createAppointmentButton_Click">Schedule Appointment At Selected Time Block</Button>
                 </Viewbox>
-                <Viewbox  StretchDirection="DownOnly" Margin="0,40,0,0">
+                    <Viewbox  StretchDirection="DownOnly" Margin="0,15,0,0">
+                        <Button x:Name="editAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFF1F1F1" Click="editAppointmentButton_Click">Edit Appointment Details</Button>
+                    </Viewbox>
+                    <Viewbox  StretchDirection="DownOnly" Margin="0,20,0,0">
                         <Button x:Name="exitAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFE68181" Click="exitAppointmentButton_Click">Exit Appointment Page</Button>
                 </Viewbox>
                 </StackPanel>

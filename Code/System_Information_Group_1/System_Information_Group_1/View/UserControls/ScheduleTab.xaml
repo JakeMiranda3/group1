@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="System_Information_Group_1.View.UserControls.ScheduleTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:System_Information_Group_1.View.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70*" />
+            <ColumnDefinition Width="30*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <local:TimeBlockSchedule x:Name="scheduleControl" Grid.Column="0" Grid.Row="1"></local:TimeBlockSchedule>
+        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1,0,2,1">
+            <Grid Background="#4CBED8E6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="6*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Viewbox StretchDirection="DownOnly" Margin="10,0,0,0">
+                        <Label x:Name="doctorComboBoxLabel" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
+                         MinWidth="50" Content="Selected Doctor:"/>
+                    </Viewbox>
+                    <ComboBox x:Name="doctorComboBox" ItemsSource="{Binding Doctors}" Grid.Column="1" MinWidth="100" Margin="5,0,20,0" FontSize="16" VerticalAlignment="Center" SelectionChanged="doctorComboBox_SelectionChanged"/>
+                </Grid>
+                <Border Grid.Row="1" BorderThickness="0,0,0,2" BorderBrush="Black">
+                    <StackPanel  VerticalAlignment="Top">
+                        <Viewbox HorizontalAlignment="Left" StretchDirection="DownOnly" Margin="10,0,0,0">
+                            <Label FontSize="16" Content="View Appointments By Date"/>
+                        </Viewbox>
+                        <DatePicker x:Name="appointmentTimePicker" VerticalAlignment="Center" Margin="15,0,10,0" FontSize="16" SelectedDateChanged="appointmentTimePicker_SelectedDateChanged" />
+                    </StackPanel>
+                </Border>
+                <StackPanel Grid.Row="2">
+                    <Viewbox  StretchDirection="DownOnly" Margin="0,10,0,0">
+                        <Button x:Name="createAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFF1F1F1" Click="createAppointmentButton_Click">Schedule Appointment At Selected Time Block</Button>
+                    </Viewbox>
+                    <Viewbox  StretchDirection="DownOnly" Margin="0,40,0,0">
+                        <Button x:Name="exitAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFE68181" Click="exitAppointmentButton_Click">Exit Appointment Page</Button>
+                    </Viewbox>
+                </StackPanel>
+            </Grid>
+
+        </Border>
+    </Grid>
+</UserControl>

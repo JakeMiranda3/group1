@@ -93,6 +93,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\AppointmentController.cs" />
     <Compile Include="Controller\AppointmentCreationController.cs" />
     <Compile Include="Controller\NurseController.cs" />
     <Compile Include="Controller\OrderTestController.cs" />
@@ -110,6 +111,9 @@
     <Compile Include="Model\Visit.cs" />
     <Compile Include="Model\VisitDisplay.cs" />
     <Compile Include="View\AppointmentWindowState.cs" />
+    <Compile Include="View\Dialog\AppointmentInfoDialog.xaml.cs">
+      <DependentUpon>AppointmentInfoDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Dialog\AppointmentSelectionDialog.xaml.cs">
       <DependentUpon>AppointmentSelectionDialog.xaml</DependentUpon>
     </Compile>
@@ -180,6 +184,10 @@
       <DependentUpon>NurseLoginPage.xaml</DependentUpon>
     </Compile>
     <Page Include="View\AdminLoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialog\AppointmentInfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -97,7 +97,7 @@ public class AppointmentDal
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
-        var query = "select app.appointment_id as AppointmentId, app.appointment_datetime as `Date`, doc.doctor_id as DoctorId, docPerson.person_id as PersonId, docPerson.first_name as FirstName, docPerson.last_name as LastName, " +
+        var query = "select app.appointment_id as AppointmentId, app.reason as Reason, app.appointment_datetime as `Date`, doc.doctor_id as DoctorId, docPerson.person_id as PersonId, docPerson.first_name as FirstName, docPerson.last_name as LastName, " +
                     "pat.patient_id as PatientId, patPerson.person_id as PersonId, patPerson.first_name as FirstName, patPerson.last_name as LastName " +
                     "from appointment as app " +
                     "join doctor doc on app.doctor_id = doc.doctor_id " +
@@ -110,14 +110,35 @@ public class AppointmentDal
             {
                 doctor.Person = doctorPerson;
                 patient.Person = patientPerson;
+
                 appointment.Doctor = doctor;
                 appointment.Patient = patient;
+
+                appointment.DoctorId = doctor.DoctorId;
+                appointment.PatientId = patient.PatientId;
 
                 return appointment;
             },
             new { id = patientId },
             splitOn: "DoctorId, PersonId, PatientId, PersonId").ToList();
         return appointments;
+    }
+
+    public void EditAppointment(Appointment appointment)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+
+        var query = "update appointment " +
+                    "set reason = @Reason, appointment_datetime = @Date " +
+                    "where appointment_id = @AppointmentId;";
+
+        connection.Execute(query, new
+        {
+            appointment.Reason,
+            appointment.Date,
+            appointment.AppointmentId
+        });
     }
 
     /// <summary>
@@ -231,4 +252,6 @@ public class AppointmentDal
             throw new Exception("No appointment found for the given patient ID and date.");
         }
     }
+
+
 }

@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System_Information_Group_1.Controller;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
+using System_Information_Group_1.View.Dialog;
 using System_Information_Group_1.View.Dialogs;
 using System_Information_Group_1.View.UserControls;
 
@@ -251,6 +252,87 @@ namespace System_Information_Group_1.View
 
             routineCheckupWindow.Show();
 
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            this.scheduleControl.SetupScheduleWithScheduledAppointments(this.controller.GetPatientAppointments());
+            this.doctorComboBox.IsEnabled = false;
+            this.appointmentTimePicker.IsEnabled = false;
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.doctorComboBox.IsEnabled = true;
+            this.appointmentTimePicker.IsEnabled = true;
+            this.scheduleControl.clearScheduleSlots();
+            
+            if (this.doctorComboBox.SelectedItem != null && this.appointmentTimePicker.SelectedDate != null)
+            {
+                this.refreshSchedulesWithSelectedDoctor();
+            }
+        }
+
+        private void editAppointmentButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.scheduleControl.scheduleListBox.SelectedItem is not ListBoxItem item ||
+                    item.Content is not TimeCard selectedCard)
+                {
+                    MessageBox.Show("Please select an appointment first.",
+                        "Missing Information", MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
+                var selectedDate = selectedCard.scheduledTime;
+
+                var appointmentId = this.controller.GetAppointmentId(
+                    this.controller.SelectedPatientId, selectedDate);
+
+                var selectedAppointment = this.controller.GetPatientAppointments()
+                    .FirstOrDefault(appointment =>
+                        appointment.AppointmentId == appointmentId);
+
+                if (selectedAppointment == null)
+                {
+                    MessageBox.Show("No appointment found for the selected time.",
+                        "Missing Information", MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
+                var dialog = new AppointmentInfoDialog(selectedAppointment)
+                {
+                    Owner = this
+                };
+
+                dialog.ShowDialog();
+
+                if (this.State == AppointmentWindowState.PatientView)
+                {
+                    if (this.appointmentTimePicker.SelectedDate.HasValue)
+                    {
+                        this.refreshSchedulesByPatientAndDate();
+                    }
+                    else
+                    {
+                        this.scheduleControl.SetupScheduleWithScheduledAppointments(
+                            this.controller.GetPatientAppointments());
+                    }
+                }
+                else if (this.State == AppointmentWindowState.DoctorView)
+                {
+                    this.refreshSchedulesWithSelectedDoctor();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Unable to open appointment information: {ex.Message}",
+                    "Error", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
     }
 }
