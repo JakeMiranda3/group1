@@ -105,6 +105,17 @@ namespace System_Information_Group_1.View
                     MessageBoxImage.Warning);
                 return;
             }
+
+            if (!this.scheduleControl.IsSelectedCardAvailable())
+            {
+                MessageBox.Show(
+                    "Please Select an appointment that is available",
+                    "Appointment Overlap",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return;
+            }
             if (this.controller.SelectedPatientId < 0)
             {
                 MessageBox.Show(

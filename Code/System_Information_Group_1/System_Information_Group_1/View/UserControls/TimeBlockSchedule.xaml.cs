@@ -78,8 +78,7 @@ namespace System_Information_Group_1.View.UserControls
                     appointment.Date,
                     doctorName,
                     patientName,
-                    appointment.Patient.Person.ContactPhoneNumber,
-                    true
+                    appointment.Patient.Person.ContactPhoneNumber
                 );
             }
         }
@@ -123,20 +122,18 @@ namespace System_Information_Group_1.View.UserControls
                     appointment.Date,
                     doctorName,
                     patientName,
-                    appointment.Patient.Person.ContactPhoneNumber,
-                    false
+                    appointment.Patient.Person.ContactPhoneNumber
                 );
             }
         }
 
-        private void addScheduleSlotWithAppointmentFilled(DateTime date, String doctorName, String patientName, String patientPhone, bool isEnabled)
+        private void addScheduleSlotWithAppointmentFilled(DateTime date, String doctorName, String patientName, String patientPhone)
         {
             var card = new TimeCard(date, doctorName, patientName, patientPhone);
             card.State = TimeCardState.Open;
             var item = new ListBoxItem
             {
                 Content = card,
-                IsEnabled = isEnabled,
             };
 
             this.scheduleListBox.Items.Add(item);
@@ -149,7 +146,6 @@ namespace System_Information_Group_1.View.UserControls
             var item = new ListBoxItem
             {
                 Content = card,
-                IsEnabled = true,
             };
 
             this.scheduleListBox.Items.Add(item);
@@ -172,6 +168,12 @@ namespace System_Information_Group_1.View.UserControls
         public bool IsAnyCardSelected()
         {
             return this.scheduleListBox.SelectedItem is ListBoxItem item && item.IsEnabled;
+        }
+
+        public bool IsSelectedCardAvailable()
+        {
+            return this.scheduleListBox.SelectedItem is ListBoxItem item && item.Content is TimeCard card &&
+                   card.State == TimeCardState.Available;
         }
     }
 }
