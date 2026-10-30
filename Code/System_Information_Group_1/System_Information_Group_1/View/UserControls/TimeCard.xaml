@@ -69,6 +69,14 @@
 
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding State, RelativeSource={RelativeSource self}}" Value="{x:Static local:TimeCardState.PastDeadline}"/>
+                        <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background" Value="#FFFF8875"/>
+                </MultiDataTrigger>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
                         <Condition
                             Binding="{Binding State, RelativeSource={RelativeSource Self}}"
                             Value="{x:Static local:TimeCardState.Available}"/>
