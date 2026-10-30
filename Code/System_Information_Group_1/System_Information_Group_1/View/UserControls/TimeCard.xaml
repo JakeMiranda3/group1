@@ -39,14 +39,21 @@
                 </DataTrigger>
                 <DataTrigger
                     Binding="{Binding State, RelativeSource={RelativeSource Self}}"
-                    Value="{x:Static local:TimeCardState.Pending}">
+                    Value="{x:Static local:TimeCardState.PendingLabs}">
 
                     <Setter Property="Background" Value="#FFFFF082"/>
 
                 </DataTrigger>
                 <DataTrigger
                     Binding="{Binding State, RelativeSource={RelativeSource Self}}"
-                    Value="{x:Static local:TimeCardState.Complete}">
+                    Value="{x:Static local:TimeCardState.PastDeadline}">
+
+                    <Setter Property="Background" Value="#FFFFB3A7"/>
+
+                </DataTrigger>
+                <DataTrigger
+                    Binding="{Binding State, RelativeSource={RelativeSource Self}}"
+                    Value="{x:Static local:TimeCardState.Finalized}">
                     <Setter Property="Background" Value="#FFDC7A1C"/>
                     <Setter Property="IsEnabled" Value="False"/>
 
@@ -54,7 +61,7 @@
 
                 <MultiDataTrigger>
                     <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding State, RelativeSource={RelativeSource self}}" Value="{x:Static local:TimeCardState.Open}"/>
+                        <Condition Binding="{Binding State, RelativeSource={RelativeSource self}}" Value="{x:Static local:TimeCardState.BeforeDeadline}"/>
                         <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
                     </MultiDataTrigger.Conditions>
                     <Setter Property="Background" Value="#FF66BB6A"/>
@@ -76,7 +83,7 @@
                     <MultiDataTrigger.Conditions>
                         <Condition
                             Binding="{Binding State, RelativeSource={RelativeSource Self}}"
-                            Value="{x:Static local:TimeCardState.Pending}"/>
+                            Value="{x:Static local:TimeCardState.PendingLabs}"/>
                         <Condition
                             Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"
                             Value="True"/>

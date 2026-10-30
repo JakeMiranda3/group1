@@ -294,7 +294,7 @@ namespace System_Information_Group_1.View
                     return;
                 }
 
-                if (selectedCard.State == TimeCardState.Complete)
+                if (selectedCard.State == TimeCardState.Finalized)
                 {
                     MessageBox.Show("Appointment has already been finalized.",
                         "Invalid Operation", MessageBoxButton.OK,

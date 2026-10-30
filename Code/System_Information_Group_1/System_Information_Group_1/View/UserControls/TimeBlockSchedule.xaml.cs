@@ -28,6 +28,7 @@ namespace System_Information_Group_1.View.UserControls
         private static readonly TimeSpan ClinicStartTime = new (8, 0, 0);
         private static readonly TimeSpan ClinicEndTime = new (17, 0, 0);
         private const int TimeIntervalInMinutes = 15;
+        private readonly SchedulerController controller;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimeBlockSchedule"/> class.
@@ -35,6 +36,7 @@ namespace System_Information_Group_1.View.UserControls
         public TimeBlockSchedule()
         {
             this.InitializeComponent();
+            this.controller = new SchedulerController();
         }
 
 
@@ -109,16 +111,19 @@ namespace System_Information_Group_1.View.UserControls
                     appointment.Date,
                     doctorName,
                     patientName,
-                    appointment.Patient.Person.ContactPhoneNumber
+                    appointment.Patient.Person.ContactPhoneNumber,
+                    this.controller.DetermineCardState(appointment)
                 );
             }
         }
 
 
-        private void addAppointmentCard(DateTime date, String doctorName, String patientName, String patientPhone)
+
+
+        private void addAppointmentCard(DateTime date, String doctorName, String patientName, String patientPhone, TimeCardState cardState)
         {
             var card = new TimeCard(date, doctorName, patientName, patientPhone);
-            card.State = TimeCardState.Open;
+            card.State = cardState;
             var item = new ListBoxItem
             {
                 Content = card,

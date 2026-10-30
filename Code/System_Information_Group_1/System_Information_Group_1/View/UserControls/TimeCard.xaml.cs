@@ -33,7 +33,7 @@ namespace System_Information_Group_1.View.UserControls
             name: nameof(State),
             propertyType: typeof(TimeCardState),
             ownerType: typeof(TimeCard),
-            new PropertyMetadata(TimeCardState.Open));
+            new PropertyMetadata(TimeCardState.BeforeDeadline));
 
         /// <summary>
         /// Gets the scheduled time.
