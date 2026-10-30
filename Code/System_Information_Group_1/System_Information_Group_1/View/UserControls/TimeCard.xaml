@@ -52,6 +52,38 @@
 
                 </DataTrigger>
 
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding State, RelativeSource={RelativeSource self}}" Value="{x:Static local:TimeCardState.Open}"/>
+                        <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background" Value="#FF66BB6A"/>
+                </MultiDataTrigger>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition
+                            Binding="{Binding State, RelativeSource={RelativeSource Self}}"
+                            Value="{x:Static local:TimeCardState.Available}"/>
+                        <Condition
+                            Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"
+                            Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background" Value="#FFD5ECFF"/>
+                </MultiDataTrigger>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition
+                            Binding="{Binding State, RelativeSource={RelativeSource Self}}"
+                            Value="{x:Static local:TimeCardState.Pending}"/>
+                        <Condition
+                            Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"
+                            Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background" Value="#FFFFD54F"/>
+                </MultiDataTrigger>
+
             </Style.Triggers>
         </Style>
 

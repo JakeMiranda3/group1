@@ -16,6 +16,7 @@ public class AppointmentCreationController
     private readonly DoctorDal doctorDal;
     private readonly AppointmentDal appointmentDal;
     private readonly PersonDal personDal;
+    private readonly TimeDal timeDal;
 
     /// <summary>
     /// Gets the selected patient identifier.
@@ -36,6 +37,7 @@ public class AppointmentCreationController
         this.personDal = new PersonDal();
         this.SelectedPatientId = 1;
         this.SelectedPatientId = patiendId;
+        this.timeDal = new TimeDal();
     }
 
     /// <summary>
@@ -61,6 +63,16 @@ public class AppointmentCreationController
         }
 
         return this.appointmentDal.GetAppointmentsContainingDoctorAndPatient(doctor.DoctorId);
+    }
+
+    public DateTime GetCurrentTimeAsEastern()
+    {
+        var serverDate = this.timeDal.GetServerDateTime();
+        DateTime serverUTCDate = DateTime.SpecifyKind(serverDate, DateTimeKind.Utc);
+
+        TimeZoneInfo easernZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+
+        return TimeZoneInfo.ConvertTimeFromUtc(serverUTCDate, easernZone);
     }
 
     /// <summary>

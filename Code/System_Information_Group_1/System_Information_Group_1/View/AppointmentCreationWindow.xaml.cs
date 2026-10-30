@@ -67,7 +67,7 @@ namespace System_Information_Group_1.View
             this.doctorComboBox.Visibility = Visibility.Collapsed;
             this.createAppointmentButton.Visibility = Visibility.Collapsed;
             this.doctorComboBoxLabel.Visibility = Visibility.Collapsed;
-            this.scheduleControl.SetupScheduleWithScheduledAppointments(this.controller.GetPatientAppointments());
+            this.scheduleControl.AddCardsFromAppointments(this.controller.GetPatientAppointments());
         }
 
 
@@ -187,7 +187,7 @@ namespace System_Information_Group_1.View
             var date = this.appointmentTimePicker.SelectedDate;
             if (date != null && this.doctorComboBox.SelectedItem is Doctor doctor)
             {
-                this.scheduleControl.SetupSchedulesWithAppointments(this.controller.GetDoctorsAppointments(doctor),
+                this.scheduleControl.AddCardsWithScheduledAndOpenCards(this.controller.GetDoctorsAppointments(doctor),
                     date.Value,
                     this.controller.GetDoctorsFullName(doctor));
             }
@@ -197,7 +197,7 @@ namespace System_Information_Group_1.View
         {
             if (this.appointmentTimePicker.SelectedDate != null)
             {
-                this.scheduleControl.SetupScheduleWithScheduledAppointments(this.controller.GetPatientAppointments(), this.appointmentTimePicker.SelectedDate.Value);
+                this.scheduleControl.AddCardsFromAppointments(this.controller.GetPatientAppointments(), this.appointmentTimePicker.SelectedDate.Value);
             }
 
         }
@@ -256,7 +256,7 @@ namespace System_Information_Group_1.View
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            this.scheduleControl.SetupScheduleWithScheduledAppointments(this.controller.GetPatientAppointments());
+            this.scheduleControl.AddCardsFromAppointments(this.controller.GetPatientAppointments());
             this.doctorComboBox.IsEnabled = false;
             this.appointmentTimePicker.IsEnabled = false;
         }
@@ -282,6 +282,30 @@ namespace System_Information_Group_1.View
                 {
                     MessageBox.Show("Please select an appointment first.",
                         "Missing Information", MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (selectedCard.State == TimeCardState.Available)
+                {
+                    MessageBox.Show("Schedule an appointment in this slot first.",
+                        "Invalid Operation", MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (selectedCard.State == TimeCardState.Complete)
+                {
+                    MessageBox.Show("Appointment has already been finalized.",
+                        "Invalid Operation", MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
+                if (selectedCard.scheduledTime <= this.controller.GetCurrentTimeAsEastern())
+                {
+                    MessageBox.Show("Appointment time has passed and cannot be edited.",
+                        "Invalid Operation", MessageBoxButton.OK,
                         MessageBoxImage.Warning);
                     return;
                 }
@@ -318,7 +342,7 @@ namespace System_Information_Group_1.View
                     }
                     else
                     {
-                        this.scheduleControl.SetupScheduleWithScheduledAppointments(
+                        this.scheduleControl.AddCardsFromAppointments(
                             this.controller.GetPatientAppointments());
                     }
                 }
