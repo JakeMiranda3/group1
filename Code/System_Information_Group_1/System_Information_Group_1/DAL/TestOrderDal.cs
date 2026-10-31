@@ -123,4 +123,43 @@ public class TestOrderDal
             cmd.ExecuteNonQuery();
         }
     }
+
+    public List<TestOrder> GetAllTestWithAppointmentId(int appointmentId)
+    {
+        List<TestOrder> orderList = new List<TestOrder>();
+
+
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+        var query = "Select * from test_order where appointment_id = @appointmentId";
+
+        using var cmd = new MySqlCommand(query, connection);
+
+        cmd.Parameters.AddWithValue("@appointmentId", appointmentId);
+
+        var reader = cmd.ExecuteReader();
+
+        int appointmentIdOrdinal = reader.GetOrdinal("appointment_id");
+        int testCodeOrdinal = reader.GetOrdinal("test_code");
+        int performedDatetimeOrdinal = reader.GetOrdinal("performed_datetime");
+        int testResultOrdinal = reader.GetOrdinal("test_result");
+        int isAbnormalOrdinal = reader.GetOrdinal("is_abnormal");
+
+
+        while (reader.Read())
+        {
+            orderList.Add(CreateOrder(reader, appointmentIdOrdinal, testCodeOrdinal, performedDatetimeOrdinal, testResultOrdinal, isAbnormalOrdinal));    
+        }
+        return orderList;
+    }
+
+    public static TestOrder CreateOrder(MySqlDataReader reader, int appointmentIdOrdinal, int testCodeOrdinal, int performedDatetimeOrdinal, int testResultOrdinal, int isAbnormalOrdinal)
+    {
+        var appointmentId = reader.GetFieldValue<Int32>(appointmentIdOrdinal);
+        var testCode = reader.GetFieldValue<Int32>(testCodeOrdinal);
+        var performedDatetime = reader.IsDBNull(performedDatetimeOrdinal) ? (DateTime?)null : reader.GetDateTime(performedDatetimeOrdinal);
+        var testResult = reader.IsDBNull(testResultOrdinal) ? null : reader.GetString(testResultOrdinal);
+        var isAbnormal = !reader.IsDBNull(isAbnormalOrdinal) && reader.GetBoolean(isAbnormalOrdinal);
+        return new TestOrder(appointmentId, testCode, performedDatetime ?? DateTime.MinValue, testResult ?? string.Empty, isAbnormal);
+    }
 }

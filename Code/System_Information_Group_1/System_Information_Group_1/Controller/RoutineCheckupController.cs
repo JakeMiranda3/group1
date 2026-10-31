@@ -87,9 +87,9 @@ namespace System_Information_Group_1.Controller
             {
                 if (string.IsNullOrWhiteSpace(testOrder.TestResult))
                 {
-                    testOrder.PerformedDateTime = null;
+                    testOrder.PerformedDateTime = DateTime.MinValue;
                 }
-                else if (!testOrder.PerformedDateTime.HasValue)
+                else
                 {
                     testOrder.PerformedDateTime = DateTime.Now;
                 }
@@ -102,5 +102,7 @@ namespace System_Information_Group_1.Controller
         {
             this.TestOrders = this.testOrderDal.GetTestOrdersByAppointmentId(this.Visit.AppointmentId);
         }
+
+
     }
 }

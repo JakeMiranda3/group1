@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System_Information_Group_1.Controller;
@@ -19,6 +20,7 @@ namespace System_Information_Group_1.View
             this.controller = new RoutineCheckupController(visitDisplay);
             this.DataContext = this.controller.Visit;
             this.applyReadOnlyState();
+            this.testsDataGrid.ItemsSource = this.controller.TestOrders;
         }
 
         private void SubmitButton_OnClick(object sender, RoutedEventArgs e)
