@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
@@ -19,9 +20,12 @@ namespace System_Information_Group_1.Controller
         /// </value>
         public Visit Visit { get; private set; }
 
+        public List<TestOrderDisplay> TestOrders { get; private set; }
+
         public bool IsReadOnly { get; private set; }
 
         private readonly VisitDal visitDal;
+        private readonly TestOrderDal testOrderDal;
         private readonly bool hasExistingVisit;
 
         /// <summary>
@@ -31,6 +35,8 @@ namespace System_Information_Group_1.Controller
         public RoutineCheckupController(Visit visit)
         {
             this.visitDal = new VisitDal();
+            this.testOrderDal = new TestOrderDal();
+            this.TestOrders = this.testOrderDal.GetTestOrdersByAppointmentId(visit.AppointmentId);
             var existingVisit = this.visitDal.GetVisitByAppointmentId(visit.AppointmentId);
             if (existingVisit != null)
             {
@@ -76,6 +82,25 @@ namespace System_Information_Group_1.Controller
             {
                 this.IsReadOnly = true;
             }
+
+            foreach (var testOrder in this.TestOrders)
+            {
+                if (string.IsNullOrWhiteSpace(testOrder.TestResult))
+                {
+                    testOrder.PerformedDateTime = null;
+                }
+                else if (!testOrder.PerformedDateTime.HasValue)
+                {
+                    testOrder.PerformedDateTime = DateTime.Now;
+                }
+            }
+
+            this.testOrderDal.UpdateTestResults(this.TestOrders);
+        }
+
+        public void RefreshTestOrders()
+        {
+            this.TestOrders = this.testOrderDal.GetTestOrdersByAppointmentId(this.Visit.AppointmentId);
         }
     }
 }

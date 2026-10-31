@@ -182,6 +182,45 @@
                             Click="OnOrderTestClick" />
                 </StackPanel>
             </Border>
+
+            <StackPanel Grid.Row="2" Margin="15">
+                <TextBlock Text="Test Results"
+                           FontSize="20"
+                           Margin="0,0,0,10" />
+                <DataGrid x:Name="testsDataGrid"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          IsReadOnly="False"
+                          HeadersVisibility="Column"
+                          HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Test"
+                                            Binding="{Binding Name}"
+                                            IsReadOnly="True"
+                                            Width="*" />
+                        <DataGridTextColumn Header="Low"
+                                            Binding="{Binding LowValue}"
+                                            IsReadOnly="True"
+                                            Width="Auto" />
+                        <DataGridTextColumn Header="High"
+                                            Binding="{Binding HighValue}"
+                                            IsReadOnly="True"
+                                            Width="Auto" />
+                        <DataGridTextColumn Header="Unit"
+                                            Binding="{Binding MeasurementType}"
+                                            IsReadOnly="True"
+                                            Width="Auto" />
+                        <DataGridTextColumn Header="Result"
+                                            Binding="{Binding TestResult, UpdateSourceTrigger=PropertyChanged}"
+                                            Width="*" />
+                        <DataGridCheckBoxColumn Header="Abnormal"
+                                                Binding="{Binding IsAbnormal, UpdateSourceTrigger=PropertyChanged}"
+                                                Width="Auto" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

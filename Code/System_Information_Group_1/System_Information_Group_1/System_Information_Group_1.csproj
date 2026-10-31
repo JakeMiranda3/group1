@@ -108,6 +108,7 @@
     <Compile Include="Model\Appointment.cs" />
     <Compile Include="Model\Test.cs" />
     <Compile Include="Model\TestOrder.cs" />
+    <Compile Include="Model\TestOrderDisplay.cs" />
     <Compile Include="Model\Visit.cs" />
     <Compile Include="Model\VisitDisplay.cs" />
     <Compile Include="View\AppointmentWindowState.cs" />
