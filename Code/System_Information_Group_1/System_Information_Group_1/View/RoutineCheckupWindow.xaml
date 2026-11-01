@@ -11,10 +11,42 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip">
 
+    <Window.Resources>
+       
+        <Style x:Key="FieldLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Padding" Value="0,0,0,4" />
+        </Style>
+        <Style x:Key="SectionLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Padding" Value="0,0,0,4" />
+        </Style>
+        <Style x:Key="VitalTextBoxStyle" TargetType="TextBox">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="NotesTextBoxStyle" TargetType="TextBox">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="AcceptsReturn" Value="True" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="MaxLength" Value="200" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        </Style>
+        
+        <Style x:Key="WrapCellStyle" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
+
     <Grid Background="LightBlue">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70*" />
-            <ColumnDefinition Width="30*" />
+         
+            <ColumnDefinition Width="5*" MinWidth="420" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="5*" MinWidth="460" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -22,152 +54,136 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+  
         <Border Grid.Row="0"
-                Grid.ColumnSpan="2"
+                Grid.ColumnSpan="3"
                 BorderThickness="0,0,0,2"
                 BorderBrush="Black">
             <barUserControl:TopAppBar x:Name="topAppBarControl"
-                                     BarHeader="Routine Checkup Entry" />
+                                      BarHeader="Routine Checkup Entry" />
         </Border>
 
-        <Border Grid.Row="1"
-                Grid.Column="0"
-                BorderBrush="Black"
-                BorderThickness="0,0,2,0">
+        
+        <ScrollViewer Grid.Row="1"
+                      Grid.Column="0"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="15">
 
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <Grid Margin="15">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
+                <TextBlock Text="Patient Vitals &amp; Diagnosis"
+                           FontSize="24"
+                           Margin="0,0,0,15" />
 
-                    <TextBlock Grid.Row="0"
-                               Text="Patient Vitals &amp; Diagnosis"
-                               FontSize="24"
-                               Margin="0,0,0,15" />
+                <Label Content="Symptoms" Style="{StaticResource SectionLabelStyle}" />
+                <TextBox x:Name="symptomsTextBox"
+                         Text="{Binding Symptoms, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource NotesTextBoxStyle}"
+                         Height="80"
+                         Margin="0,0,0,15" />
 
-                    <StackPanel Grid.Row="1" Margin="0,0,0,15">
-                        <Label Content="Symptoms" FontSize="16" FontWeight="Bold"/>
-                        <TextBox x:Name="symptomsTextBox"
-                                 Text="{Binding Symptoms, UpdateSourceTrigger=PropertyChanged}"
-                                 FontSize="15"
-                                 Height="80"
-                                 AcceptsReturn="True"
-                                 VerticalScrollBarVisibility="Auto"
-                                 MaxLength="200"
-                                 TextWrapping="Wrap" />
+               
+                <UniformGrid Columns="3" Margin="0,0,0,15">
+                    <StackPanel Margin="0,0,10,10">
+                        <Label Content="Systolic BP" Style="{StaticResource FieldLabelStyle}" />
+                        <TextBox x:Name="systolicTextBox"
+                                 Text="{Binding SystolicBloodPressure, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource VitalTextBoxStyle}" />
                     </StackPanel>
 
-                    <Grid Grid.Row="2" Margin="0,0,0,15">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
-                            <Label Content="Systolic BP" FontSize="15" />
-                            <TextBox x:Name="systolicTextBox"
-                                     Text="{Binding SystolicBloodPressure, UpdateSourceTrigger=PropertyChanged}"
-                                     FontSize="15" Height="32" VerticalContentAlignment="Center" />
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="1" Margin="0,0,10,0">
-                            <Label Content="Diastolic BP" FontSize="15" />
-                            <TextBox x:Name="diastolicTextBox"
-                                     Text="{Binding DiastolicBloodPressure, UpdateSourceTrigger=PropertyChanged}"
-                                     FontSize="15" Height="32" VerticalContentAlignment="Center" />
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="2" Margin="0,0,10,0">
-                            <Label Content="Temp (°F)" FontSize="15" />
-                            <TextBox x:Name="temperatureTextBox"
-                                     Text="{Binding Temperature, UpdateSourceTrigger=PropertyChanged}"
-                                     FontSize="15" Height="32" VerticalContentAlignment="Center" />
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="3">
-                            <Label Content="Pulse" FontSize="15" />
-                            <TextBox x:Name="pulseTextBox"
-                                     Text="{Binding Pulse, UpdateSourceTrigger=PropertyChanged}"
-                                     FontSize="15" Height="32" VerticalContentAlignment="Center" />
-                        </StackPanel>
-                    </Grid>
-
-                    <Grid Grid.Row="3" Margin="0,0,0,15">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2*" />
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
-                            <Label Content="Height (in)" FontSize="15" />
-                            <TextBox x:Name="heightTextBox"
-                                     Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
-                                     FontSize="15" Height="32" VerticalContentAlignment="Center" />
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="1" Margin="0,0,10,0">
-                            <Label Content="Weight (lbs)" FontSize="15" />
-                            <TextBox x:Name="weightTextBox"
-                                     Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"
-                                     FontSize="15" Height="32" VerticalContentAlignment="Center" />
-                        </StackPanel>
-                    </Grid>
-
-                    <StackPanel Grid.Row="4" Margin="0,0,0,15">
-                        <Label Content="Initial Diagnosis" FontSize="16" FontWeight="Bold"/>
-                        <TextBox x:Name="initialDiagnosisTextBox"
-                                 Text="{Binding InitialDiagnosis, UpdateSourceTrigger=PropertyChanged}"
-                                 FontSize="15"
-                                 Height="60"
-                                 AcceptsReturn="True"
-                                 MaxLength="200"
-                                 TextWrapping="Wrap"
-                                 Margin="0,0,0,10"/>
-
-                        <Label Content="Final Diagnosis" FontSize="16" FontWeight="Bold"/>
-                        <TextBox x:Name="finalDiagnosisTextBox"
-                                 Text="{Binding FinalDiagnosis, UpdateSourceTrigger=PropertyChanged}"
-                                 FontSize="15"
-                                 Height="60"
-                                 AcceptsReturn="True"
-                                 MaxLength="200"
-                                 TextWrapping="Wrap"/>
+                    <StackPanel Margin="0,0,10,10">
+                        <Label Content="Diastolic BP" Style="{StaticResource FieldLabelStyle}" />
+                        <TextBox x:Name="diastolicTextBox"
+                                 Text="{Binding DiastolicBloodPressure, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource VitalTextBoxStyle}" />
                     </StackPanel>
-                </Grid>
-            </ScrollViewer>
-        </Border>
 
-        <Grid Grid.Row="1" Grid.Column="1">
+                    <StackPanel Margin="0,0,0,10">
+                        <Label Content="Pulse" Style="{StaticResource FieldLabelStyle}" />
+                        <TextBox x:Name="pulseTextBox"
+                                 Text="{Binding Pulse, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource VitalTextBoxStyle}" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0,0,10,10">
+                        <Label Content="Temp (°F)" Style="{StaticResource FieldLabelStyle}" />
+                        <TextBox x:Name="temperatureTextBox"
+                                 Text="{Binding Temperature, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource VitalTextBoxStyle}" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0,0,10,10">
+                        <Label Content="Height (in)" Style="{StaticResource FieldLabelStyle}" />
+                        <TextBox x:Name="heightTextBox"
+                                 Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource VitalTextBoxStyle}" />
+                    </StackPanel>
+
+                    <StackPanel Margin="0,0,0,10">
+                        <Label Content="Weight (lbs)" Style="{StaticResource FieldLabelStyle}" />
+                        <TextBox x:Name="weightTextBox"
+                                 Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource VitalTextBoxStyle}" />
+                    </StackPanel>
+                </UniformGrid>
+
+                <Label Content="Initial Diagnosis" Style="{StaticResource SectionLabelStyle}" />
+                <TextBox x:Name="initialDiagnosisTextBox"
+                         Text="{Binding InitialDiagnosis, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource NotesTextBoxStyle}"
+                         Height="60"
+                         Margin="0,0,0,15" />
+
+                <Label Content="Final Diagnosis" Style="{StaticResource SectionLabelStyle}" />
+                <TextBox x:Name="finalDiagnosisTextBox"
+                         Text="{Binding FinalDiagnosis, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource NotesTextBoxStyle}"
+                         Height="60" />
+            </StackPanel>
+        </ScrollViewer>
+
+       
+        <GridSplitter Grid.Row="1"
+                      Grid.Column="1"
+                      Width="4"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      ResizeBehavior="PreviousAndNext"
+                      Background="Black"
+                      ShowsPreview="False"
+                      Cursor="SizeWE" />
+
+      
+        <Grid Grid.Row="1" Grid.Column="2" Margin="15">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                
                 <RowDefinition Height="Auto" />
+               
+                <RowDefinition Height="Auto" />
+                
                 <RowDefinition Height="*" />
+                
+                <RowDefinition Height="Auto" />
+               
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0"
                        Text="Checkup Actions"
                        FontSize="24"
-                       Margin="15,15,0,15" />
+                       Margin="0,0,0,10" />
 
+           
             <Border Grid.Row="1"
                     BorderBrush="Black"
-                    BorderThickness="0,2,0,2"
-                    Padding="15">
-
-                <StackPanel>
+                    BorderThickness="0,0,0,2"
+                    Padding="0,0,0,15"
+                    Margin="0,0,0,15">
+                <UniformGrid Columns="2">
                     <Button x:Name="submitButton"
                             Content="Submit Checkup"
                             FontSize="16"
                             Height="45"
+                            Margin="0,0,8,0"
                             Style="{StaticResource BlueButtonStyle}"
                             Background="#FFF1F1F1"
                             Click="SubmitButton_OnClick" />
@@ -176,51 +192,73 @@
                             Content="Order Test"
                             FontSize="16"
                             Height="45"
-                            Margin="0,15,0,0"
+                            Margin="8,0,0,0"
                             Style="{StaticResource BlueButtonStyle}"
                             Background="#FFF1F1F1"
                             Click="OnOrderTestClick" />
-                </StackPanel>
+                </UniformGrid>
             </Border>
 
-            <StackPanel Grid.Row="2" Margin="15">
-                <TextBlock Text="Test Results"
-                           FontSize="20"
-                           Margin="0,0,0,10" />
-                <DataGrid x:Name="testsDataGrid"
-                          AutoGenerateColumns="False"
-                          CanUserAddRows="False"
-                          CanUserDeleteRows="False"
-                          IsReadOnly="False"
-                          HeadersVisibility="Column"
-                          HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Auto">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Test"
-                                            Binding="{Binding Name}"
-                                            IsReadOnly="True"
-                                            Width="*" />
-                        <DataGridTextColumn Header="Low"
-                                            Binding="{Binding LowValue}"
-                                            IsReadOnly="True"
+            <TextBlock Grid.Row="2"
+                       Text="Test Results"
+                       FontSize="20"
+                       Margin="0,0,0,10" />
+
+        
+            <DataGrid x:Name="testsDataGrid"
+                      Grid.Row="3"
+                      MinHeight="200"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      IsReadOnly="False"
+                      HeadersVisibility="Column"
+                      FontSize="14"
+                      RowHeight="30"
+                      AlternatingRowBackground="#FFF3F8FC"
+                      GridLinesVisibility="Horizontal"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Test"
+                                        Binding="{Binding Name}"
+                                        IsReadOnly="True"
+                                        ElementStyle="{StaticResource WrapCellStyle}"
+                                        Width="2*"
+                                        MinWidth="120" />
+                    <DataGridTextColumn Header="Low"
+                                        Binding="{Binding LowValue}"
+                                        IsReadOnly="True"
+                                        Width="Auto"
+                                        MinWidth="50" />
+                    <DataGridTextColumn Header="High"
+                                        Binding="{Binding HighValue}"
+                                        IsReadOnly="True"
+                                        Width="Auto"
+                                        MinWidth="50" />
+                    <DataGridTextColumn Header="Unit"
+                                        Binding="{Binding MeasurementType}"
+                                        IsReadOnly="True"
+                                        Width="Auto"
+                                        MinWidth="50" />
+                    <DataGridTextColumn Header="Result"
+                                        Binding="{Binding TestResult, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="*"
+                                        MinWidth="90" />
+                    <DataGridCheckBoxColumn Header="Abnormal"
+                                            Binding="{Binding IsAbnormal, UpdateSourceTrigger=PropertyChanged}"
                                             Width="Auto" />
-                        <DataGridTextColumn Header="High"
-                                            Binding="{Binding HighValue}"
-                                            IsReadOnly="True"
-                                            Width="Auto" />
-                        <DataGridTextColumn Header="Unit"
-                                            Binding="{Binding MeasurementType}"
-                                            IsReadOnly="True"
-                                            Width="Auto" />
-                        <DataGridTextColumn Header="Result"
-                                            Binding="{Binding TestResult, UpdateSourceTrigger=PropertyChanged}"
-                                            Width="*" />
-                        <DataGridCheckBoxColumn Header="Abnormal"
-                                                Binding="{Binding IsAbnormal, UpdateSourceTrigger=PropertyChanged}"
-                                                Width="Auto" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </StackPanel>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Button Grid.Row="4"
+                    Content="Submit Test Results"
+                    Style="{StaticResource BlueButtonStyle}"
+                    HorizontalAlignment="Right"
+                    Width="232"
+                    Height="39"
+                    Margin="0,12,0,0"
+                    Click="OnSubmitTestResultClick" />
         </Grid>
     </Grid>
 </Window>

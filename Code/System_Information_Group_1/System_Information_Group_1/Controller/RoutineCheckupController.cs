@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
@@ -26,7 +28,7 @@ namespace System_Information_Group_1.Controller
 
         private readonly VisitDal visitDal;
         private readonly TestOrderDal testOrderDal;
-        private readonly bool hasExistingVisit;
+        public bool HasExistingVisit { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RoutineCheckupController"/> class.
@@ -40,7 +42,7 @@ namespace System_Information_Group_1.Controller
             var existingVisit = this.visitDal.GetVisitByAppointmentId(visit.AppointmentId);
             if (existingVisit != null)
             {
-                this.hasExistingVisit = true;
+                this.HasExistingVisit = true;
                 this.Visit = new VisitDisplay(existingVisit.AppointmentId, existingVisit.Symptoms, existingVisit.NurseId,
                     existingVisit.SystolicBloodPressure, existingVisit.DiastolicBloodPressure, existingVisit.Temperature,
                     existingVisit.Pulse, existingVisit.Height, existingVisit.Weight, existingVisit.InitialDiagnosis,
@@ -51,7 +53,7 @@ namespace System_Information_Group_1.Controller
             {
                 this.Visit = visit;
                 this.IsReadOnly = false;
-                this.hasExistingVisit = false;
+                this.HasExistingVisit = false;
             }
         }
 
@@ -65,7 +67,7 @@ namespace System_Information_Group_1.Controller
                 throw new InvalidOperationException("Final diagnosis is already set. This visit is read-only.");
             }
 
-            if (this.hasExistingVisit)
+            if (this.HasExistingVisit)
             {
                 var wasUpdated = this.visitDal.UpdateVisit(this.Visit);
                 if (!wasUpdated)
@@ -103,6 +105,9 @@ namespace System_Information_Group_1.Controller
             this.TestOrders = this.testOrderDal.GetTestOrdersByAppointmentId(this.Visit.AppointmentId);
         }
 
-
+        public void SubmitTestResults(IEnumerable<TestOrderDisplay> collection)
+        {
+            this.testOrderDal.UpdateTestResults(collection);
+        }
     }
 }

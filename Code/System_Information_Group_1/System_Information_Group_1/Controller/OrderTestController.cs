@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
@@ -15,7 +17,6 @@ public class OrderTestController
 
     private readonly TestDal testDal;
     private readonly TestOrderDal testOrderDal;
-
     #endregion
 
     #region Constructors
@@ -24,6 +25,7 @@ public class OrderTestController
     {
         this.testDal = new TestDal();
         this.testOrderDal = new TestOrderDal();
+        
     }
 
     #endregion

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System_Information_Group_1.Controller;
@@ -20,7 +21,7 @@ namespace System_Information_Group_1.View
             this.controller = new RoutineCheckupController(visitDisplay);
             this.DataContext = this.controller.Visit;
             this.applyReadOnlyState();
-            this.testsDataGrid.ItemsSource = this.controller.TestOrders;
+            this.testsDataGrid.ItemsSource = new ObservableCollection<TestOrderDisplay>(this.controller.TestOrders);
         }
 
         private void SubmitButton_OnClick(object sender, RoutedEventArgs e)
@@ -88,8 +89,23 @@ namespace System_Information_Group_1.View
 
         private void OnOrderTestClick(object sender, RoutedEventArgs e)
         {
+            if (!this.controller.HasExistingVisit)
+            {
+                MessageBox.Show("Please save the visit information before ordering tests.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
             OrderTestWindow orderTestWindow = new OrderTestWindow(this.controller.Visit.AppointmentId);
             orderTestWindow.Show();
+        }
+
+        private void OnSubmitTestResultClick(object sender, RoutedEventArgs e)
+        {
+            IEnumerable<TestOrderDisplay> collection = (IEnumerable<TestOrderDisplay>)this.testsDataGrid.ItemsSource;
+            foreach (TestOrderDisplay item in collection)
+            {
+                this.controller.SubmitTestResults(collection);
+            }
         }
     }
 }

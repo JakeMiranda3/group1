@@ -66,12 +66,12 @@ public class TestOrderDal
                              reader.GetBoolean(reader.GetOrdinal("is_abnormal"));
 
             testOrders.Add(new TestOrderDisplay(
-                reader.GetInt32(reader.GetOrdinal("appointment_id")),
-                reader.GetInt32(reader.GetOrdinal("test_code")),
-                reader.GetString(reader.GetOrdinal("name")),
-                reader.GetDouble(reader.GetOrdinal("low_value")),
-                reader.GetDouble(reader.GetOrdinal("high_value")),
-                reader.GetString(reader.GetOrdinal("measurement_type")),
+                reader.GetFieldValueCheckNull<Int32>(reader.GetOrdinal("appointment_id")),
+                reader.GetFieldValueCheckNull<Int32>(reader.GetOrdinal("test_code")),
+                reader.GetFieldValueCheckNull<String>(reader.GetOrdinal("name")),
+                reader.GetFieldValueCheckNull<Double>(reader.GetOrdinal("low_value")),
+                reader.GetFieldValueCheckNull<Double>(reader.GetOrdinal("high_value")),
+                reader.GetFieldValue<String>(reader.GetOrdinal("measurement_type")),
                 performedDateTime,
                 testResult,
                 isAbnormal));
