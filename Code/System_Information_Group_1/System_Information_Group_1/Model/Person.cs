@@ -101,6 +101,7 @@ public class Person
 
     #region Constructors
 
+    public Person() {}
     /// <summary>
     ///     Initializes a new instance of the <see cref="Person" /> class.
     /// </summary>

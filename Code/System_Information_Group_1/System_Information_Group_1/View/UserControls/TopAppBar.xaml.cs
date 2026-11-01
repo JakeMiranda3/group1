@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System_Information_Group_1.Controller;
+using System_Information_Group_1.Controller.UserControl;
 
 namespace System_Information_Group_1.View.UserControls
 {

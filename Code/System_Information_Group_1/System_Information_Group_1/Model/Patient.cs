@@ -65,5 +65,7 @@ public class Patient
         this.IsActive = isActive;
     }
 
+    public Patient() {}
+
     #endregion
 }

@@ -19,6 +19,7 @@ namespace System_Information_Group_1.View.Dialog
 
         private void SelectButton_OnClick(object sender, RoutedEventArgs e)
         {
+
             if (this.appointmentDataGrid.SelectedItem is not Appointment selectedAppointment)
             {
                 MessageBox.Show("Please select an appointment.", "Missing Information", MessageBoxButton.OK,

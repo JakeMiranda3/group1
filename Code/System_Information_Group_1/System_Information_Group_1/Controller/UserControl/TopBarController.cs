@@ -1,9 +1,8 @@
-﻿using System_Information_Group_1.Constants;
+﻿using System;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
-using System;
 
-namespace System_Information_Group_1.Controller
+namespace System_Information_Group_1.Controller.UserControl
 {
     /// <summary>
     /// The controller for the top app bar.

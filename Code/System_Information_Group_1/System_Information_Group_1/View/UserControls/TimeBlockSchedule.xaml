@@ -18,8 +18,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#1F26A0DA"/>
-        <SolidColorBrush x:Key="Item.MouseOver.Border" Color="#a826A0Da"/>
+        <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#FFB3E5FC"/>
+        <SolidColorBrush x:Key="Item.MouseOver.Border" Color="#FF0277BD"/>
         <SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#948C54"/>
         <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="#FF844B1B"/>
         <SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="#FFB1A96F"/>

@@ -18,7 +18,7 @@ public class Appointment
     /// <value>
     /// The appointment identifier.
     /// </value>
-    public int AppointmentId { get; private set; }
+    public int AppointmentId { get; set; }
 
     /// <summary>
     /// Gets or sets the doctor identifier.
@@ -58,7 +58,7 @@ public class Appointment
     /// <value>
     /// The doctor.
     /// </value>
-    public Person Doctor { get; set; }
+    public Doctor Doctor { get; set; }
 
     /// <summary>
     /// Gets or sets the patient.
@@ -66,7 +66,7 @@ public class Appointment
     /// <value>
     /// The patient.
     /// </value>
-    public Person Patient { get; set; }
+    public Patient Patient { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Appointment"/> class.
@@ -104,4 +104,6 @@ public class Appointment
         this.Reason = reason;
         this.Date = date;
     }
+
+    public Appointment() {}
 }

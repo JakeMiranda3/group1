@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
@@ -19,10 +22,13 @@ namespace System_Information_Group_1.Controller
         /// </value>
         public Visit Visit { get; private set; }
 
+        public List<TestOrderDisplay> TestOrders { get; private set; }
+
         public bool IsReadOnly { get; private set; }
 
         private readonly VisitDal visitDal;
-        private readonly bool hasExistingVisit;
+        private readonly TestOrderDal testOrderDal;
+        public bool HasExistingVisit { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RoutineCheckupController"/> class.
@@ -31,10 +37,12 @@ namespace System_Information_Group_1.Controller
         public RoutineCheckupController(Visit visit)
         {
             this.visitDal = new VisitDal();
+            this.testOrderDal = new TestOrderDal();
+            this.TestOrders = this.testOrderDal.GetTestOrdersByAppointmentId(visit.AppointmentId);
             var existingVisit = this.visitDal.GetVisitByAppointmentId(visit.AppointmentId);
             if (existingVisit != null)
             {
-                this.hasExistingVisit = true;
+                this.HasExistingVisit = true;
                 this.Visit = new VisitDisplay(existingVisit.AppointmentId, existingVisit.Symptoms, existingVisit.NurseId,
                     existingVisit.SystolicBloodPressure, existingVisit.DiastolicBloodPressure, existingVisit.Temperature,
                     existingVisit.Pulse, existingVisit.Height, existingVisit.Weight, existingVisit.InitialDiagnosis,
@@ -45,7 +53,7 @@ namespace System_Information_Group_1.Controller
             {
                 this.Visit = visit;
                 this.IsReadOnly = false;
-                this.hasExistingVisit = false;
+                this.HasExistingVisit = false;
             }
         }
 
@@ -59,7 +67,7 @@ namespace System_Information_Group_1.Controller
                 throw new InvalidOperationException("Final diagnosis is already set. This visit is read-only.");
             }
 
-            if (this.hasExistingVisit)
+            if (this.HasExistingVisit)
             {
                 var wasUpdated = this.visitDal.UpdateVisit(this.Visit);
                 if (!wasUpdated)
@@ -76,6 +84,30 @@ namespace System_Information_Group_1.Controller
             {
                 this.IsReadOnly = true;
             }
+
+            foreach (var testOrder in this.TestOrders)
+            {
+                if (string.IsNullOrWhiteSpace(testOrder.TestResult))
+                {
+                    testOrder.PerformedDateTime = DateTime.MinValue;
+                }
+                else
+                {
+                    testOrder.PerformedDateTime = DateTime.Now;
+                }
+            }
+
+            this.testOrderDal.UpdateTestResults(this.TestOrders);
+        }
+
+        public void RefreshTestOrders()
+        {
+            this.TestOrders = this.testOrderDal.GetTestOrdersByAppointmentId(this.Visit.AppointmentId);
+        }
+
+        public void SubmitTestResults(IEnumerable<TestOrderDisplay> collection)
+        {
+            this.testOrderDal.UpdateTestResults(collection);
         }
     }
 }

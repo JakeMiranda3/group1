@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Dapper;
 using MySqlConnector;
 using System_Information_Group_1.Model;
 
@@ -28,8 +30,8 @@ public class AppointmentDal
             reasonOrdinal, appointmentDatetimeOrdinal);
         var doctorPersonId = reader.GetFieldValueCheckNull<int>(doctorPersonIdOrdinal);
         var patientPersonId = reader.GetFieldValueCheckNull<int>(patientPersonIdOrdinal);
-        appointment.Patient = personDal.GetPersonWithId(patientPersonId);
-        appointment.Doctor = personDal.GetPersonWithId(doctorPersonId);
+        appointment.Patient = new Patient {Person = personDal.GetPersonWithId(patientPersonId) };
+        appointment.Doctor = new Doctor {Person = personDal.GetPersonWithId(doctorPersonId) };
         return appointment;
     }
 
@@ -79,6 +81,64 @@ public class AppointmentDal
             appointments.Add(createAppointment(reader, appointmentIdOrdinal, doctorIdOrdinal, patientIdOrdinal, reasonOrdinal, appointmentDateTimeOrdinal));
         }
         return appointments;
+    }
+
+    public bool DoesPatientHaveAppointments(int patientId)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+        var query = "select exists (select 1 from appointment where patient_id = @id)";
+
+        bool exists = connection.ExecuteScalar<bool>(query, new { id = patientId });
+        return exists;
+    }
+
+    public IList<Appointment> GetAllAppointmentsByPatientId(int patientId)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+        var query = "select app.appointment_id as AppointmentId, app.reason as Reason, app.appointment_datetime as `Date`, doc.doctor_id as DoctorId, docPerson.person_id as PersonId, docPerson.first_name as FirstName, docPerson.last_name as LastName, " +
+                    "pat.patient_id as PatientId, patPerson.person_id as PersonId, patPerson.first_name as FirstName, patPerson.last_name as LastName " +
+                    "from appointment as app " +
+                    "join doctor doc on app.doctor_id = doc.doctor_id " +
+                    "join person docPerson on doc.person_id = docPerson.person_id " +
+                    "join patient as pat on app.patient_id = pat.patient_id " +
+                    "join person patPerson on pat.person_id = patPerson.person_id " +
+                    "where app.patient_id = @id;";
+        IList<Appointment> appointments = connection.Query<Appointment, Doctor, Person, Patient, Person, Appointment>(query,
+            (appointment, doctor, doctorPerson, patient, patientPerson) =>
+            {
+                doctor.Person = doctorPerson;
+                patient.Person = patientPerson;
+
+                appointment.Doctor = doctor;
+                appointment.Patient = patient;
+
+                appointment.DoctorId = doctor.DoctorId;
+                appointment.PatientId = patient.PatientId;
+
+                return appointment;
+            },
+            new { id = patientId },
+            splitOn: "DoctorId, PersonId, PatientId, PersonId").ToList();
+        return appointments;
+    }
+
+    public void EditAppointment(Appointment appointment)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+
+        var query = "update appointment " +
+                    "set reason = @Reason, appointment_datetime = @Date " +
+                    "where appointment_id = @AppointmentId;";
+
+        connection.Execute(query, new
+        {
+            appointment.Reason,
+            appointment.Date,
+            appointment.AppointmentId
+        });
     }
 
     /// <summary>
@@ -192,4 +252,6 @@ public class AppointmentDal
             throw new Exception("No appointment found for the given patient ID and date.");
         }
     }
+
+
 }

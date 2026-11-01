@@ -38,8 +38,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.1.89\lib\net461\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.8, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.8\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=8.0.0.2, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.8.0.2\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
@@ -90,16 +93,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\AppointmentController.cs" />
     <Compile Include="Controller\AppointmentCreationController.cs" />
     <Compile Include="Controller\NurseController.cs" />
+    <Compile Include="Controller\OrderTestController.cs" />
     <Compile Include="Controller\PatientController.cs" />
     <Compile Include="Controller\RoutineCheckupController.cs" />
-    <Compile Include="Controller\TopBarController.cs" />
+    <Compile Include="Controller\UserControl\TopBarController.cs" />
     <Compile Include="DAL\AppointmentDal.cs" />
+    <Compile Include="DAL\TestDal.cs" />
+    <Compile Include="DAL\TestOrderDal.cs" />
+    <Compile Include="DAL\TimeDal.cs" />
     <Compile Include="DAL\VisitDal.cs" />
     <Compile Include="Model\Appointment.cs" />
+    <Compile Include="Model\Test.cs" />
+    <Compile Include="Model\TestOrder.cs" />
+    <Compile Include="Model\TestOrderDisplay.cs" />
     <Compile Include="Model\Visit.cs" />
     <Compile Include="Model\VisitDisplay.cs" />
+    <Compile Include="View\AppointmentWindowState.cs" />
+    <Compile Include="View\Dialog\AppointmentInfoDialog.xaml.cs">
+      <DependentUpon>AppointmentInfoDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Dialog\AppointmentSelectionDialog.xaml.cs">
       <DependentUpon>AppointmentSelectionDialog.xaml</DependentUpon>
     </Compile>
@@ -121,6 +136,9 @@
     <Compile Include="View\NurseWindow.xaml.cs">
       <DependentUpon>NurseWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\OrderTestWindow.xaml.cs">
+      <DependentUpon>OrderTestWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PatientWindow.xaml.cs">
       <DependentUpon>PatientWindow.xaml</DependentUpon>
     </Compile>
@@ -136,6 +154,7 @@
     <Compile Include="View\UserControls\TimeCard.xaml.cs">
       <DependentUpon>TimeCard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UserControls\TimeCardState.cs" />
     <Compile Include="View\UserControls\TopAppBar.xaml.cs">
       <DependentUpon>TopAppBar.xaml</DependentUpon>
     </Compile>
@@ -166,6 +185,10 @@
       <DependentUpon>NurseLoginPage.xaml</DependentUpon>
     </Compile>
     <Page Include="View\AdminLoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Dialog\AppointmentInfoDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -226,6 +249,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\NurseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OrderTestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

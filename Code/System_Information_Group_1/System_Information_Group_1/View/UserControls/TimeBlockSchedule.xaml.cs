@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System_Information_Group_1.Controller.UserControl;
+using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
 namespace System_Information_Group_1.View.UserControls
@@ -32,7 +34,7 @@ namespace System_Information_Group_1.View.UserControls
         /// </summary>
         public TimeBlockSchedule()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
 
@@ -42,16 +44,17 @@ namespace System_Information_Group_1.View.UserControls
         /// <param name="appointments">The appointments.</param>
         /// <param name="selectedDay">The selected day.</param>
         /// <param name="doctorName">Name of the doctor.</param>
-        public void SetupSchedulesWithAppointments(IList<Appointment> appointments, DateTime selectedDay, string doctorName)
+        public void AddCardsWithScheduledAndOpenCards(IList<Appointment> appointments, DateTime selectedDay, string doctorName)
         {
             this.clearScheduleSlots();
-            this.fillAppointmentCards(appointments, selectedDay);
-            var timeSlot = new TimeSpan(ClinicStartTime.Hours, ClinicStartTime.Minutes, ClinicStartTime.Seconds);
-            while (timeSlot.Ticks < ClinicEndTime.Ticks)
+            var appointmentsOnDate = this.filterAppointmentsByDate(appointments, selectedDay);
+            this.fillAppointmentCards(appointmentsOnDate);
+            var timeSlot = ClinicStartTime;
+            while (timeSlot < ClinicEndTime)
             {
-                if (!appointments.Any(appointment => appointment.Date.TimeOfDay.Equals(timeSlot)))
+                if (appointmentsOnDate.All(appointment => appointment.Date.TimeOfDay != timeSlot))
                 {
-                    this.addEmptyScheduleSlot(selectedDay.Date.AddTicks(timeSlot.Ticks), doctorName);
+                    this.addEmptyScheduleSlot(selectedDay.Date.Add(timeSlot), doctorName);
                 }
 
                 timeSlot = timeSlot.Add(TimeSpan.FromMinutes(TimeIntervalInMinutes));
@@ -59,6 +62,21 @@ namespace System_Information_Group_1.View.UserControls
 
             this.sortCardsByDate();
 
+        }
+
+        public void AddCardsFromAppointments(IList<Appointment> appointments)
+        {
+            this.clearScheduleSlots();
+            this.fillAppointmentCards(appointments);
+            this.sortCardsByDate();
+        }
+
+        public void AddCardsFromAppointments(IList<Appointment> appointments, DateTime time)
+        {
+            var filteredAppointments = this.filterAppointmentsByDate(appointments, time);
+            this.clearScheduleSlots();
+            this.fillAppointmentCards(filteredAppointments);
+            this.sortCardsByDate();
         }
 
         private void sortCardsByDate()
@@ -77,34 +95,33 @@ namespace System_Information_Group_1.View.UserControls
         }
 
 
-        private void fillAppointmentCards(IList<Appointment> appointments, DateTime selectedDay)
+        private void fillAppointmentCards(IList<Appointment> appointments)
         {
             foreach (Appointment appointment in appointments)
             {
-                if (appointment.Date.Date != selectedDay.Date)
-                    continue;
+                var doctorName =
+                    $"{appointment.Doctor.Person.FirstName} {appointment.Doctor.Person.LastName}";
 
-                string doctorName =
-                    $"{appointment.Doctor.FirstName} {appointment.Doctor.LastName}";
+                var patientName =
+                    $"{appointment.Patient.Person.FirstName} {appointment.Patient.Person.LastName}";
 
-                string patientName =
-                    $"{appointment.Patient.FirstName} {appointment.Patient.LastName}";
-
-                this.addScheduleSlotWithAppointmentFilled(
+                this.addAppointmentCard(
                     appointment.Date,
                     doctorName,
                     patientName,
-                    appointment.Patient.ContactPhoneNumber
+                    appointment.Patient.Person.ContactPhoneNumber
                 );
             }
         }
 
-        private void addScheduleSlotWithAppointmentFilled(DateTime date, String doctorName, String patientName, String patientPhone)
+
+        private void addAppointmentCard(DateTime date, String doctorName, String patientName, String patientPhone)
         {
+            var card = new TimeCard(date, doctorName, patientName, patientPhone);
+            card.State = TimeCardState.Open;
             var item = new ListBoxItem
             {
-                Content = new TimeCard(date, doctorName, patientName, patientPhone),
-                IsEnabled = false
+                Content = card,
             };
 
             this.scheduleListBox.Items.Add(item);
@@ -112,10 +129,11 @@ namespace System_Information_Group_1.View.UserControls
 
         private void addEmptyScheduleSlot(DateTime date, String doctorName)
         {
+            var card = new TimeCard(date, doctorName);
+            card.State = TimeCardState.Available;
             var item = new ListBoxItem
             {
-                Content = new TimeCard(date, doctorName),
-                IsEnabled = true
+                Content = card,
             };
 
             this.scheduleListBox.Items.Add(item);
@@ -139,5 +157,17 @@ namespace System_Information_Group_1.View.UserControls
         {
             return this.scheduleListBox.SelectedItem is ListBoxItem item && item.IsEnabled;
         }
+
+        public bool IsSelectedCardAvailable()
+        {
+            return this.scheduleListBox.SelectedItem is ListBoxItem item && item.Content is TimeCard card &&
+                   card.State == TimeCardState.Available;
+        }
+
+        private IList<Appointment> filterAppointmentsByDate(IList<Appointment> appointments, DateTime selectedDay)
+        {
+            return appointments.Where(a => a.Date.Date == selectedDay.Date).ToList();
+        }
+
     }
 }

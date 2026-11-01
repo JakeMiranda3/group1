@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="System_Information_Group_1.View.UserControls.TimeCard"
+﻿<UserControl Style="{DynamicResource CardStateStyle}" x:Class="System_Information_Group_1.View.UserControls.TimeCard"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:System_Information_Group_1.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="800">
+    
+    
     <UserControl.Resources>
         <Style x:Key="TimeCardLabelStyle" TargetType="{x:Type Label}">
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
@@ -19,31 +21,78 @@
                         <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="Black"/>
-                                <Setter Property="Background" Value="#FFDC5A1C"></Setter>
-
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="CardStateStyle" TargetType="{x:Type local:TimeCard}">
+            <Setter Property="Background" Value="#FFA5D7A7"/>
+            <Setter Property="IsEnabled" Value="True"/>
+
+            <Style.Triggers>
+                <DataTrigger
+                    Binding="{Binding State, RelativeSource={RelativeSource Self}}"
+                    Value="{x:Static local:TimeCardState.Available}">
+
+                    <Setter Property="Background" Value="#FFFFFFFB"/>
+
+                </DataTrigger>
+                <DataTrigger
+                    Binding="{Binding State, RelativeSource={RelativeSource Self}}"
+                    Value="{x:Static local:TimeCardState.Pending}">
+
+                    <Setter Property="Background" Value="#FFFFF082"/>
+
+                </DataTrigger>
+                <DataTrigger
+                    Binding="{Binding State, RelativeSource={RelativeSource Self}}"
+                    Value="{x:Static local:TimeCardState.Complete}">
+                    <Setter Property="Background" Value="#FFDC7A1C"/>
+                    <Setter Property="IsEnabled" Value="False"/>
+
+                </DataTrigger>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding State, RelativeSource={RelativeSource self}}" Value="{x:Static local:TimeCardState.Open}"/>
+                        <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background" Value="#FF66BB6A"/>
+                </MultiDataTrigger>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition
+                            Binding="{Binding State, RelativeSource={RelativeSource Self}}"
+                            Value="{x:Static local:TimeCardState.Available}"/>
+                        <Condition
+                            Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"
+                            Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background" Value="#FFD5ECFF"/>
+                </MultiDataTrigger>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition
+                            Binding="{Binding State, RelativeSource={RelativeSource Self}}"
+                            Value="{x:Static local:TimeCardState.Pending}"/>
+                        <Condition
+                            Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"
+                            Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background" Value="#FFFFD54F"/>
+                </MultiDataTrigger>
+
+            </Style.Triggers>
+        </Style>
+
+
 
 
     </UserControl.Resources>
-    <Border BorderThickness="1,1,1,1" BorderBrush="Black">
-        <Border.Style>
-            <Style TargetType="Border">
-                <Setter Property="Background" Value="Transparent"/>
-                <Style.Triggers>
-                    <Trigger Property="IsEnabled" Value="False">
-                        <Setter Property="Background" Value="#FFDC5A1C"/>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-        </Border.Style>
+    <Border BorderThickness="1,1,1,1" BorderBrush="Black" Background="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type local:TimeCard}}}">
+
         <Grid>
             <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"></ColumnDefinition>

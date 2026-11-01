@@ -33,10 +33,10 @@
                                     Binding="{Binding Date, StringFormat=g}"
                                     Width="2*" />
                 <DataGridTextColumn Header="Doctor First Name"
-                                    Binding="{Binding Doctor.FirstName}"
+                                    Binding="{Binding Doctor.Person.FirstName}"
                                     Width="2*" />
                 <DataGridTextColumn Header="Doctor Last Name"
-                                    Binding="{Binding Doctor.LastName}"
+                                    Binding="{Binding Doctor.Person.LastName}"
                                     Width="2*" />
                 <DataGridTextColumn Header="Reason"
                                     Binding="{Binding Reason}"
