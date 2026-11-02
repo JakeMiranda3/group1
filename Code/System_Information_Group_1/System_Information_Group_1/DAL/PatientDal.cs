@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using MySqlConnector;
 using System_Information_Group_1.Model;
@@ -56,21 +57,81 @@ public class PatientDal
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
 
-        var insert = "insert into patient (person_id) values (@personId);";
-        using (var cmd = new MySqlCommand(insert, connection))
-        {
-            cmd.Parameters.Add("@personId", MySqlDbType.Int32).Value = personId;
-            cmd.ExecuteNonQuery();
-        }
+        var patient = this.CreatePatient(personId, connection, null);
 
-        using var idCmd = new MySqlCommand("select last_insert_id();", connection);
-        var newId = Convert.ToInt32(idCmd.ExecuteScalar());
-
-        var patient = new Patient(personId, newId, true);
         var personDal = new PersonDal();
         patient.Person = personDal.GetPersonWithId(patient.PersonId);
 
         return patient;
+    }
+
+    /// <summary>
+    /// Creates the patient.
+    /// </summary>
+    /// <param name="personId">The person identifier.</param>
+    /// <param name="connection">The connection.</param>
+    /// <param name="transaction">The transaction.</param>
+    /// <returns>The newly created patient.</returns>
+    public Patient CreatePatient(int personId, MySqlConnection connection,
+        MySqlTransaction? transaction)
+    {
+        var insert = "insert into patient (person_id) values (@personId);";
+
+        using var command = new MySqlCommand(insert, connection, transaction);
+
+        command.Parameters.Add("@personId", MySqlDbType.Int32).Value = personId;
+
+        command.ExecuteNonQuery();
+
+        var newId = Convert.ToInt32(command.LastInsertedId);
+
+        return new Patient(personId, newId, true);
+    }
+
+
+    /// <summary>
+    /// Creates the patient with person.
+    /// </summary>
+    /// <param name="lastName">The last name.</param>
+    /// <param name="firstName">The first name.</param>
+    /// <param name="dateOfBirth">The date of birth.</param>
+    /// <param name="contactPhoneNumber">The contact phone number.</param>
+    /// <param name="address">The address.</param>
+    /// <param name="zip">The zip.</param>
+    /// <param name="city">The city.</param>
+    /// <param name="state">The state.</param>
+    /// <param name="gender">The gender.</param>
+    /// <returns>The newly created patient.</returns>
+    public Patient CreatePatientWithPerson(string lastName, string firstName,
+        DateTime dateOfBirth, string contactPhoneNumber, string address,
+        string zip, string city, string state, string gender = "")
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+
+        using var transaction = connection.BeginTransaction();
+
+        try
+        {
+            var personDal = new PersonDal();
+
+            var person = personDal.CreatePerson(lastName, firstName,
+                dateOfBirth, contactPhoneNumber, address, zip,
+                city, state, gender, connection, transaction);
+
+            var patient = this.CreatePatient(person.PersonId, connection, transaction);
+
+            patient.Person = person;
+
+            transaction.Commit();
+
+            return patient;
+        }
+        catch
+        {
+            transaction.Rollback();
+            throw;
+        }
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using MySqlConnector;
 using System_Information_Group_1.Model;
@@ -55,33 +56,60 @@ public class PersonDal
     ///     Creates a new person row and returns the created Person with generated person id.
     /// </summary>
     /// <returns>Person with generated PersonId.</returns>
-    public Person CreatePerson(string lastName, string firstName, DateTime dateOfBirth, string contactPhoneNumber,
-        string address, string zip, string city, string state, string gender = "")
+    public Person CreatePerson(string lastName, string firstName, DateTime dateOfBirth,
+        string contactPhoneNumber, string address, string zip, string city,
+        string state, string gender = "")
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
 
+        return this.CreatePerson(lastName, firstName, dateOfBirth,
+            contactPhoneNumber, address, zip, city, state, gender,
+            connection, null);
+    }
+
+    /// <summary>
+    ///     Creates the person.
+    /// </summary>
+    /// <param name="lastName">The last name.</param>
+    /// <param name="firstName">The first name.</param>
+    /// <param name="dateOfBirth">The date of birth.</param>
+    /// <param name="contactPhoneNumber">The contact phone number.</param>
+    /// <param name="address">The address.</param>
+    /// <param name="zip">The zip.</param>
+    /// <param name="city">The city.</param>
+    /// <param name="state">The state.</param>
+    /// <param name="gender">The gender.</param>
+    /// <param name="connection">The connection.</param>
+    /// <param name="transaction">The transaction.</param>
+    /// <returns>Person with generated PersonId.</returns>
+    public Person CreatePerson(string lastName, string firstName, DateTime dateOfBirth,
+        string contactPhoneNumber, string address, string zip, string city,
+        string state, string gender, MySqlConnection connection,
+        MySqlTransaction? transaction)
+    {
         var insert =
-            "insert into person (last_name, first_name, date_of_birth, contact_phone_number, address, zip, city, state, gender) values (@last, @first, @dob, @phone, @address, @zip, @city, @state, @gender);";
-        using (var command = new MySqlCommand(insert, connection))
-        {
-            command.Parameters.Add("@last", MySqlDbType.VarChar).Value = lastName;
-            command.Parameters.Add("@first", MySqlDbType.VarChar).Value = firstName;
-            command.Parameters.Add("@dob", MySqlDbType.DateTime).Value = dateOfBirth;
-            command.Parameters.Add("@phone", MySqlDbType.String).Value = contactPhoneNumber;
-            command.Parameters.Add("@address", MySqlDbType.VarChar).Value = address;
-            command.Parameters.Add("@zip", MySqlDbType.VarChar).Value = zip;
-            command.Parameters.Add("@city", MySqlDbType.VarChar).Value = city;
-            command.Parameters.Add("@state", MySqlDbType.VarChar).Value = state;
-            command.Parameters.Add("@gender", MySqlDbType.VarChar).Value = gender ?? string.Empty;
+            "insert into person (last_name, first_name, date_of_birth, contact_phone_number, address, zip, city, state, gender) " +
+            "values (@last, @first, @dob, @phone, @address, @zip, @city, @state, @gender);";
 
-            command.ExecuteNonQuery();
-        }
+        using var command = new MySqlCommand(insert, connection, transaction);
 
-        using var idCmd = new MySqlCommand("select last_insert_id();", connection);
-        var newId = Convert.ToInt32(idCmd.ExecuteScalar());
+        command.Parameters.Add("@last", MySqlDbType.VarChar).Value = lastName;
+        command.Parameters.Add("@first", MySqlDbType.VarChar).Value = firstName;
+        command.Parameters.Add("@dob", MySqlDbType.DateTime).Value = dateOfBirth;
+        command.Parameters.Add("@phone", MySqlDbType.String).Value = contactPhoneNumber;
+        command.Parameters.Add("@address", MySqlDbType.VarChar).Value = address;
+        command.Parameters.Add("@zip", MySqlDbType.VarChar).Value = zip;
+        command.Parameters.Add("@city", MySqlDbType.VarChar).Value = city;
+        command.Parameters.Add("@state", MySqlDbType.VarChar).Value = state;
+        command.Parameters.Add("@gender", MySqlDbType.VarChar).Value = gender ?? string.Empty;
 
-        return new Person(newId, lastName, firstName, dateOfBirth, contactPhoneNumber, address, zip, city, state, gender);
+        command.ExecuteNonQuery();
+
+        var newId = Convert.ToInt32(command.LastInsertedId);
+
+        return new Person(newId, lastName, firstName, dateOfBirth,
+            contactPhoneNumber, address, zip, city, state, gender);
     }
 
     /// <summary>
@@ -174,7 +202,8 @@ public class PersonDal
 
     public static Person createPerson(MySqlDataReader reader, int personIdOrdinal, int firstNameOrdinal,
         int lastNameOrdinal, int dateOfBirthOrdinal,
-        int contactPhoneNumberOrdinal, int addressOrdinal, int zipOrdinal, int cityOrdinal, int stateOrdinal, int genderOrdinal)
+        int contactPhoneNumberOrdinal, int addressOrdinal, int zipOrdinal, int cityOrdinal, int stateOrdinal,
+        int genderOrdinal)
     {
         return new Person(
             reader.GetFieldValueCheckNull<int>(personIdOrdinal),
@@ -218,5 +247,4 @@ public class PersonDal
     }
 
     #endregion
-
 }

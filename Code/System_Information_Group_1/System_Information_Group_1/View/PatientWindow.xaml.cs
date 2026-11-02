@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Linq;
 using System.Windows;
 using System_Information_Group_1.Controller;
@@ -93,7 +92,7 @@ public partial class PatientWindow : Window
         if (this.patientDataGrid.SelectedItem is Patient selectedPatient)
         {
             var patientId = selectedPatient.PatientId;
-            AppointmentCreationWindow appointmentCreationWindow = new AppointmentCreationWindow(patientId, AppointmentWindowState.DoctorView);
+            var appointmentCreationWindow = new AppointmentCreationWindow(patientId, AppointmentWindowState.DoctorView);
             appointmentCreationWindow.Show();
 
             var parentWindow = GetWindow(this);
@@ -115,10 +114,12 @@ public partial class PatientWindow : Window
                 return;
             }
 
-            var appointments = this.appointmentDal.GetAppointmentsContainingDoctorAndPatientByPatientId(selectedPatient.PatientId);
+            var appointments =
+                this.appointmentDal.GetAppointmentsContainingDoctorAndPatientByPatientId(selectedPatient.PatientId);
             if (appointments.Count == 0)
             {
-                MessageBox.Show("No appointments found for the selected patient.", "Missing Information", MessageBoxButton.OK,
+                MessageBox.Show("No appointments found for the selected patient.", "Missing Information",
+                    MessageBoxButton.OK,
                     MessageBoxImage.Information);
                 return;
             }
@@ -129,7 +130,8 @@ public partial class PatientWindow : Window
 
             if (editableAppointments.Count == 0)
             {
-                MessageBox.Show("All visits for this patient are finalized and read-only.", "No Editable Visit", MessageBoxButton.OK,
+                MessageBox.Show("All visits for this patient are finalized and read-only.", "No Editable Visit",
+                    MessageBoxButton.OK,
                     MessageBoxImage.Information);
                 return;
             }
@@ -181,13 +183,15 @@ public partial class PatientWindow : Window
             var patientHasAppointments = this.appointmentDal.DoesPatientHaveAppointments(selectedPatient.PatientId);
             if (!patientHasAppointments)
             {
-                MessageBox.Show("No appointments found for the selected patient.", "Missing Information", MessageBoxButton.OK,
+                MessageBox.Show("No appointments found for the selected patient.", "Missing Information",
+                    MessageBoxButton.OK,
                     MessageBoxImage.Information);
                 return;
             }
 
             var patientId = selectedPatient.PatientId;
-            AppointmentCreationWindow appointmentCreationWindow = new AppointmentCreationWindow(patientId, AppointmentWindowState.PatientView);
+            var appointmentCreationWindow =
+                new AppointmentCreationWindow(patientId, AppointmentWindowState.PatientView);
             appointmentCreationWindow.Show();
 
             var parentWindow = GetWindow(this);
@@ -195,8 +199,6 @@ public partial class PatientWindow : Window
             {
                 parentWindow?.Close();
             }
-
-
         }
         catch (AccessViolationException)
         {
@@ -209,6 +211,16 @@ public partial class PatientWindow : Window
                 MessageBoxImage.Error);
         }
     }
-}
+
+    private void ClearButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        this.firstNameTextBox.Clear();
+        this.lastNameTextBox.Clear();
+        this.dateOfBirthPicker.SelectedDate = null;
+
+        this.patientDataGrid.ItemsSource = null;
+    }
+
     #endregion
+}
 

@@ -53,11 +53,9 @@ public class NurseController
         this.checkFieldLengths(firstName, lastName, address,
             city, state);
 
-        var person = this.personDal.CreatePerson(
-            lastName, firstName, dateOfBirth.Date, phoneNumber,
-            address, zip, city, state, gender);
-
-        var nurse = this.nurseDal.CreateNurse(person.PersonId);
+        var nurse = this.nurseDal.CreateNurseWithPerson(
+            lastName, firstName, dateOfBirth,
+            phoneNumber, address, zip, city, state, gender);
 
         return nurse;
     }

@@ -17,9 +17,10 @@ public partial class NurseWindow : Window
 
     #endregion
 
-    #region Constructors    
+    #region Constructors
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="NurseWindow"/> class.
+    ///     Initializes a new instance of the <see cref="NurseWindow" /> class.
     /// </summary>
     public NurseWindow()
     {
@@ -72,6 +73,15 @@ public partial class NurseWindow : Window
 
             this.nurseDataGrid.Items.Refresh();
         }
+    }
+
+    private void ClearButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        this.firstNameTextBox.Clear();
+        this.lastNameTextBox.Clear();
+        this.dateOfBirthPicker.SelectedDate = null;
+
+        this.nurseDataGrid.ItemsSource = null;
     }
 
     #endregion
