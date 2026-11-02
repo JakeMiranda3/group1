@@ -84,6 +84,35 @@ public class PersonDal
         return new Person(newId, lastName, firstName, dateOfBirth, contactPhoneNumber, address, zip, city, state, gender);
     }
 
+    public Person CreatePerson(string lastName, string firstName, DateTime dateOfBirth,
+        string contactPhoneNumber, string address, string zip, string city,
+        string state, string gender, MySqlConnection connection,
+        MySqlTransaction transaction)
+    {
+        var insert =
+            "insert into person (last_name, first_name, date_of_birth, contact_phone_number, address, zip, city, state, gender) " +
+            "values (@last, @first, @dob, @phone, @address, @zip, @city, @state, @gender);";
+
+        using var command = new MySqlCommand(insert, connection, transaction);
+
+        command.Parameters.Add("@last", MySqlDbType.VarChar).Value = lastName;
+        command.Parameters.Add("@first", MySqlDbType.VarChar).Value = firstName;
+        command.Parameters.Add("@dob", MySqlDbType.DateTime).Value = dateOfBirth;
+        command.Parameters.Add("@phone", MySqlDbType.String).Value = contactPhoneNumber;
+        command.Parameters.Add("@address", MySqlDbType.VarChar).Value = address;
+        command.Parameters.Add("@zip", MySqlDbType.VarChar).Value = zip;
+        command.Parameters.Add("@city", MySqlDbType.VarChar).Value = city;
+        command.Parameters.Add("@state", MySqlDbType.VarChar).Value = state;
+        command.Parameters.Add("@gender", MySqlDbType.VarChar).Value = gender ?? string.Empty;
+
+        command.ExecuteNonQuery();
+
+        var newId = Convert.ToInt32(command.LastInsertedId);
+
+        return new Person(newId, lastName, firstName, dateOfBirth,
+            contactPhoneNumber, address, zip, city, state, gender);
+    }
+
     /// <summary>
     ///     Gets all persons from the person table.
     /// </summary>

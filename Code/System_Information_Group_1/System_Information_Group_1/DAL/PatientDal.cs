@@ -73,6 +73,58 @@ public class PatientDal
         return patient;
     }
 
+    public Patient CreatePatient(int personId, MySqlConnection connection,
+        MySqlTransaction transaction)
+    {
+        var insert = "insert into patient (person_id) values (@personId);";
+
+        using var command = new MySqlCommand(insert, connection, transaction);
+
+        command.Parameters.Add("@personId", MySqlDbType.Int32).Value = personId;
+
+        command.ExecuteNonQuery();
+
+        var newId = Convert.ToInt32(command.LastInsertedId);
+
+        return new Patient(personId, newId, true);
+    }
+
+    /// <summary>
+    /// Creates a new person and patient within a single transaction.
+    /// </summary>
+    /// <returns>The newly created patient.</returns>
+    public Patient CreatePatientWithPerson(string lastName, string firstName,
+        DateTime dateOfBirth, string contactPhoneNumber, string address,
+        string zip, string city, string state, string gender = "")
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+
+        using var transaction = connection.BeginTransaction();
+
+        try
+        {
+            var personDal = new PersonDal();
+
+            var person = personDal.CreatePerson(lastName, firstName,
+                dateOfBirth, contactPhoneNumber, address, zip,
+                city, state, gender, connection, transaction);
+
+            var patient = this.CreatePatient(person.PersonId, connection, transaction);
+
+            patient.Person = person;
+
+            transaction.Commit();
+
+            return patient;
+        }
+        catch
+        {
+            transaction.Rollback();
+            throw;
+        }
+    }
+
     /// <summary>
     ///     Searches the patients.
     /// </summary>

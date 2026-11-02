@@ -49,10 +49,9 @@ public class PatientController
         this.checkFields(firstName, lastName, dateOfBirth, phoneNumber, zip, address, city, state);
         this.checkFieldLengths(firstName, lastName, address, city, state);
 
-        var person = this.personDal.CreatePerson(
-            lastName, firstName, dateOfBirth.Date, phoneNumber, address, zip, city, state, gender);
-
-        var patient = this.patientDal.CreatePatient(person.PersonId);
+        var patient = this.patientDal.CreatePatientWithPerson(
+            lastName, firstName, dateOfBirth,
+            phoneNumber, address, zip, city, state, gender);
         return patient;
     }
 
