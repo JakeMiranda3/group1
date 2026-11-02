@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using MySqlConnector;
@@ -81,30 +82,80 @@ public class NurseDal
     }
 
     /// <summary>
-    ///     Creates a nurse associated with the specified person.
+    ///     Creates the nurse.
     /// </summary>
+    /// <param name="personId">The person identifier.</param>
+    /// <returns>A newly created nurse.</returns>
     public Nurse CreateNurse(int personId)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
 
-        var query = "insert into nurse (person_id) values (@personId);";
-
-        using (var command = new MySqlCommand(query, connection))
-        {
-            command.Parameters.Add("@personId", MySqlDbType.Int32).Value = personId;
-            command.ExecuteNonQuery();
-        }
-
-        using var idCommand = new MySqlCommand("select last_insert_id();", connection);
-        var nurseId = Convert.ToInt32(idCommand.ExecuteScalar());
-
-        var nurse = new Nurse(personId, nurseId);
+        var nurse = this.CreateNurse(personId, connection, null);
 
         var personDal = new PersonDal();
-        nurse.Person = personDal.GetPersonWithId(personId);
+        nurse.Person = personDal.GetPersonWithId(nurse.PersonId);
 
         return nurse;
+    }
+
+    /// <summary>
+    ///     Creates the nurse.
+    /// </summary>
+    /// <param name="personId">The person identifier.</param>
+    /// <param name="connection">The connection.</param>
+    /// <param name="transaction">The transaction.</param>
+    /// <returns>A newly created nurse.</returns>
+    public Nurse CreateNurse(int personId, MySqlConnection connection,
+        MySqlTransaction? transaction)
+    {
+        var insert = "insert into nurse (person_id) values (@personId);";
+
+        using var command = new MySqlCommand(insert, connection, transaction);
+
+        command.Parameters.Add("@personId", MySqlDbType.Int32).Value = personId;
+
+        command.ExecuteNonQuery();
+
+        var newId = Convert.ToInt32(command.LastInsertedId);
+
+        return new Nurse(personId, newId);
+    }
+
+    /// <summary>
+    ///     Creates a new person and nurse within a single transaction.
+    /// </summary>
+    /// <returns>The newly created nurse.</returns>
+    public Nurse CreateNurseWithPerson(string lastName, string firstName,
+        DateTime dateOfBirth, string contactPhoneNumber, string address,
+        string zip, string city, string state, string gender = "")
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+        connection.Open();
+
+        using var transaction = connection.BeginTransaction();
+
+        try
+        {
+            var personDal = new PersonDal();
+
+            var person = personDal.CreatePerson(lastName, firstName,
+                dateOfBirth, contactPhoneNumber, address, zip,
+                city, state, gender, connection, transaction);
+
+            var nurse = this.CreateNurse(person.PersonId, connection, transaction);
+
+            nurse.Person = person;
+
+            transaction.Commit();
+
+            return nurse;
+        }
+        catch
+        {
+            transaction.Rollback();
+            throw;
+        }
     }
 
     /// <summary>
