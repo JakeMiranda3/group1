@@ -142,6 +142,10 @@
                                             Binding="{Binding Person.ContactPhoneNumber}"
                                             Width="*" />
 
+                        <DataGridTextColumn Header="Gender"
+                                            Binding="{Binding Person.Gender}"
+                                            Width="*" />
+
                         <DataGridCheckBoxColumn Header="Active"
                                                 Binding="{Binding IsActive}"
                                                 Width="Auto" />
