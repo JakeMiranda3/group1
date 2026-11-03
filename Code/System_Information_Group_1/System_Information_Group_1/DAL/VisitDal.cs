@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Dapper;
 using MySqlConnector;
 using System_Information_Group_1.Model;
 
@@ -102,6 +105,25 @@ namespace System_Information_Group_1.DAL
                                  "where appointment_id = @appointment_id and (final_diagnosis is null or trim(final_diagnosis) = '');";
 
             return this.ExecuteWithFallback(connection, typoUpdate, standardUpdate, visit) > 0;
+        }
+
+        /// <summary>
+        /// Gets all appointments ids that have a final diagnosis for the visit
+        /// </summary>
+        /// <param name="appointmentIds">a list of appointment ids to check if are final</param>
+        /// <returns></returns>
+        public IList<int> GetFinalizedAppointmentIds(IList<int> appointmentIds)
+        {
+            if (appointmentIds.Count == 0)
+            {
+                return [];
+            }
+
+            using var connection = new MySqlConnection(Connection.ConnectionString());
+
+            var query = "SELECT DISTINCT appointment_id FROM visit WHERE appointment_id IN @appointmentIds AND final_diagnosis IS NOT NULL";
+
+            return connection.Query<int>(query, new { appointmentIds }).ToList();
         }
 
         private int ExecuteWithFallback(MySqlConnection connection, string primarySql, string fallbackSql, Visit visit)

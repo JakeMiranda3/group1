@@ -23,6 +23,8 @@ namespace System_Information_Group_1.View.UserControls
     {
         private const String DefaultEmptyMessage = "Available";
 
+        public int? AppointmentId { get; private set; }
+
         public TimeCardState State
         {
             get => (TimeCardState)GetValue(StateProperty);
@@ -77,6 +79,12 @@ namespace System_Information_Group_1.View.UserControls
             this.patientNameLabel.Content = patientName;
             this.patientPhoneLabel.Content = patientPhone;
             this.scheduledTime = date;
+        }
+
+        public TimeCard(DateTime date, string doctorName, string patientName, string patientPhone, int appointmentId) :
+            this(date, doctorName, patientName, patientPhone)
+        {
+            this.AppointmentId = appointmentId;
         }
 
         

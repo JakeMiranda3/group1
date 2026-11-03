@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using Dapper;
 using MySqlConnector;
 using System_Information_Group_1.Model;
 
@@ -88,28 +89,42 @@ public class PersonDal
         string state, string gender, MySqlConnection connection,
         MySqlTransaction? transaction)
     {
-        var insert =
-            "insert into person (last_name, first_name, date_of_birth, contact_phone_number, address, zip, city, state, gender) " +
-            "values (@last, @first, @dob, @phone, @address, @zip, @city, @state, @gender);";
+        var insertQuery =
+            "INSERT INTO person (last_name, first_name, date_of_birth, contact_phone_number, address, zip, city, state, gender) " +
+            "VALUES (@LastName, @FirstName, @DateOfBirth, @ContactPhoneNumber, @Address, @Zip, @City, @State, @Gender); " +
+            "SELECT LAST_INSERT_ID();";
 
-        using var command = new MySqlCommand(insert, connection, transaction);
-
-        command.Parameters.Add("@last", MySqlDbType.VarChar).Value = lastName;
-        command.Parameters.Add("@first", MySqlDbType.VarChar).Value = firstName;
-        command.Parameters.Add("@dob", MySqlDbType.DateTime).Value = dateOfBirth;
-        command.Parameters.Add("@phone", MySqlDbType.String).Value = contactPhoneNumber;
-        command.Parameters.Add("@address", MySqlDbType.VarChar).Value = address;
-        command.Parameters.Add("@zip", MySqlDbType.VarChar).Value = zip;
-        command.Parameters.Add("@city", MySqlDbType.VarChar).Value = city;
-        command.Parameters.Add("@state", MySqlDbType.VarChar).Value = state;
-        command.Parameters.Add("@gender", MySqlDbType.VarChar).Value = gender ?? string.Empty;
-
-        command.ExecuteNonQuery();
-
-        var newId = Convert.ToInt32(command.LastInsertedId);
+        var newId = connection.QuerySingle<int>(insertQuery, new
+        {
+            LastName = lastName,
+            FirstName = firstName,
+            DateOfBirth = dateOfBirth,
+            ContactPhoneNumber = contactPhoneNumber,
+            Address = address,
+            Zip = zip,
+            City = city,
+            State = state,
+            Gender = gender ?? string.Empty
+        }, transaction);
 
         return new Person(newId, lastName, firstName, dateOfBirth,
             contactPhoneNumber, address, zip, city, state, gender);
+    }
+
+    public Person CreatePerson(Person person, MySqlConnection connection, MySqlTransaction? transaction)
+    {
+        return this.CreatePerson(
+            person.LastName,
+            person.FirstName,
+            person.DateOfBirth,
+            person.ContactPhoneNumber,
+            person.Address,
+            person.Zip,
+            person.City,
+            person.State,
+            person.Gender ?? string.Empty,
+            connection,
+            transaction);
     }
 
     /// <summary>

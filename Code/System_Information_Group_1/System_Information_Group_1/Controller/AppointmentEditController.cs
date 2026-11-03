@@ -9,7 +9,7 @@ namespace System_Information_Group_1.Controller;
 ///     Controller class for managing appointment related operations,
 ///     including editing appointment information.
 /// </summary>
-public class AppointmentController
+public class AppointmentEditController
 {
     #region Fields
 
@@ -40,6 +40,12 @@ public class AppointmentController
         appointment.Reason = appointment.Reason?.Trim() ?? "";
 
         this.checkFields(appointment);
+
+        if (this.appointmentDal.HasDoctorAppointmentConflict(appointment.DoctorId, appointment.Date,
+                appointment.AppointmentId))
+        {
+            throw new ArgumentException("The doctor already has an appointment at this time.");
+        }
 
         this.appointmentDal.EditAppointment(appointment);
     }
@@ -75,6 +81,7 @@ public class AppointmentController
         {
             throw new ArgumentException("Invalid appointment date.");
         }
+
     }
 
     #endregion

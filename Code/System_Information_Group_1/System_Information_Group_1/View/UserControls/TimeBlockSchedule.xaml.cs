@@ -25,6 +25,19 @@ namespace System_Information_Group_1.View.UserControls
     /// </summary>
     public partial class TimeBlockSchedule : UserControl
     {
+
+        public int? SelectedAppointmentId
+        {
+            get
+            {
+                if (this.scheduleListBox.SelectedItem is ListBoxItem item && item.Content is TimeCard card)
+                {
+                    return card.AppointmentId;
+                }
+
+                return null;
+            }
+        }
         private static readonly TimeSpan ClinicStartTime = new (8, 0, 0);
         private static readonly TimeSpan ClinicEndTime = new (17, 0, 0);
         private const int TimeIntervalInMinutes = 15;
@@ -73,14 +86,6 @@ namespace System_Information_Group_1.View.UserControls
             this.sortCardsByDate();
         }
 
-        public void AddCardsFromAppointments(IList<Appointment> appointments, DateTime time)
-        {
-            var filteredAppointments = this.filterAppointmentsByDate(appointments, time);
-            this.clearScheduleSlots();
-            this.fillAppointmentCards(filteredAppointments);
-            this.sortCardsByDate();
-        }
-
         private void sortCardsByDate()
         {
             var sortedCards = this.scheduleListBox.Items
@@ -99,7 +104,10 @@ namespace System_Information_Group_1.View.UserControls
 
         private void fillAppointmentCards(IList<Appointment> appointments)
         {
-            foreach (Appointment appointment in appointments)
+            var cardStates = this.controller.DetermineCardStates(appointments);
+
+
+            foreach (var appointment in appointments)
             {
                 var doctorName =
                     $"{appointment.Doctor.Person.FirstName} {appointment.Doctor.Person.LastName}";
@@ -112,7 +120,8 @@ namespace System_Information_Group_1.View.UserControls
                     doctorName,
                     patientName,
                     appointment.Patient.Person.ContactPhoneNumber,
-                    this.controller.DetermineCardState(appointment)
+                    cardStates[appointment.AppointmentId],
+                    appointment.AppointmentId
                 );
             }
         }
@@ -120,9 +129,9 @@ namespace System_Information_Group_1.View.UserControls
 
 
 
-        private void addAppointmentCard(DateTime date, String doctorName, String patientName, String patientPhone, TimeCardState cardState)
+        private void addAppointmentCard(DateTime date, String doctorName, String patientName, String patientPhone, TimeCardState cardState, int appointmentId)
         {
-            var card = new TimeCard(date, doctorName, patientName, patientPhone);
+            var card = new TimeCard(date, doctorName, patientName, patientPhone, appointmentId);
             card.State = cardState;
             var item = new ListBoxItem
             {
@@ -152,16 +161,6 @@ namespace System_Information_Group_1.View.UserControls
             this.scheduleListBox.Items.Clear();
         }
 
-        /// <summary>
-        /// Determines whether [is any card selected].
-        /// </summary>
-        /// <returns>
-        ///   <c>true</c> if [is any card selected]; otherwise, <c>false</c>.
-        /// </returns>
-        public bool IsAnyCardSelected()
-        {
-            return this.scheduleListBox.SelectedItem is ListBoxItem item && item.IsEnabled;
-        }
 
         public bool IsSelectedCardAvailable()
         {

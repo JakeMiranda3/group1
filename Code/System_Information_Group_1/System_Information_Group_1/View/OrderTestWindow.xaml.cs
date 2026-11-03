@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,6 +20,8 @@ public partial class OrderTestWindow : Window
     private List<Test> existingOrderedTests; 
     private List<Test> newlyOrderedTests;    
     private int appointmentId;
+
+    public event EventHandler? TestsSubmitted;
 
     #endregion
 
@@ -51,9 +54,11 @@ public partial class OrderTestWindow : Window
 
     private void RefreshOrderedTestsListView()
     {
-        var combined = this.existingOrderedTests.Concat(this.newlyOrderedTests).ToList();
-        this.OrderedTestsListView.ItemsSource = null;
-        this.OrderedTestsListView.ItemsSource = combined;
+        var orderedTests = this.existingOrderedTests.Concat(this.newlyOrderedTests).ToList();
+        var orderedTestCodes = orderedTests.Select(test => test.TestCode).ToHashSet();
+
+        this.OrderedTestsListView.ItemsSource = orderedTests;
+        this.AllTestsListView.ItemsSource = this.allTests.Where(test => !orderedTestCodes.Contains(test.TestCode)).ToList();
     }
 
     private void AddTestButton_Click(object sender, RoutedEventArgs e)
@@ -90,17 +95,36 @@ public partial class OrderTestWindow : Window
 
     private void SubmitButton_Click(object sender, RoutedEventArgs e)
     {
-        if (this.newlyOrderedTests.Any())
-        {
-            this.controller.OrderTest(this.newlyOrderedTests, this.appointmentId);
-            MessageBox.Show(this, "New tests have been ordered successfully");
-            this.RefreshOrderedTestsListView();
-            this.newlyOrderedTests.Clear();
-        }
-        else
+        if (!this.newlyOrderedTests.Any())
         {
             MessageBox.Show(this, "No new tests to order.");
+            return;
         }
+
+        try
+        {
+            this.controller.OrderTest(
+                this.newlyOrderedTests, this.appointmentId);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(this, ex.Message,
+                "Order Error", MessageBoxButton.OK,
+                MessageBoxImage.Error);
+            return;
+        }
+
+        this.existingOrderedTests.AddRange(this.newlyOrderedTests);
+        this.newlyOrderedTests.Clear();
+
+        this.RefreshOrderedTestsListView();
+
+        this.TestsSubmitted?.Invoke(this, EventArgs.Empty);
+
+        MessageBox.Show(this,
+            "New tests have been ordered successfully.",
+            "Success", MessageBoxButton.OK,
+            MessageBoxImage.Information);
     }
 
 

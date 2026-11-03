@@ -126,9 +126,7 @@ public class NurseDal
     ///     Creates a new person and nurse within a single transaction.
     /// </summary>
     /// <returns>The newly created nurse.</returns>
-    public Nurse CreateNurseWithPerson(string lastName, string firstName,
-        DateTime dateOfBirth, string contactPhoneNumber, string address,
-        string zip, string city, string state, string gender = "")
+    public Nurse CreateNurseWithPerson(Person nursePerson)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
@@ -139,9 +137,7 @@ public class NurseDal
         {
             var personDal = new PersonDal();
 
-            var person = personDal.CreatePerson(lastName, firstName,
-                dateOfBirth, contactPhoneNumber, address, zip,
-                city, state, gender, connection, transaction);
+            var person = personDal.CreatePerson(nursePerson, connection, transaction);
 
             var nurse = this.CreateNurse(person.PersonId, connection, transaction);
 
