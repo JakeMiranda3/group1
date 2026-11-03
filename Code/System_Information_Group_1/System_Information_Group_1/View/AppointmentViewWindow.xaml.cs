@@ -199,15 +199,13 @@ namespace System_Information_Group_1.View
                     Owner = this
                 };
 
-                routineCheckupWindow.Closed += (sender, args) =>
-                {
-                    this.Show();
-                    this.Activate();
-                    this.refreshSchedules();
-                };
-
-                routineCheckupWindow.Show();
                 this.Hide();
+
+                routineCheckupWindow.ShowDialog();
+
+                this.Show();
+                this.refreshSchedules();
+                this.Activate();
             }
             catch (Exception ex)
             {

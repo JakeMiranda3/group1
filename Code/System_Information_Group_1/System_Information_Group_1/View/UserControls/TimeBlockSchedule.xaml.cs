@@ -86,14 +86,6 @@ namespace System_Information_Group_1.View.UserControls
             this.sortCardsByDate();
         }
 
-        public void AddCardsFromAppointments(IList<Appointment> appointments, DateTime time)
-        {
-            var filteredAppointments = this.filterAppointmentsByDate(appointments, time);
-            this.clearScheduleSlots();
-            this.fillAppointmentCards(filteredAppointments);
-            this.sortCardsByDate();
-        }
-
         private void sortCardsByDate()
         {
             var sortedCards = this.scheduleListBox.Items
@@ -169,16 +161,6 @@ namespace System_Information_Group_1.View.UserControls
             this.scheduleListBox.Items.Clear();
         }
 
-        /// <summary>
-        /// Determines whether [is any card selected].
-        /// </summary>
-        /// <returns>
-        ///   <c>true</c> if [is any card selected]; otherwise, <c>false</c>.
-        /// </returns>
-        public bool IsAnyCardSelected()
-        {
-            return this.scheduleListBox.SelectedItem is ListBoxItem item && item.IsEnabled;
-        }
 
         public bool IsSelectedCardAvailable()
         {
