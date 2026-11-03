@@ -107,6 +107,7 @@
     <Compile Include="DAL\TestOrderDal.cs" />
     <Compile Include="DAL\TimeDal.cs" />
     <Compile Include="DAL\VisitDal.cs" />
+    <Compile Include="InputValidation\PersonValidator.cs" />
     <Compile Include="Model\Appointment.cs" />
     <Compile Include="Model\Test.cs" />
     <Compile Include="Model\TestOrder.cs" />
