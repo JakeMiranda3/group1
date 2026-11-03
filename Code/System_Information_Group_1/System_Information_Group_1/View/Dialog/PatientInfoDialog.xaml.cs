@@ -46,25 +46,21 @@ public partial class PatientInfoDialog : Window
         };
         this.genderComboBox.ItemsSource = new[] { "Male", "Female", "Other" };
 
-        this.registerTextBoxValidation(this.firstNameTextBox, this.firstNameError);
-        this.registerTextBoxValidation(this.lastNameTextBox, this.lastNameError);
-        this.registerTextBoxValidation(this.phoneNumberTextBox, this.phoneNumberError);
-        this.registerTextBoxValidation(this.addressTextBox, this.addressError);
-        this.registerTextBoxValidation(this.cityTextBox, this.cityError);
-        this.registerTextBoxValidation(this.zipTextBox, this.zipError);
-
-        this.dateOfBirthPicker.LostFocus += this.Input_LostFocus;
-        this.stateComboBox.LostFocus += this.Input_LostFocus;
-        this.genderComboBox.LostFocus += this.Input_LostFocus;
-
-        this.dateOfBirthPicker.SelectedDateChanged += (_, _) =>
-            this.revalidateIfErrorVisible(this.dateOfBirthPicker, this.dateOfBirthError);
-
-        this.stateComboBox.SelectionChanged += (_, _) =>
-            this.revalidateIfErrorVisible(this.stateComboBox, this.stateError);
-
-        this.genderComboBox.SelectionChanged += (_, _) =>
-            this.revalidateIfErrorVisible(this.genderComboBox, this.genderError);
+        foreach (var input in new FrameworkElement[]
+                 {
+                     this.firstNameTextBox,
+                     this.lastNameTextBox,
+                     this.dateOfBirthPicker,
+                     this.phoneNumberTextBox,
+                     this.addressTextBox,
+                     this.cityTextBox,
+                     this.stateComboBox,
+                     this.zipTextBox,
+                     this.genderComboBox
+                 })
+        {
+            input.LostFocus += this.Input_LostFocus;
+        }
     }
 
     #endregion
@@ -215,21 +211,6 @@ public partial class PatientInfoDialog : Window
             : Visibility.Visible;
     }
 
-    private void registerTextBoxValidation(TextBox textBox, TextBlock errorLabel)
-    {
-        textBox.LostFocus += this.Input_LostFocus;
-
-        textBox.TextChanged += (_, _) =>
-            this.revalidateIfErrorVisible(textBox, errorLabel);
-    }
-
-    private void revalidateIfErrorVisible(object input, TextBlock errorLabel)
-    {
-        if (this.isEditing && errorLabel.Visibility == Visibility.Visible)
-        {
-            this.validateInput(input);
-        }
-    }
 
     private static bool setError(TextBlock errorLabel, string? error)
     {
