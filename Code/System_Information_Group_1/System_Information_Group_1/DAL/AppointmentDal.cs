@@ -216,6 +216,14 @@ public class AppointmentDal
         return cmd.ExecuteNonQuery() > 0;
     }
 
+    public bool HasDoctorAppointmentConflict(int doctorId, DateTime date, int appointmentId)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+
+        var query = "SELECT EXISTS(SELECT 1 FROM appointment WHERE doctor_id = @doctorId AND appointment_datetime = @date AND appointment_id != @appointmentId);";
+        return connection.ExecuteScalar<bool>(query, new { doctorId, date, appointmentId });
+    }
+
     public int GetAppointmentIdByPatientIdWithDate(int patientId, DateTime date)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());

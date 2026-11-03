@@ -93,8 +93,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controller\AppointmentController.cs" />
-    <Compile Include="Controller\AppointmentCreationController.cs" />
+    <Compile Include="Controller\AppointmentEditController.cs" />
+    <Compile Include="Controller\ViewAppointmentController.cs" />
     <Compile Include="Controller\NurseController.cs" />
     <Compile Include="Controller\OrderTestController.cs" />
     <Compile Include="Controller\PatientController.cs" />

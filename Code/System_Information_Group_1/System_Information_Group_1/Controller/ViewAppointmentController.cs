@@ -11,7 +11,7 @@ namespace System_Information_Group_1.Controller;
 /// @author Matthew Shirley
 /// @version 2026
 /// </summary>
-public class AppointmentCreationController
+public class ViewAppointmentController
 {
     private readonly DoctorDal doctorDal;
     private readonly AppointmentDal appointmentDal;
@@ -27,10 +27,10 @@ public class AppointmentCreationController
     public int SelectedPatientId { get; private set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="AppointmentCreationController"/> class.
+    /// Initializes a new instance of the <see cref="ViewAppointmentController"/> class.
     /// </summary>
     /// <param name="patiendId">The patiend identifier.</param>
-    public AppointmentCreationController(int patiendId)
+    public ViewAppointmentController(int patiendId)
     {
         this.doctorDal = new DoctorDal();
         this.appointmentDal = new AppointmentDal();

@@ -28,7 +28,7 @@ namespace System_Information_Group_1.View
     public partial class AppointmentViewWindow : Window
     {
         private const int MaxReasonLength = 100;
-        private readonly AppointmentCreationController controller;
+        private readonly ViewAppointmentController controller;
 
         /// <summary>
         /// Gets or sets the doctors.
@@ -46,7 +46,7 @@ namespace System_Information_Group_1.View
         public AppointmentViewWindow(int patientId)
         {
             this.InitializeComponent();
-            this.controller = new AppointmentCreationController(patientId);
+            this.controller = new ViewAppointmentController(patientId);
             DataContext = this;
             this.regenerateDoctorComboBox();
         }
@@ -162,22 +162,13 @@ namespace System_Information_Group_1.View
         private void exitAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
             this.clearError();
-
-            var result = MessageBox.Show("Are you sure you want to exit?", "Confirm Exit",
-                MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
+            var patientWindow = new PatientWindow();
+            var parentWindow = Window.GetWindow(this);
+            patientWindow.Show();
+            if (parentWindow != null)
             {
-                var patientWindow = new PatientWindow();
-                patientWindow.Show();
-
-
-                var parentWindow = Window.GetWindow(this);
-                if (parentWindow != null)
-                {
-                    parentWindow?.Close();
-                }
+                parentWindow?.Close();
             }
-
         }
 
         private void onVisitClicked()
