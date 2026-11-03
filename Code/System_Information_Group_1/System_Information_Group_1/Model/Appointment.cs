@@ -68,6 +68,9 @@ public class Appointment
     /// </value>
     public Patient Patient { get; set; }
 
+
+    public Visit? Visit { get; set; }
+
     /// <summary>
     /// Initializes a new instance of the <see cref="Appointment"/> class.
     /// </summary>

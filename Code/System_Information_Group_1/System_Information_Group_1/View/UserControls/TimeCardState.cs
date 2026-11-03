@@ -3,7 +3,8 @@
 public enum TimeCardState
 {
     Available,
-    Open,
-    Pending,
-    Complete
+    PastDeadline,
+    BeforeDeadline,
+    PendingLabs,
+    Finalized
 }
