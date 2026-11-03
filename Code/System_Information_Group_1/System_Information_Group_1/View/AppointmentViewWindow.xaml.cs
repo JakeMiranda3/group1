@@ -223,38 +223,31 @@ namespace System_Information_Group_1.View
 
         private void editAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
+            this.clearError();
             try
             {
                 if (this.scheduleControl.scheduleListBox.SelectedItem is not ListBoxItem item ||
                     item.Content is not TimeCard selectedCard)
                 {
-                    MessageBox.Show("Please select an appointment first.",
-                        "Missing Information", MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
+                    this.showError("Please select an appointment first.");
                     return;
                 }
 
                 if (selectedCard.State == TimeCardState.Available)
                 {
-                    MessageBox.Show("Schedule an appointment in this slot first.",
-                        "Invalid Operation", MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
+                    this.showError("Schedule an appointment in the selected slot first.");
                     return;
                 }
 
                 if (selectedCard.State == TimeCardState.Finalized)
                 {
-                    MessageBox.Show("Appointment has already been finalized.",
-                        "Invalid Operation", MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
+                    this.showError("Appointment has a final diagnosis and cannot be edited.");
                     return;
                 }
 
                 if (selectedCard.scheduledTime <= this.controller.GetCurrentTimeAsEastern())
                 {
-                    MessageBox.Show("Appointment time has passed and cannot be edited.",
-                        "Invalid Operation", MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
+                    this.showError("Appointment time has passed and cannot be edited");
                     return;
                 }
 
