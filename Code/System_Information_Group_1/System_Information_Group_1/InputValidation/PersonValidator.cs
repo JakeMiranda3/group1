@@ -12,7 +12,7 @@ public static class PersonValidator
     #region Methods
 
     /// <summary>
-    /// Validates the first name.
+    ///     Validates the first name.
     /// </summary>
     /// <param name="firstName">The first name.</param>
     /// <returns>String containing the error message, or null if valid.</returns>
@@ -32,7 +32,7 @@ public static class PersonValidator
     }
 
     /// <summary>
-    /// Validates the last name.
+    ///     Validates the last name.
     /// </summary>
     /// <param name="lastName">The last name.</param>
     /// <returns>String containing the error message, or null if valid.</returns>
@@ -52,7 +52,7 @@ public static class PersonValidator
     }
 
     /// <summary>
-    /// Validates the date of birth.
+    ///     Validates the date of birth.
     /// </summary>
     /// <param name="dateOfBirth">The date of birth.</param>
     /// <returns>String containing the error message, or null if valid.</returns>
@@ -67,9 +67,9 @@ public static class PersonValidator
 
         return null;
     }
-    
+
     /// <summary>
-    /// Validates the phone number.
+    ///     Validates the phone number.
     /// </summary>
     /// <param name="phoneNumber">The phone number.</param>
     /// <returns>String containing the error message, or null if valid.</returns>
@@ -84,7 +84,7 @@ public static class PersonValidator
     }
 
     /// <summary>
-    /// Validates the zip.
+    ///     Validates the zip.
     /// </summary>
     /// <param name="zip">The zip.</param>
     /// <returns>String containing the error message, or null if valid.</returns>
@@ -97,9 +97,9 @@ public static class PersonValidator
 
         return null;
     }
-    
+
     /// <summary>
-    /// Validates the address.
+    ///     Validates the address.
     /// </summary>
     /// <param name="address">The address.</param>
     /// <returns>String containing the error message, or null if valid.</returns>
@@ -119,7 +119,7 @@ public static class PersonValidator
     }
 
     /// <summary>
-    /// Validates the city.
+    ///     Validates the city.
     /// </summary>
     /// <param name="city">The city.</param>
     /// <returns>String containing the error message, or null if valid.</returns>
@@ -137,8 +137,9 @@ public static class PersonValidator
 
         return null;
     }
+
     /// <summary>
-    /// Validates the state.
+    ///     Validates the state.
     /// </summary>
     /// <param name="state">The state.</param>
     /// <returns>String containing the error message, or null if valid.</returns>
@@ -156,12 +157,12 @@ public static class PersonValidator
 
         return null;
     }
-    
+
     /// <summary>
-    /// Validates the gender.
+    ///     Validates the gender.
     /// </summary>
     /// <param name="gender">The gender.</param>
-    /// <returns>String containing the error message, or null if valid.</returns>  
+    /// <returns>String containing the error message, or null if valid.</returns>
     public static string? ValidateGender(string? gender)
     {
         if (string.IsNullOrWhiteSpace(gender))
@@ -170,6 +171,41 @@ public static class PersonValidator
         }
 
         return null;
+    }
+
+    /// <summary>
+    ///     Validates the person.
+    /// </summary>
+    /// <param name="firstName">The first name.</param>
+    /// <param name="lastName">The last name.</param>
+    /// <param name="dateOfBirth">The date of birth.</param>
+    /// <param name="phoneNumber">The phone number.</param>
+    /// <param name="zip">The zip.</param>
+    /// <param name="address">The address.</param>
+    /// <param name="city">The city.</param>
+    /// <param name="state">The state.</param>
+    /// <param name="gender">The gender.</param>
+    /// <returns>String containing the error message, or null if valid.</returns>
+    public static string? ValidatePerson(
+        string firstName,
+        string lastName,
+        DateTime dateOfBirth,
+        string phoneNumber,
+        string zip,
+        string address,
+        string city,
+        string state,
+        string gender)
+    {
+        return ValidateFirstName(firstName) ??
+               ValidateLastName(lastName) ??
+               ValidateDateOfBirth(dateOfBirth) ??
+               ValidatePhoneNumber(phoneNumber) ??
+               ValidateZip(zip) ??
+               ValidateAddress(address) ??
+               ValidateCity(city) ??
+               ValidateState(state) ??
+               ValidateGender(gender);
     }
 
     #endregion

@@ -44,14 +44,20 @@ public class PatientController
         state = state?.Trim() ?? "";
         gender = gender?.Trim() ?? "";
 
-        checkFields(firstName, lastName, dateOfBirth,
-            phoneNumber, zip, address, city, state);
+        var error = PersonValidator.ValidatePerson(
+            firstName,
+            lastName,
+            dateOfBirth,
+            phoneNumber,
+            zip,
+            address,
+            city,
+            state,
+            gender);
 
-        var genderError = PersonValidator.ValidateGender(gender);
-
-        if (genderError != null)
+        if (error != null)
         {
-            throw new ArgumentException(genderError);
+            throw new ArgumentException(error);
         }
 
         var patient = this.patientDal.CreatePatientWithPerson(
@@ -102,8 +108,9 @@ public class PatientController
         person.Zip = person.Zip?.Trim() ?? "";
         person.City = person.City?.Trim() ?? "";
         person.State = person.State?.Trim() ?? "";
+        person.Gender = person.Gender?.Trim() ?? "";
 
-        checkFields(
+        var error = PersonValidator.ValidatePerson(
             person.FirstName,
             person.LastName,
             person.DateOfBirth,
@@ -111,39 +118,16 @@ public class PatientController
             person.Zip,
             person.Address,
             person.City,
-            person.State);
-
-        this.personDal.EditPerson(person);
-        this.patientDal.EditPatient(patient);
-    }
-
-    /// <summary>
-    ///     Validates all required person fields.
-    /// </summary>
-    private static void checkFields(
-        string firstName,
-        string lastName,
-        DateTime dateOfBirth,
-        string phoneNumber,
-        string zip,
-        string address,
-        string city,
-        string state)
-    {
-        var error =
-            PersonValidator.ValidateFirstName(firstName) ??
-            PersonValidator.ValidateLastName(lastName) ??
-            PersonValidator.ValidateDateOfBirth(dateOfBirth) ??
-            PersonValidator.ValidatePhoneNumber(phoneNumber) ??
-            PersonValidator.ValidateZip(zip) ??
-            PersonValidator.ValidateAddress(address) ??
-            PersonValidator.ValidateCity(city) ??
-            PersonValidator.ValidateState(state);
+            person.State,
+            person.Gender);
 
         if (error != null)
         {
             throw new ArgumentException(error);
         }
+
+        this.personDal.EditPerson(person);
+        this.patientDal.EditPatient(patient);
     }
 
     #endregion
