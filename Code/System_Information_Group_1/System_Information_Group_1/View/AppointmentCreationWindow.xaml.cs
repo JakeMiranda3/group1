@@ -38,36 +38,18 @@ namespace System_Information_Group_1.View
         /// </value>
         public ObservableCollection<Doctor> Doctors { get; set; }
 
-        public AppointmentWindowState State { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AppointmentCreationWindow"/> class.
         /// </summary>
         /// <param name="patientId">The patient identifier.</param>
-        public AppointmentCreationWindow(int patientId, AppointmentWindowState state)
+        public AppointmentCreationWindow(int patientId)
         {
             this.InitializeComponent();
             this.controller = new AppointmentCreationController(patientId);
             DataContext = this;
             this.nurseDal = new NurseDal();
-            this.State = state;
-            if (state == AppointmentWindowState.PatientView)
-            {
-                this.setupComponentsForPatientView();
-            } else if (state == AppointmentWindowState.DoctorView)
-            {
-                this.regenerateDoctorComboBox();
-            }
-
-
-        }
-
-        private void setupComponentsForPatientView()
-        {
-            this.doctorComboBox.Visibility = Visibility.Collapsed;
-            this.createAppointmentButton.Visibility = Visibility.Collapsed;
-            this.doctorComboBoxLabel.Visibility = Visibility.Collapsed;
-            this.scheduleControl.AddCardsFromAppointments(this.controller.GetPatientAppointments());
+            this.regenerateDoctorComboBox();
         }
 
 
@@ -78,108 +60,90 @@ namespace System_Information_Group_1.View
 
         private void doctorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.updateInformationWithNewDoctor();
+            this.refreshSchedules();
 
         }
 
         private void appointmentTimePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.State == AppointmentWindowState.PatientView)
-            {
-                this.refreshSchedulesByPatientAndDate();
-            } else if (this.State == AppointmentWindowState.DoctorView)
-            {
-                this.updateInformationWithNewDoctor();
-            }
+            this.refreshSchedules();
         }
 
-        private void updateInformationWithNewDoctor()
-        {
-            this.refreshSchedulesWithSelectedDoctor();
-        }
 
         private void createAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!this.scheduleControl.IsAnyCardSelected())
-            {
-                MessageBox.Show("Please select a time slot.", "Invalid Information", MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
-                return;
-            }
+            this.clearError();
 
             if (!this.scheduleControl.IsSelectedCardAvailable())
             {
-                MessageBox.Show(
-                    "Please Select an appointment that is available",
-                    "Appointment Overlap",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-                return;
-            }
-            if (this.controller.SelectedPatientId < 0)
-            {
-                MessageBox.Show(
-                    "Patient is unavailable at this time...",
-                    "Patient Missing",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                this.showError("Please select an appointment that is available.");
                 return;
             }
 
             if (this.scheduleControl.scheduleListBox.SelectedItem is not ListBoxItem item ||
                 item.Content is not TimeCard selectedCard)
             {
-                MessageBox.Show("Please select a time slot.", "Missing Information",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.showError("Please select a time slot to create an appointment.");
                 return;
             }
 
             var selectedDate = selectedCard.scheduledTime;
             if (this.doctorComboBox.SelectedItem is not Doctor currentDoctor)
             {
-                MessageBox.Show("Please select a doctor.", "Missing Information", MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
+                this.showError("Please first select a doctor.");
                 return;
             }
 
+            this.createAppointment(selectedDate, currentDoctor);
+        }
 
-
+        private void createAppointment(DateTime selectedDate, Doctor currentDoctor)
+        {
             var reasonDialog = new ReasonDialog
             {
                 Owner = this
             };
 
-
-
-            if (reasonDialog.ShowDialog() == true)
+            if (reasonDialog.ShowDialog() != true)
             {
-                var reason = reasonDialog.Reason;
-
-                if (reason.Length > MaxReasonLength)
-                {
-                    MessageBox.Show("The appointment reason cannot exceed 100 characters", "Invalid Information", MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
-                    return;
-                }
-
-                var wasAdded =
-                    this.controller.StoreAppointment(selectedDate, currentDoctor.DoctorId, this.controller.SelectedPatientId, reason);
-                if (wasAdded)
-                {
-                    MessageBox.Show("Appointment booked!", "Success", MessageBoxButton.OK,
-                        MessageBoxImage.Information);
-
-                    this.refreshSchedulesWithSelectedDoctor();
-                }
-                else
-                {
-                    MessageBox.Show("Failed to book the appointment. Try again...", "Error", MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-                }
+                return;
             }
 
+            var reason = reasonDialog.Reason;
+
+            var wasAdded = this.controller.StoreAppointment(
+                selectedDate,
+                currentDoctor.DoctorId,
+                this.controller.SelectedPatientId,
+                reason);
+
+            if (!wasAdded)
+            {
+                this.showError("Failed to book the appointment. Please try again.");
+                return;
+            }
+
+            this.refreshSchedules();
+
+            MessageBox.Show(
+                "Appointment booked",
+                "Success",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+        }
+
+        private void refreshSchedules()
+        {
+            this.scheduleControl.clearScheduleSlots();
+
+            if (this.filterCheckbox.IsChecked == true)
+            {
+                this.scheduleControl.AddCardsFromAppointments(this.controller.GetPatientAppointments());
+            }
+            else
+            {
+                this.refreshSchedulesWithSelectedDoctor();
+            }
         }
 
         private void refreshSchedulesWithSelectedDoctor()
@@ -193,14 +157,7 @@ namespace System_Information_Group_1.View
             }
         }
 
-        private void refreshSchedulesByPatientAndDate()
-        {
-            if (this.appointmentTimePicker.SelectedDate != null)
-            {
-                this.scheduleControl.AddCardsFromAppointments(this.controller.GetPatientAppointments(), this.appointmentTimePicker.SelectedDate.Value);
-            }
-
-        }
+        
 
         private void exitAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
@@ -256,21 +213,18 @@ namespace System_Information_Group_1.View
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            this.scheduleControl.AddCardsFromAppointments(this.controller.GetPatientAppointments());
             this.doctorComboBox.IsEnabled = false;
             this.appointmentTimePicker.IsEnabled = false;
+            this.createAppointmentButton.IsEnabled = false;
+            this.refreshSchedules();
         }
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             this.doctorComboBox.IsEnabled = true;
             this.appointmentTimePicker.IsEnabled = true;
-            this.scheduleControl.clearScheduleSlots();
-            
-            if (this.doctorComboBox.SelectedItem != null && this.appointmentTimePicker.SelectedDate != null)
-            {
-                this.refreshSchedulesWithSelectedDoctor();
-            }
+            this.createAppointmentButton.IsEnabled = true;
+            this.refreshSchedules();
         }
 
         private void editAppointmentButton_Click(object sender, RoutedEventArgs e)
@@ -333,23 +287,7 @@ namespace System_Information_Group_1.View
                 };
 
                 dialog.ShowDialog();
-
-                if (this.State == AppointmentWindowState.PatientView)
-                {
-                    if (this.appointmentTimePicker.SelectedDate.HasValue)
-                    {
-                        this.refreshSchedulesByPatientAndDate();
-                    }
-                    else
-                    {
-                        this.scheduleControl.AddCardsFromAppointments(
-                            this.controller.GetPatientAppointments());
-                    }
-                }
-                else if (this.State == AppointmentWindowState.DoctorView)
-                {
-                    this.refreshSchedulesWithSelectedDoctor();
-                }
+                this.refreshSchedules();
             }
             catch (Exception ex)
             {
@@ -357,6 +295,23 @@ namespace System_Information_Group_1.View
                     "Error", MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
+        }
+
+        private void showError(string message)
+        {
+            this.errorMessage.Text = message;
+            this.errorMessage.Visibility = Visibility.Visible;
+        }
+
+        private void clearError()
+        {
+            this.errorMessage.Text = string.Empty;
+            this.errorMessage.Visibility = Visibility.Collapsed;
+        }
+
+        private void viewVisitInformationButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

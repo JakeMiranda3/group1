@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:System_Information_Group_1.View.Dialogs"
         mc:Ignorable="d"
-        Title="ReasonDialog" Height="250" Width="800"
+        Title="ReasonDialog" Height="300" Width="800"
         ResizeMode="NoResize">
     <StackPanel Margin="20">
 
@@ -15,25 +15,45 @@
 
         <TextBox x:Name="reasonTextBox"
                  Height="100"
-                 MaxLength="256"
+                 MaxLength="100"
                  TextWrapping="Wrap"
                  AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto" Width="756"/>
+                 VerticalScrollBarVisibility="Auto"/>
 
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    Margin="0,15,0,0">
+        <Grid Margin="0,15,0,0">
 
-            <Button x:Name="cancelButton" Content="Cancel"
-                    Width="80"
-                    Margin="0,0,10,0" Click="cancelButton_Click"
-                    />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-            <Button x:Name="confirmButton" Content="Confirm"
-                    Width="80" Click="confirmButton_Click"
-                    />
+            <TextBlock x:Name="errorMessage"
+                       Grid.Column="0"
+                       Foreground="DarkRed"
+                       FontSize="14"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center"
+                       Margin="0,0,10,0"
+                       Visibility="Collapsed"/>
 
-        </StackPanel>
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+
+                <Button x:Name="cancelButton"
+                        Content="Cancel"
+                        Width="80"
+                        Margin="0,0,10,0"
+                        Click="cancelButton_Click"/>
+
+                <Button x:Name="confirmButton"
+                        Content="Confirm"
+                        Width="80"
+                        Click="confirmButton_Click"/>
+
+            </StackPanel>
+
+        </Grid>
 
     </StackPanel>
 </Window>

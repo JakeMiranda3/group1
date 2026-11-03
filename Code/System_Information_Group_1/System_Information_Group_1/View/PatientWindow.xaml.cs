@@ -87,12 +87,12 @@ public partial class PatientWindow : Window
         }
     }
 
-    private void CreateAppointmentButton_OnClick(object sender, RoutedEventArgs e)
+    private void ViewAppointmentButton_OnClick(object sender, RoutedEventArgs e)
     {
         if (this.patientDataGrid.SelectedItem is Patient selectedPatient)
         {
             var patientId = selectedPatient.PatientId;
-            var appointmentCreationWindow = new AppointmentCreationWindow(patientId, AppointmentWindowState.DoctorView);
+            var appointmentCreationWindow = new AppointmentCreationWindow(patientId);
             appointmentCreationWindow.Show();
 
             var parentWindow = GetWindow(this);
@@ -169,48 +169,6 @@ public partial class PatientWindow : Window
         }
     }
 
-    private void viewPatientAppointmentButton_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            if (this.patientDataGrid.SelectedItem is not Patient selectedPatient)
-            {
-                MessageBox.Show("Please select a patient first.", "Missing Information", MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
-                return;
-            }
-
-            var patientHasAppointments = this.appointmentDal.DoesPatientHaveAppointments(selectedPatient.PatientId);
-            if (!patientHasAppointments)
-            {
-                MessageBox.Show("No appointments found for the selected patient.", "Missing Information",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
-                return;
-            }
-
-            var patientId = selectedPatient.PatientId;
-            var appointmentCreationWindow =
-                new AppointmentCreationWindow(patientId, AppointmentWindowState.PatientView);
-            appointmentCreationWindow.Show();
-
-            var parentWindow = GetWindow(this);
-            if (parentWindow != null)
-            {
-                parentWindow?.Close();
-            }
-        }
-        catch (AccessViolationException)
-        {
-            MessageBox.Show("Only a nurse account can enter visit information.", "Access Error", MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Unable to open visit information: {ex.Message}", "Error", MessageBoxButton.OK,
-                MessageBoxImage.Error);
-        }
-    }
 
     private void ClearButton_OnClick(object sender, RoutedEventArgs e)
     {
