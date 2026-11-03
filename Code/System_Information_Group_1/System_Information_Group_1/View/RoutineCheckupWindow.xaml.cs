@@ -107,5 +107,10 @@ namespace System_Information_Group_1.View
                 this.controller.SubmitTestResults(collection);
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

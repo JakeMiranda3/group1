@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:System_Information_Group_1.View.Dialogs"
         mc:Ignorable="d"
         Title="ReasonDialog" Height="300" Width="800"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <StackPanel Margin="20">
 
         <TextBlock Text="Reason for appointment:"

@@ -102,7 +102,6 @@
     <Compile Include="Controller\UserControl\SchedulerController.cs" />
     <Compile Include="Controller\UserControl\TopBarController.cs" />
     <Compile Include="DAL\AppointmentDal.cs" />
-    <Compile Include="DAL\LabDal.cs" />
     <Compile Include="DAL\TestDal.cs" />
     <Compile Include="DAL\TestOrderDal.cs" />
     <Compile Include="DAL\TimeDal.cs" />
@@ -160,7 +159,7 @@
     <Compile Include="View\UserControls\TopAppBar.xaml.cs">
       <DependentUpon>TopAppBar.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\AppointmentCreationWindow.xaml">
+    <Page Include="View\AppointmentViewWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -239,8 +238,8 @@
     <Compile Include="Model\Nurse.cs" />
     <Compile Include="Model\Patient.cs" />
     <Compile Include="Model\Person.cs" />
-    <Compile Include="View\AppointmentCreationWindow.xaml.cs">
-      <DependentUpon>AppointmentCreationWindow.xaml</DependentUpon>
+    <Compile Include="View\AppointmentViewWindow.xaml.cs">
+      <DependentUpon>AppointmentViewWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>

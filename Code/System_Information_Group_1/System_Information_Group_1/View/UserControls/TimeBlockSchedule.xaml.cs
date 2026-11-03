@@ -25,6 +25,19 @@ namespace System_Information_Group_1.View.UserControls
     /// </summary>
     public partial class TimeBlockSchedule : UserControl
     {
+
+        public int? SelectedAppointmentId
+        {
+            get
+            {
+                if (this.scheduleListBox.SelectedItem is ListBoxItem item && item.Content is TimeCard card)
+                {
+                    return card.AppointmentId;
+                }
+
+                return null;
+            }
+        }
         private static readonly TimeSpan ClinicStartTime = new (8, 0, 0);
         private static readonly TimeSpan ClinicEndTime = new (17, 0, 0);
         private const int TimeIntervalInMinutes = 15;
@@ -99,7 +112,10 @@ namespace System_Information_Group_1.View.UserControls
 
         private void fillAppointmentCards(IList<Appointment> appointments)
         {
-            foreach (Appointment appointment in appointments)
+            var cardStates = this.controller.DetermineCardStates(appointments);
+
+
+            foreach (var appointment in appointments)
             {
                 var doctorName =
                     $"{appointment.Doctor.Person.FirstName} {appointment.Doctor.Person.LastName}";
@@ -112,7 +128,8 @@ namespace System_Information_Group_1.View.UserControls
                     doctorName,
                     patientName,
                     appointment.Patient.Person.ContactPhoneNumber,
-                    this.controller.DetermineCardState(appointment)
+                    cardStates[appointment.AppointmentId],
+                    appointment.AppointmentId
                 );
             }
         }
@@ -120,9 +137,9 @@ namespace System_Information_Group_1.View.UserControls
 
 
 
-        private void addAppointmentCard(DateTime date, String doctorName, String patientName, String patientPhone, TimeCardState cardState)
+        private void addAppointmentCard(DateTime date, String doctorName, String patientName, String patientPhone, TimeCardState cardState, int appointmentId)
         {
-            var card = new TimeCard(date, doctorName, patientName, patientPhone);
+            var card = new TimeCard(date, doctorName, patientName, patientPhone, appointmentId);
             card.State = cardState;
             var item = new ListBoxItem
             {

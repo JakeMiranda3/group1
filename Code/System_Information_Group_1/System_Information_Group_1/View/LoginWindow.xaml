@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Title="Hi-Tek"
         Height="500"
-        Width="800">
+        Width="800" WindowStartupLocation="CenterScreen">
     <Grid Background="WhiteSmoke" Height="450" Width="800">
         <TextBlock x:Name="LoginWindowTitle" HorizontalAlignment="Center" Margin="0,24,0,0" TextWrapping="Wrap" Text="Welcome!"
                    VerticalAlignment="Top" FontFamily="Arial Black" FontSize="22" Height="37" Width="176" TextAlignment="Center" Foreground="#FF0079FF" />

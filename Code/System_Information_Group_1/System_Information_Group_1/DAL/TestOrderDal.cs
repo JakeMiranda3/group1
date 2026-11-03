@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Linq;
+using Dapper;
 using MySqlConnector;
 using System_Information_Group_1.Model;
 
@@ -124,6 +126,22 @@ public class TestOrderDal
         }
     }
 
+    public IList<int> GetAppointmentIdsWithOrders(IList<int> appointmentIds)
+    {
+        if (appointmentIds.Count == 0)
+        {
+            return [];
+        }
+
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+
+        var query = "SELECT DISTINCT appointment_id FROM test_order WHERE appointment_id IN @appointmentIds;";
+
+        return connection.Query<int>(query, new { appointmentIds }).ToList();
+
+
+    }
+
     public List<TestOrder> GetAllTestWithAppointmentId(int appointmentId)
     {
         List<TestOrder> orderList = new List<TestOrder>();
@@ -162,4 +180,5 @@ public class TestOrderDal
         var isAbnormal = !reader.IsDBNull(isAbnormalOrdinal) && reader.GetBoolean(isAbnormalOrdinal);
         return new TestOrder(appointmentId, testCode, performedDatetime ?? DateTime.MinValue, testResult ?? string.Empty, isAbnormal);
     }
+
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,9 +23,9 @@ using System_Information_Group_1.View.UserControls;
 namespace System_Information_Group_1.View
 {
     /// <summary>
-    /// Interaction logic for AppointmentCreationWindow.xaml
+    /// Interaction logic for AppointmentViewWindow.xaml
     /// </summary>
-    public partial class AppointmentCreationWindow : Window
+    public partial class AppointmentViewWindow : Window
     {
         private const int MaxReasonLength = 100;
         private readonly AppointmentCreationController controller;
@@ -39,10 +40,10 @@ namespace System_Information_Group_1.View
 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AppointmentCreationWindow"/> class.
+        /// Initializes a new instance of the <see cref="AppointmentViewWindow"/> class.
         /// </summary>
         /// <param name="patientId">The patient identifier.</param>
-        public AppointmentCreationWindow(int patientId)
+        public AppointmentViewWindow(int patientId)
         {
             this.InitializeComponent();
             this.controller = new AppointmentCreationController(patientId);
@@ -182,32 +183,36 @@ namespace System_Information_Group_1.View
         private void onVisitClicked()
         {
             this.clearError();
-            if (this.scheduleControl.scheduleListBox.SelectedItem is not ListBoxItem item ||
-                item.Content is not TimeCard selectedCard)
+
+            if (this.scheduleControl.SelectedAppointmentId is not int appointmentId)
             {
-                this.showError("Please select a time slot.");
+                this.showError("Please select a scheduled appointment.");
                 return;
             }
 
-            ListBoxItem listBoxItem = (ListBoxItem) this.scheduleControl.scheduleListBox.SelectedItem;
-            TimeCard timeCardSelected = (TimeCard) listBoxItem.Content;
-            DateTime timeSelected = DateTime.MinValue;
-            if (timeCardSelected != null)
+            try
             {
-                timeSelected = timeCardSelected.scheduledTime;
+                var visit = this.controller.GetVisitForAppointment(appointmentId);
+
+                var routineCheckupWindow = new RoutineCheckupWindow(visit)
+                {
+                    Owner = this
+                };
+
+                routineCheckupWindow.Closed += (sender, args) =>
+                {
+                    this.Show();
+                    this.Activate();
+                    this.refreshSchedules();
+                };
+
+                routineCheckupWindow.Show();
+                this.Hide();
             }
-
-            int appointmentId = this.controller.GetAppointmentId(this.controller.SelectedPatientId, timeSelected);
-
-            int personIdOfNurseLoggedIn = AuthServiceSingleton.GetAccount().PersonId;
-
-            //int nurseId = this.nurseDal.GetNurseWithPersonId(personIdOfNurseLoggedIn).NurseId;
-
-            //Visit visitDisplay = new VisitDisplay(appointmentId, nurseId);
-
-            //RoutineCheckupWindow routineCheckupWindow = new RoutineCheckupWindow(visitDisplay);
-
-            //routineCheckupWindow.Show();
+            catch (Exception ex)
+            {
+                this.showError($"Unable to open visit information: {ex.Message}");
+            }
 
         }
 
@@ -309,7 +314,7 @@ namespace System_Information_Group_1.View
             this.errorMessage.Visibility = Visibility.Collapsed;
         }
 
-        private void viewVisitInformationButton_Click(object sender, RoutedEventArgs e)
+        private void viewVisitButton_Click(object sender, RoutedEventArgs e)
         {
             this.onVisitClicked();
         }

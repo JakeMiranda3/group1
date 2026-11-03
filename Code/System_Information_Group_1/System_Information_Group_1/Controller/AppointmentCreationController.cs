@@ -15,7 +15,7 @@ public class AppointmentCreationController
 {
     private readonly DoctorDal doctorDal;
     private readonly AppointmentDal appointmentDal;
-    private readonly PersonDal personDal;
+    private readonly NurseDal nurseDal;
     private readonly TimeDal timeDal;
 
     /// <summary>
@@ -34,10 +34,10 @@ public class AppointmentCreationController
     {
         this.doctorDal = new DoctorDal();
         this.appointmentDal = new AppointmentDal();
-        this.personDal = new PersonDal();
         this.SelectedPatientId = 1;
         this.SelectedPatientId = patiendId;
         this.timeDal = new TimeDal();
+        this.nurseDal = new NurseDal();
     }
 
     /// <summary>
@@ -108,5 +108,20 @@ public class AppointmentCreationController
     public IList<Appointment> GetPatientAppointments()
     {
         return this.appointmentDal.GetAllAppointmentsByPatientId(this.SelectedPatientId);
+    }
+
+    public Visit GetVisitForAppointment(int appointmentId)
+    {
+        var personId = AuthServiceSingleton.GetAccount().PersonId;
+
+        var nurse = this.nurseDal.GetNurseWithPersonId(personId);
+
+        if (nurse == null)
+        {
+            throw new InvalidOperationException(
+                "Unable to find the currently logged-in nurse.");
+        }
+
+        return new VisitDisplay(appointmentId, nurse.NurseId);
     }
 }
