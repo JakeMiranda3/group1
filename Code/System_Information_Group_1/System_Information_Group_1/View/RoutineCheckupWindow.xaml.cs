@@ -96,16 +96,27 @@ namespace System_Information_Group_1.View
             }
 
             OrderTestWindow orderTestWindow = new OrderTestWindow(this.controller.Visit.AppointmentId);
+
+            orderTestWindow.TestsSubmitted += (sen, args) =>
+            {
+                this.RefreshTestOrders();
+            };
             orderTestWindow.Show();
+        }
+
+        private void RefreshTestOrders()
+        {
+            this.controller.RefreshTestOrders();
+
+            this.testsDataGrid.ItemsSource =
+                new ObservableCollection<TestOrderDisplay>(
+                    this.controller.TestOrders);
         }
 
         private void OnSubmitTestResultClick(object sender, RoutedEventArgs e)
         {
             IEnumerable<TestOrderDisplay> collection = (IEnumerable<TestOrderDisplay>)this.testsDataGrid.ItemsSource;
-            foreach (TestOrderDisplay item in collection)
-            {
-                this.controller.SubmitTestResults(collection);
-            }
+            this.controller.SubmitTestResults(collection);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
