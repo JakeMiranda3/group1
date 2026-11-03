@@ -28,7 +28,6 @@ namespace System_Information_Group_1.View
     {
         private const int MaxReasonLength = 100;
         private readonly AppointmentCreationController controller;
-        private NurseDal nurseDal;
 
         /// <summary>
         /// Gets or sets the doctors.
@@ -48,7 +47,6 @@ namespace System_Information_Group_1.View
             this.InitializeComponent();
             this.controller = new AppointmentCreationController(patientId);
             DataContext = this;
-            this.nurseDal = new NurseDal();
             this.regenerateDoctorComboBox();
         }
 
@@ -134,6 +132,7 @@ namespace System_Information_Group_1.View
 
         private void refreshSchedules()
         {
+            this.clearError();
             this.scheduleControl.clearScheduleSlots();
 
             if (this.filterCheckbox.IsChecked == true)
@@ -161,6 +160,8 @@ namespace System_Information_Group_1.View
 
         private void exitAppointmentButton_Click(object sender, RoutedEventArgs e)
         {
+            this.clearError();
+
             var result = MessageBox.Show("Are you sure you want to exit?", "Confirm Exit",
                 MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
@@ -178,14 +179,13 @@ namespace System_Information_Group_1.View
 
         }
 
-        private void onVisitInfoButtonClicked(object sender, RoutedEventArgs e)
+        private void onVisitClicked()
         {
-            // TODO : CHANGE THIS TO BE WHENEVER A BOOKED TIME SLOT IS CLICKED, BECAUSE THEY CANNNOT BE SELECTED IF THEY ARE BOOKED, SO THIS WILL NOT WORK FOR NOW
+            this.clearError();
             if (this.scheduleControl.scheduleListBox.SelectedItem is not ListBoxItem item ||
                 item.Content is not TimeCard selectedCard)
             {
-                MessageBox.Show("Please select a time slot.", "Missing Information",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                this.showError("Please select a time slot.");
                 return;
             }
 
@@ -201,13 +201,13 @@ namespace System_Information_Group_1.View
 
             int personIdOfNurseLoggedIn = AuthServiceSingleton.GetAccount().PersonId;
 
-            int nurseId = this.nurseDal.GetNurseWithPersonId(personIdOfNurseLoggedIn).NurseId;
+            //int nurseId = this.nurseDal.GetNurseWithPersonId(personIdOfNurseLoggedIn).NurseId;
 
-            Visit visitDisplay = new VisitDisplay(appointmentId, nurseId);
+            //Visit visitDisplay = new VisitDisplay(appointmentId, nurseId);
 
-            RoutineCheckupWindow routineCheckupWindow = new RoutineCheckupWindow(visitDisplay);
+            //RoutineCheckupWindow routineCheckupWindow = new RoutineCheckupWindow(visitDisplay);
 
-            routineCheckupWindow.Show();
+            //routineCheckupWindow.Show();
 
         }
 
@@ -311,7 +311,7 @@ namespace System_Information_Group_1.View
 
         private void viewVisitInformationButton_Click(object sender, RoutedEventArgs e)
         {
-
+            this.onVisitClicked();
         }
     }
 }
