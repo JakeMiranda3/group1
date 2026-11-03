@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System_Information_Group_1.DAL;
+using System_Information_Group_1.InputValidation;
 using System_Information_Group_1.Model;
 
 namespace System_Information_Group_1.Controller;
@@ -47,11 +48,16 @@ public class NurseController
         state = state?.Trim() ?? "";
         gender = gender?.Trim() ?? "";
 
-        this.checkFields(firstName, lastName, dateOfBirth,
+
+        checkFields(firstName, lastName, dateOfBirth,
             phoneNumber, zip, address, city, state);
 
-        this.checkFieldLengths(firstName, lastName, address,
-            city, state);
+        var genderError = PersonValidator.ValidateGender(gender);
+
+        if (genderError != null)
+        {
+            throw new ArgumentException(genderError);
+        }
 
         var nurse = this.nurseDal.CreateNurseWithPerson(
             lastName, firstName, dateOfBirth,
@@ -92,99 +98,50 @@ public class NurseController
                 "Data Mismatch: Person ID does not match.");
         }
 
-        person.FirstName = person.FirstName.Trim();
-        person.LastName = person.LastName.Trim();
-        person.ContactPhoneNumber = person.ContactPhoneNumber.Trim();
-        person.Address = person.Address.Trim();
-        person.Zip = person.Zip.Trim();
-        person.City = person.City.Trim();
-        person.State = person.State.Trim();
+        person.FirstName = person.FirstName?.Trim() ?? "";
+        person.LastName = person.LastName?.Trim() ?? "";
+        person.ContactPhoneNumber = person.ContactPhoneNumber?.Trim() ?? "";
+        person.Address = person.Address?.Trim() ?? "";
+        person.Zip = person.Zip?.Trim() ?? "";
+        person.City = person.City?.Trim() ?? "";
+        person.State = person.State?.Trim() ?? "";
 
-        this.checkFields(person.FirstName, person.LastName,
-            person.DateOfBirth, person.ContactPhoneNumber,
-            person.Zip, person.Address, person.City, person.State);
-
-        this.checkFieldLengths(person.FirstName, person.LastName,
-            person.Address, person.City, person.State);
+        checkFields(
+            person.FirstName,
+            person.LastName,
+            person.DateOfBirth,
+            person.ContactPhoneNumber,
+            person.Zip,
+            person.Address,
+            person.City,
+            person.State);
 
         this.personDal.EditPerson(person);
     }
 
-    /// <summary>
-    ///     Validates required fields and their formats.
-    /// </summary>
-    private void checkFields(string firstName, string lastName,
-        DateTime dateOfBirth, string phoneNumber, string zip,
-        string address, string city, string state)
+    private static void checkFields(
+        string firstName,
+        string lastName,
+        DateTime dateOfBirth,
+        string phoneNumber,
+        string zip,
+        string address,
+        string city,
+        string state)
     {
-        if (string.IsNullOrWhiteSpace(firstName) ||
-            string.IsNullOrWhiteSpace(lastName))
-        {
-            throw new ArgumentException(
-                "First name and last name cannot be empty.");
-        }
+        var error =
+            PersonValidator.ValidateFirstName(firstName) ??
+            PersonValidator.ValidateLastName(lastName) ??
+            PersonValidator.ValidateDateOfBirth(dateOfBirth) ??
+            PersonValidator.ValidatePhoneNumber(phoneNumber) ??
+            PersonValidator.ValidateZip(zip) ??
+            PersonValidator.ValidateAddress(address) ??
+            PersonValidator.ValidateCity(city) ??
+            PersonValidator.ValidateState(state);
 
-        if (dateOfBirth == default ||
-            dateOfBirth.Date > DateTime.Today)
+        if (error != null)
         {
-            throw new ArgumentException("Invalid date of birth.");
-        }
-
-        if (string.IsNullOrWhiteSpace(phoneNumber) ||
-            !Regex.IsMatch(phoneNumber, @"^[0-9]{10}$"))
-        {
-            throw new ArgumentException("Invalid phone number.");
-        }
-
-        if (string.IsNullOrWhiteSpace(zip) ||
-            !Regex.IsMatch(zip, @"^([0-9]{5}|[0-9]{9})$"))
-        {
-            throw new ArgumentException("Invalid zip code.");
-        }
-
-        if (string.IsNullOrWhiteSpace(address) ||
-            string.IsNullOrWhiteSpace(city) ||
-            string.IsNullOrWhiteSpace(state))
-        {
-            throw new ArgumentException(
-                "Address, city, and state cannot be empty.");
-        }
-    }
-
-    /// <summary>
-    ///     Validates maximum field lengths.
-    /// </summary>
-    private void checkFieldLengths(string firstName, string lastName,
-        string address, string city, string state)
-    {
-        if (firstName.Trim().Length > 20)
-        {
-            throw new ArgumentException(
-                "First name cannot exceed 20 characters.");
-        }
-
-        if (lastName.Trim().Length > 20)
-        {
-            throw new ArgumentException(
-                "Last name cannot exceed 20 characters.");
-        }
-
-        if (address.Trim().Length > 20)
-        {
-            throw new ArgumentException(
-                "Address cannot exceed 20 characters.");
-        }
-
-        if (city.Trim().Length > 20)
-        {
-            throw new ArgumentException(
-                "City cannot exceed 20 characters.");
-        }
-
-        if (state.Trim().Length > 20)
-        {
-            throw new ArgumentException(
-                "State cannot exceed 20 characters.");
+            throw new ArgumentException(error);
         }
     }
 

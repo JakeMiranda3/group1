@@ -23,160 +23,259 @@
                        Margin="20,0,0,0" />
         </Border>
 
-        <Grid Grid.Row="1" Margin="25,20">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="160" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="35" />
-                <RowDefinition Height="35" />
-                <RowDefinition Height="35" />
-                <RowDefinition Height="35" />
-                <RowDefinition Height="35" />
-                <RowDefinition Height="35" />
-                <RowDefinition Height="35" />
-                <RowDefinition Height="35" />
-                <RowDefinition Height="35" />
-                <RowDefinition Height="35" />
-                <RowDefinition Height="35" />
-                <RowDefinition Height="35" />
-            </Grid.RowDefinitions>
+            <Grid Margin="25,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <Grid.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="FontSize" Value="16" />
-                    <Setter Property="VerticalAlignment" Value="Center" />
-                </Style>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" MinHeight="35" />
+                    <RowDefinition Height="Auto" MinHeight="35" />
+                    <RowDefinition Height="Auto" MinHeight="35" />
+                    <RowDefinition Height="Auto" MinHeight="35" />
+                    <RowDefinition Height="Auto" MinHeight="35" />
+                    <RowDefinition Height="Auto" MinHeight="35" />
+                    <RowDefinition Height="Auto" MinHeight="35" />
+                    <RowDefinition Height="Auto" MinHeight="35" />
+                    <RowDefinition Height="Auto" MinHeight="35" />
+                    <RowDefinition Height="Auto" MinHeight="35" />
+                    <RowDefinition Height="Auto" MinHeight="35" />
+                    <RowDefinition Height="Auto" MinHeight="35" />
+                </Grid.RowDefinitions>
 
-                <Style x:Key="PatientTextBoxStyle" TargetType="TextBox">
-                    <Setter Property="FontSize" Value="16" />
-                    <Setter Property="VerticalContentAlignment" Value="Center" />
-                    <Setter Property="IsReadOnly" Value="True" />
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="BorderThickness" Value="0" />
-                    <Setter Property="Padding" Value="0" />
+                <Grid.Resources>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                    </Style>
 
-                    <Style.Triggers>
-                        <Trigger Property="IsReadOnly" Value="False">
-                            <Setter Property="Background" Value="White" />
-                            <Setter Property="BorderThickness" Value="1" />
-                            <Setter Property="Padding" Value="5,0" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Resources>
+                    <Style x:Key="PatientTextBoxStyle"
+                           TargetType="TextBox">
+                        <Setter Property="FontSize" Value="16" />
+                        <Setter Property="VerticalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="IsReadOnly" Value="True" />
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="Padding" Value="0" />
 
-            <Border Grid.Row="0" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="0,0,0,1" />
-            <Border Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
-            <Border Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
-            <Border Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
-            <Border Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
-            <Border Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
-            <Border Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
-            <Border Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
-            <Border Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
-            <Border Grid.Row="9" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
-            <Border Grid.Row="10" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
-            <Border Grid.Row="11" Grid.ColumnSpan="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0,0,0,1" />
+                        <Style.Triggers>
+                            <Trigger Property="IsReadOnly" Value="False">
+                                <Setter Property="Background" Value="White" />
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="Padding" Value="5,0" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
 
+                    <Style x:Key="FieldErrorStyle" TargetType="TextBlock">
+                        <Setter Property="Foreground" Value="Red" />
+                        <Setter Property="FontSize" Value="11" />
+                        <Setter Property="TextWrapping" Value="Wrap" />
+                        <Setter Property="VerticalAlignment" Value="Top" />
+                        <Setter Property="Margin" Value="0,2,0,4" />
+                        <Setter Property="Visibility" Value="Collapsed" />
+                    </Style>
+                </Grid.Resources>
 
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Patient ID:" />
-            <TextBlock Grid.Row="0" Grid.Column="1"
-                       Text="{Binding PatientId}" />
+                <Border Grid.Row="0" Grid.ColumnSpan="2"
+                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                <Border Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0"
+                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                <Border Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
+                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                <Border Grid.Row="3" Grid.ColumnSpan="2"
+                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                <Border Grid.Row="4" Grid.ColumnSpan="2"
+                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                <Border Grid.Row="5" Grid.ColumnSpan="2"
+                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                <Border Grid.Row="6" Grid.ColumnSpan="2"
+                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                <Border Grid.Row="7" Grid.ColumnSpan="2"
+                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                <Border Grid.Row="8" Grid.ColumnSpan="2"
+                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                <Border Grid.Row="9" Grid.ColumnSpan="2"
+                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                <Border Grid.Row="10" Grid.ColumnSpan="2"
+                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                <Border Grid.Row="11" Grid.ColumnSpan="2"
+                        BorderBrush="Black" BorderThickness="0,0,0,1" />
 
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Person ID:" />
-            <TextBlock Grid.Row="1" Grid.Column="1"
-                       Text="{Binding PersonId}" />
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="Patient ID:" />
+                <TextBlock Grid.Row="0" Grid.Column="1"
+                           Text="{Binding PatientId}" />
 
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="First Name:" />
-            <TextBox x:Name="firstNameTextBox"
-                     Grid.Row="2" Grid.Column="1"
-                     Text="{Binding Person.FirstName, Mode=OneWay}"
-                     Style="{StaticResource PatientTextBoxStyle}"
-                     MaxLength="20" />
+                <TextBlock Grid.Row="1" Grid.Column="0"
+                           Text="Person ID:" />
+                <TextBlock Grid.Row="1" Grid.Column="1"
+                           Text="{Binding PersonId}" />
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Last Name:" />
-            <TextBox x:Name="lastNameTextBox"
-                     Grid.Row="3" Grid.Column="1"
-                     Text="{Binding Person.LastName, Mode=OneWay}"
-                     Style="{StaticResource PatientTextBoxStyle}"
-                     MaxLength="20" />
+                <TextBlock Grid.Row="2" Grid.Column="0"
+                           Text="First Name:" />
 
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="Date of Birth:" />
-            <TextBlock x:Name="dateOfBirthTextBlock"
-                       Grid.Row="4" Grid.Column="1"
-                       Text="{Binding Person.DateOfBirth, StringFormat=d}" />
+                <StackPanel Grid.Row="2" Grid.Column="1"
+                            VerticalAlignment="Center">
+                    <TextBox x:Name="firstNameTextBox"
+                             Text="{Binding Person.FirstName, Mode=OneWay}"
+                             Style="{StaticResource PatientTextBoxStyle}"
+                             MaxLength="20"
+                             Height="30" />
 
-            <DatePicker x:Name="dateOfBirthPicker"
-                        Grid.Row="4" Grid.Column="1"
-                        Visibility="Collapsed"
-                        VerticalAlignment="Center" />
+                    <TextBlock x:Name="firstNameError"
+                               Style="{StaticResource FieldErrorStyle}" />
+                </StackPanel>
 
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="Phone Number:" />
-            <TextBox x:Name="phoneNumberTextBox"
-                     Grid.Row="5" Grid.Column="1"
-                     Text="{Binding Person.ContactPhoneNumber, Mode=OneWay}"
-                     Style="{StaticResource PatientTextBoxStyle}" />
+                <TextBlock Grid.Row="3" Grid.Column="0"
+                           Text="Last Name:" />
 
-            <TextBlock Grid.Row="6" Grid.Column="0" Text="Address:" />
-            <TextBox x:Name="addressTextBox"
-                     Grid.Row="6" Grid.Column="1"
-                     Text="{Binding Person.Address, Mode=OneWay}"
-                     Style="{StaticResource PatientTextBoxStyle}"
-                     MaxLength="20" />
+                <StackPanel Grid.Row="3" Grid.Column="1"
+                            VerticalAlignment="Center">
+                    <TextBox x:Name="lastNameTextBox"
+                             Text="{Binding Person.LastName, Mode=OneWay}"
+                             Style="{StaticResource PatientTextBoxStyle}"
+                             MaxLength="20"
+                             Height="30" />
 
-            <TextBlock Grid.Row="7" Grid.Column="0" Text="City:" />
-            <TextBox x:Name="cityTextBox"
-                     Grid.Row="7" Grid.Column="1"
-                     Text="{Binding Person.City, Mode=OneWay}"
-                     Style="{StaticResource PatientTextBoxStyle}"
-                     MaxLength="20" />
+                    <TextBlock x:Name="lastNameError"
+                               Style="{StaticResource FieldErrorStyle}" />
+                </StackPanel>
 
-            <TextBlock Grid.Row="8" Grid.Column="0" Text="State:" />
-            <TextBlock x:Name="stateTextBlock"
-                       Grid.Row="8" Grid.Column="1"
-                       Text="{Binding Person.State}" />
+                <TextBlock Grid.Row="4" Grid.Column="0"
+                           Text="Date of Birth:" />
 
-            <ComboBox x:Name="stateComboBox"
-                      Grid.Row="8" Grid.Column="1"
-                      Visibility="Collapsed"
-                      VerticalAlignment="Center" />
+                <TextBlock x:Name="dateOfBirthTextBlock"
+                           Grid.Row="4" Grid.Column="1"
+                           Text="{Binding Person.DateOfBirth, StringFormat=d}" />
 
-            <TextBlock Grid.Row="9" Grid.Column="0" Text="Gender:" />
-            <TextBlock x:Name="genderTextBlock"
-                       Grid.Row="9" Grid.Column="1"
-                       Text="{Binding Person.Gender}" />
+                <StackPanel Grid.Row="4" Grid.Column="1"
+                            VerticalAlignment="Center">
+                    <DatePicker x:Name="dateOfBirthPicker"
+                                Visibility="Collapsed"
+                                Height="30" />
 
-            <ComboBox x:Name="genderComboBox"
-                      Grid.Row="9" Grid.Column="1"
-                      Visibility="Collapsed"
-                      VerticalAlignment="Center" />
+                    <TextBlock x:Name="dateOfBirthError"
+                               Style="{StaticResource FieldErrorStyle}" />
+                </StackPanel>
 
-            <TextBlock Grid.Row="10" Grid.Column="0" Text="ZIP Code:" />
-            <TextBox x:Name="zipTextBox"
-                     Grid.Row="10" Grid.Column="1"
-                     Text="{Binding Person.Zip, Mode=OneWay}"
-                     Style="{StaticResource PatientTextBoxStyle}"
-                     MaxLength="9" />
+                <TextBlock Grid.Row="5" Grid.Column="0"
+                           Text="Phone Number:" />
 
-            <TextBlock Grid.Row="11" Grid.Column="0" Text="Active:" />
-            <CheckBox x:Name="isActiveCheckBox"
-                      Grid.Row="11" Grid.Column="1"
-                      IsChecked="{Binding IsActive, Mode=OneWay}"
-                      IsHitTestVisible="False"
-                      Focusable="False"
-                      VerticalAlignment="Center" />
+                <StackPanel Grid.Row="5" Grid.Column="1"
+                            VerticalAlignment="Center">
+                    <TextBox x:Name="phoneNumberTextBox"
+                             Text="{Binding Person.ContactPhoneNumber, Mode=OneWay}"
+                             Style="{StaticResource PatientTextBoxStyle}"
+                             Height="30" />
 
-        </Grid>
+                    <TextBlock x:Name="phoneNumberError"
+                               Style="{StaticResource FieldErrorStyle}" />
+                </StackPanel>
+
+                <TextBlock Grid.Row="6" Grid.Column="0"
+                           Text="Address:" />
+
+                <StackPanel Grid.Row="6" Grid.Column="1"
+                            VerticalAlignment="Center">
+                    <TextBox x:Name="addressTextBox"
+                             Text="{Binding Person.Address, Mode=OneWay}"
+                             Style="{StaticResource PatientTextBoxStyle}"
+                             MaxLength="20"
+                             Height="30" />
+
+                    <TextBlock x:Name="addressError"
+                               Style="{StaticResource FieldErrorStyle}" />
+                </StackPanel>
+
+                <TextBlock Grid.Row="7" Grid.Column="0"
+                           Text="City:" />
+
+                <StackPanel Grid.Row="7" Grid.Column="1"
+                            VerticalAlignment="Center">
+                    <TextBox x:Name="cityTextBox"
+                             Text="{Binding Person.City, Mode=OneWay}"
+                             Style="{StaticResource PatientTextBoxStyle}"
+                             MaxLength="20"
+                             Height="30" />
+
+                    <TextBlock x:Name="cityError"
+                               Style="{StaticResource FieldErrorStyle}" />
+                </StackPanel>
+
+                <TextBlock Grid.Row="8" Grid.Column="0"
+                           Text="State:" />
+
+                <TextBlock x:Name="stateTextBlock"
+                           Grid.Row="8" Grid.Column="1"
+                           Text="{Binding Person.State}" />
+
+                <StackPanel Grid.Row="8" Grid.Column="1"
+                            VerticalAlignment="Center">
+                    <ComboBox x:Name="stateComboBox"
+                              Visibility="Collapsed"
+                              Height="30" />
+
+                    <TextBlock x:Name="stateError"
+                               Style="{StaticResource FieldErrorStyle}" />
+                </StackPanel>
+
+                <TextBlock Grid.Row="9" Grid.Column="0"
+                           Text="Gender:" />
+
+                <TextBlock x:Name="genderTextBlock"
+                           Grid.Row="9" Grid.Column="1"
+                           Text="{Binding Person.Gender}" />
+
+                <StackPanel Grid.Row="9" Grid.Column="1"
+                            VerticalAlignment="Center">
+                    <ComboBox x:Name="genderComboBox"
+                              Visibility="Collapsed"
+                              Height="30" />
+
+                    <TextBlock x:Name="genderError"
+                               Style="{StaticResource FieldErrorStyle}" />
+                </StackPanel>
+
+                <TextBlock Grid.Row="10" Grid.Column="0"
+                           Text="ZIP Code:" />
+
+                <StackPanel Grid.Row="10" Grid.Column="1"
+                            VerticalAlignment="Center">
+                    <TextBox x:Name="zipTextBox"
+                             Text="{Binding Person.Zip, Mode=OneWay}"
+                             Style="{StaticResource PatientTextBoxStyle}"
+                             MaxLength="9"
+                             Height="30" />
+
+                    <TextBlock x:Name="zipError"
+                               Style="{StaticResource FieldErrorStyle}" />
+                </StackPanel>
+
+                <TextBlock Grid.Row="11" Grid.Column="0"
+                           Text="Active:" />
+
+                <CheckBox x:Name="isActiveCheckBox"
+                          Grid.Row="11" Grid.Column="1"
+                          IsChecked="{Binding IsActive, Mode=OneWay}"
+                          IsHitTestVisible="False"
+                          Focusable="False"
+                          VerticalAlignment="Center" />
+
+            </Grid>
+        </ScrollViewer>
 
         <Border Grid.Row="2"
                 Background="White"
                 BorderBrush="Black"
                 BorderThickness="0,2,0,0"
                 Padding="12">
-
 
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right">
@@ -218,7 +317,6 @@
                         IsCancel="True" />
 
             </StackPanel>
-
         </Border>
     </Grid>
 </Window>
