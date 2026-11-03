@@ -43,6 +43,8 @@ public partial class CreateNurseDialog : Window
             var city = this.cityTextBox.Text;
             var state = this.stateTextBox.Text;
             var gender = this.genderTextBox.Text;
+            var username = this.usernameTextBox.Text;
+            var password = this.passwordTextBox.Password;
 
             if (!dateOfBirth.HasValue)
             {
@@ -59,7 +61,9 @@ public partial class CreateNurseDialog : Window
                 zip,
                 city,
                 state,
-                gender);
+                gender,
+                username,
+                password);
 
             MessageBox.Show(
                 "Nurse successfully registered.",

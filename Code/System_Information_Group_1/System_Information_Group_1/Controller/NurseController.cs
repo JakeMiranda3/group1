@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System_Information_Group_1.Constants;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
@@ -16,6 +17,7 @@ public class NurseController
 
     private readonly PersonDal personDal = new();
     private readonly NurseDal nurseDal = new();
+    private readonly AccountDal accountDal = new();
 
     #endregion
 
@@ -33,10 +35,13 @@ public class NurseController
     /// <param name="city">The city.</param>
     /// <param name="state">The state.</param>
     /// <param name="gender">The gender.</param>
+    /// <param name="username">The username.</param>
+    /// <param name="password">The password.</param>
     /// <returns>The registered nurse.</returns>
     public Nurse RegisterNurse(string lastName, string firstName,
         DateTime dateOfBirth, string phoneNumber, string address,
-        string zip, string city, string state, string gender)
+        string zip, string city, string state, string gender,
+        string username, string password)
     {
         lastName = lastName?.Trim() ?? "";
         firstName = firstName?.Trim() ?? "";
@@ -46,12 +51,15 @@ public class NurseController
         city = city?.Trim() ?? "";
         state = state?.Trim() ?? "";
         gender = gender?.Trim() ?? "";
+        username = username?.Trim() ?? "";
 
         this.checkFields(firstName, lastName, dateOfBirth,
             phoneNumber, zip, address, city, state);
 
         this.checkFieldLengths(firstName, lastName, address,
             city, state);
+
+        this.checkCredentials(username, password);
 
         var nursePerson = new Person()
         {
@@ -67,6 +75,9 @@ public class NurseController
         };
 
         var nurse = this.nurseDal.CreateNurseWithPerson(nursePerson);
+        var hashedPassword = PasswordHasher.Hash(password);
+        this.accountDal.CreateAccount(nurse.PersonId, AccountType.Nurse,
+            username, hashedPassword);
 
         return nurse;
     }
@@ -159,6 +170,29 @@ public class NurseController
         {
             throw new ArgumentException(
                 "Address, city, and state cannot be empty.");
+        }
+    }
+
+    /// <summary>
+    ///     Validates account credentials for new nurse accounts.
+    /// </summary>
+    private void checkCredentials(string username, string password)
+    {
+        if (string.IsNullOrWhiteSpace(username) || username.Length < 5)
+        {
+            throw new ArgumentException(
+                "Username must be at least 5 characters long.");
+        }
+
+        if (string.IsNullOrWhiteSpace(password) || password.Length < 8)
+        {
+            throw new ArgumentException(
+                "Password must be at least 8 characters long.");
+        }
+
+        if (this.accountDal.GetAccountWithUserName(username) != null)
+        {
+            throw new ArgumentException("Username already exists.");
         }
     }
 

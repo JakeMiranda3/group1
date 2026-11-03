@@ -61,6 +61,29 @@ namespace System_Information_Group_1.DAL
             return reader.Read() ? createAccount(reader, personIdOrdinal, accountTypeOrdinal, usernameOrdinal, hashedPasswordOrdinal) : null;
         }
 
+        /// <summary>
+        /// Creates a new account.
+        /// </summary>
+        /// <param name="personId">The person identifier.</param>
+        /// <param name="accountType">Type of the account.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="hashedPassword">The hashed password.</param>
+        public void CreateAccount(int personId, AccountType accountType, String username, String hashedPassword)
+        {
+            using var connection = new MySqlConnection(Connection.ConnectionString());
+            connection.Open();
+
+            var query = "INSERT INTO account (person_id, account_type, username, hashed_password) VALUES (@personId, @accountType, @username, @hashedPassword);";
+            using var command = new MySqlCommand(query, connection);
+
+            command.Parameters.Add("@personId", MySqlDbType.Int32).Value = personId;
+            command.Parameters.Add("@accountType", MySqlDbType.VarChar).Value = accountType.ToString();
+            command.Parameters.Add("@username", MySqlDbType.VarChar).Value = username;
+            command.Parameters.Add("@hashedPassword", MySqlDbType.VarChar).Value = hashedPassword;
+
+            command.ExecuteNonQuery();
+        }
+
         #endregion
 
         #region Private Helper
