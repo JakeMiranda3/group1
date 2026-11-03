@@ -82,6 +82,12 @@ namespace System_Information_Group_1.Controller
 
             if (!string.IsNullOrWhiteSpace(this.Visit.FinalDiagnosis))
             {
+                IEnumerable<TestOrderDisplay> ordersWhereTestResultsIsEmpty = this.TestOrders.Where(x => String.IsNullOrEmpty(x.TestResult));
+                if (ordersWhereTestResultsIsEmpty.GetEnumerator().Current == null)
+                {
+                    throw new InvalidOperationException("Cannot finalize visit. All test results must be filled in.");
+                }
+
                 this.IsReadOnly = true;
             }
 
