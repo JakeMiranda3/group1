@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
@@ -67,6 +68,17 @@ namespace System_Information_Group_1.Controller
                 throw new InvalidOperationException("Final diagnosis is already set. This visit is read-only.");
             }
 
+            if (!string.IsNullOrWhiteSpace(this.Visit.FinalDiagnosis))
+            {
+                IList<TestOrderDisplay> ordersWhereTestResultsIsEmpty = this.TestOrders.Where(x => String.IsNullOrEmpty(x.TestResult)).ToList();
+                if (ordersWhereTestResultsIsEmpty.Count > 0)
+                {
+                    throw new InvalidOperationException("Cannot finalize visit. All test results must be filled in.");
+                }
+
+                this.IsReadOnly = true;
+            }
+
             if (this.HasExistingVisit)
             {
                 var wasUpdated = this.visitDal.UpdateVisit(this.Visit);
@@ -80,16 +92,7 @@ namespace System_Information_Group_1.Controller
                 this.visitDal.AddVisit(this.Visit);
             }
 
-            if (!string.IsNullOrWhiteSpace(this.Visit.FinalDiagnosis))
-            {
-                IEnumerable<TestOrderDisplay> ordersWhereTestResultsIsEmpty = this.TestOrders.Where(x => String.IsNullOrEmpty(x.TestResult));
-                if (ordersWhereTestResultsIsEmpty.GetEnumerator().Current == null)
-                {
-                    throw new InvalidOperationException("Cannot finalize visit. All test results must be filled in.");
-                }
-
-                this.IsReadOnly = true;
-            }
+            
 
             foreach (var testOrder in this.TestOrders)
             {
