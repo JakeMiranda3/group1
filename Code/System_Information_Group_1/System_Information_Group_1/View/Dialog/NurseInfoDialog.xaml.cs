@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System_Information_Group_1.Controller;
+using System_Information_Group_1.InputValidation;
 using System_Information_Group_1.Model;
 
 namespace System_Information_Group_1.View.Dialog;
@@ -14,6 +16,7 @@ public partial class NurseInfoDialog : Window
 
     private readonly Nurse nurse;
     private readonly NurseController nurseController;
+    private bool isEditing;
 
     #endregion
 
@@ -44,6 +47,22 @@ public partial class NurseInfoDialog : Window
 
         this.genderComboBox.ItemsSource =
             new[] { "Male", "Female", "Other" };
+
+        foreach (var input in new FrameworkElement[]
+                 {
+                     this.firstNameTextBox,
+                     this.lastNameTextBox,
+                     this.dateOfBirthPicker,
+                     this.phoneNumberTextBox,
+                     this.addressTextBox,
+                     this.cityTextBox,
+                     this.stateComboBox,
+                     this.zipTextBox,
+                     this.genderComboBox
+                 })
+        {
+            input.LostFocus += this.Input_LostFocus;
+        }
     }
 
     #endregion
@@ -52,37 +71,28 @@ public partial class NurseInfoDialog : Window
 
     private void EditButton_OnClick(object sender, RoutedEventArgs e)
     {
+        this.clearErrors();
         this.loadFields();
         this.setEditMode(true);
     }
 
     private void SaveButton_OnClick(object sender, RoutedEventArgs e)
     {
+        if (!this.validateAllFields())
+        {
+            return;
+        }
+
         try
         {
-            if (!this.dateOfBirthPicker.SelectedDate.HasValue)
-            {
-                throw new ArgumentException(
-                    "Please select a date of birth.");
-            }
-
-            if (this.stateComboBox.SelectedItem is not string state)
-            {
-                throw new ArgumentException(
-                    "Please select a state.");
-            }
-
-            if (this.genderComboBox.SelectedItem is not string gender)
-            {
-                throw new ArgumentException(
-                    "Please select a gender.");
-            }
+            var state = (string)this.stateComboBox.SelectedItem;
+            var gender = (string)this.genderComboBox.SelectedItem;
 
             var editedPerson = new Person(
                 this.nurse.PersonId,
                 this.lastNameTextBox.Text,
                 this.firstNameTextBox.Text,
-                this.dateOfBirthPicker.SelectedDate.Value,
+                this.dateOfBirthPicker.SelectedDate!.Value,
                 this.phoneNumberTextBox.Text,
                 this.addressTextBox.Text,
                 this.zipTextBox.Text,
@@ -100,10 +110,11 @@ public partial class NurseInfoDialog : Window
 
             this.nurse.Person = editedPerson;
 
+            this.setEditMode(false);
+            this.clearErrors();
+
             DataContext = null;
             DataContext = this.nurse;
-
-            this.setEditMode(false);
 
             MessageBox.Show(
                 "Nurse information updated successfully.",
@@ -115,7 +126,7 @@ public partial class NurseInfoDialog : Window
         {
             MessageBox.Show(
                 ex.Message,
-                "Invalid Information",
+                "Unable to Save Nurse",
                 MessageBoxButton.OK,
                 MessageBoxImage.Warning);
         }
@@ -131,26 +142,24 @@ public partial class NurseInfoDialog : Window
 
     private void CancelEditButton_OnClick(object sender, RoutedEventArgs e)
     {
+        this.setEditMode(false);
+        this.clearErrors();
+
         DataContext = null;
         DataContext = this.nurse;
-
-        this.setEditMode(false);
     }
 
     private void loadFields()
     {
-        this.dateOfBirthPicker.SelectedDate =
-            this.nurse.Person.DateOfBirth;
-
-        this.stateComboBox.SelectedItem =
-            this.nurse.Person.State;
-
-        this.genderComboBox.SelectedItem =
-            this.nurse.Person.Gender;
+        this.dateOfBirthPicker.SelectedDate = this.nurse.Person.DateOfBirth;
+        this.stateComboBox.SelectedItem = this.nurse.Person.State;
+        this.genderComboBox.SelectedItem = this.nurse.Person.Gender;
     }
 
     private void setEditMode(bool editing)
     {
+        this.isEditing = editing;
+
         this.firstNameTextBox.IsReadOnly = !editing;
         this.lastNameTextBox.IsReadOnly = !editing;
         this.phoneNumberTextBox.IsReadOnly = !editing;
@@ -197,6 +206,128 @@ public partial class NurseInfoDialog : Window
         this.closeButton.Visibility = editing
             ? Visibility.Collapsed
             : Visibility.Visible;
+    }
+
+    private static bool setError(TextBlock errorLabel, string? error)
+    {
+        errorLabel.Text = error ?? "";
+
+        errorLabel.Visibility = error == null
+            ? Visibility.Collapsed
+            : Visibility.Visible;
+
+        return error == null;
+    }
+
+    private bool validateInput(object sender)
+    {
+        if (Equals(sender, this.firstNameTextBox))
+        {
+            return setError(
+                this.firstNameError,
+                PersonValidator.ValidateFirstName(this.firstNameTextBox.Text));
+        }
+
+        if (Equals(sender, this.lastNameTextBox))
+        {
+            return setError(
+                this.lastNameError,
+                PersonValidator.ValidateLastName(this.lastNameTextBox.Text));
+        }
+
+        if (Equals(sender, this.dateOfBirthPicker))
+        {
+            return setError(
+                this.dateOfBirthError,
+                PersonValidator.ValidateDateOfBirth(this.dateOfBirthPicker.SelectedDate));
+        }
+
+        if (Equals(sender, this.phoneNumberTextBox))
+        {
+            return setError(
+                this.phoneNumberError,
+                PersonValidator.ValidatePhoneNumber(this.phoneNumberTextBox.Text));
+        }
+
+        if (Equals(sender, this.addressTextBox))
+        {
+            return setError(
+                this.addressError,
+                PersonValidator.ValidateAddress(this.addressTextBox.Text));
+        }
+
+        if (Equals(sender, this.cityTextBox))
+        {
+            return setError(
+                this.cityError,
+                PersonValidator.ValidateCity(this.cityTextBox.Text));
+        }
+
+        if (Equals(sender, this.stateComboBox))
+        {
+            return setError(
+                this.stateError,
+                PersonValidator.ValidateState(
+                    this.stateComboBox.SelectedItem as string));
+        }
+
+        if (Equals(sender, this.zipTextBox))
+        {
+            return setError(
+                this.zipError,
+                PersonValidator.ValidateZip(this.zipTextBox.Text));
+        }
+
+        if (Equals(sender, this.genderComboBox))
+        {
+            return setError(
+                this.genderError,
+                PersonValidator.ValidateGender(
+                    this.genderComboBox.SelectedItem as string));
+        }
+
+        return true;
+    }
+
+    private void Input_LostFocus(object sender, RoutedEventArgs e)
+    {
+        if (this.isEditing)
+        {
+            this.validateInput(sender);
+        }
+    }
+
+    private bool validateAllFields()
+    {
+        return this.validateInput(this.firstNameTextBox)
+               & this.validateInput(this.lastNameTextBox)
+               & this.validateInput(this.dateOfBirthPicker)
+               & this.validateInput(this.phoneNumberTextBox)
+               & this.validateInput(this.addressTextBox)
+               & this.validateInput(this.cityTextBox)
+               & this.validateInput(this.stateComboBox)
+               & this.validateInput(this.zipTextBox)
+               & this.validateInput(this.genderComboBox);
+    }
+
+    private void clearErrors()
+    {
+        foreach (var errorLabel in new[]
+                 {
+                     this.firstNameError,
+                     this.lastNameError,
+                     this.dateOfBirthError,
+                     this.phoneNumberError,
+                     this.addressError,
+                     this.cityError,
+                     this.stateError,
+                     this.genderError,
+                     this.zipError
+                 })
+        {
+            errorLabel.Text = "";
+            errorLabel.Visibility = Visibility.Collapsed;
+        }
     }
 
     private void CloseButton_OnClick(object sender, RoutedEventArgs e)

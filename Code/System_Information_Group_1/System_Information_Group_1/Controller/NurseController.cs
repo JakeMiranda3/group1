@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System_Information_Group_1.Constants;
 using System_Information_Group_1.DAL;
+using System_Information_Group_1.InputValidation;
 using System_Information_Group_1.Model;
 
 namespace System_Information_Group_1.Controller;
@@ -53,11 +54,21 @@ public class NurseController
         gender = gender?.Trim() ?? "";
         username = username?.Trim() ?? "";
 
-        this.checkFields(firstName, lastName, dateOfBirth,
-            phoneNumber, zip, address, city, state);
+        var error = PersonValidator.ValidatePerson(
+            firstName,
+            lastName,
+            dateOfBirth,
+            phoneNumber,
+            zip,
+            address,
+            city,
+            state,
+            gender);
 
-        this.checkFieldLengths(firstName, lastName, address,
-            city, state);
+        if (error != null)
+        {
+            throw new ArgumentException(error);
+        }
 
         this.checkCredentials(username, password);
 
@@ -114,60 +125,29 @@ public class NurseController
                 "Data Mismatch: Person ID does not match.");
         }
 
-        person.FirstName = person.FirstName.Trim();
-        person.LastName = person.LastName.Trim();
-        person.ContactPhoneNumber = person.ContactPhoneNumber.Trim();
-        person.Address = person.Address.Trim();
-        person.Zip = person.Zip.Trim();
-        person.City = person.City.Trim();
-        person.State = person.State.Trim();
+        person.FirstName = person.FirstName?.Trim() ?? "";
+        person.LastName = person.LastName?.Trim() ?? "";
+        person.ContactPhoneNumber = person.ContactPhoneNumber?.Trim() ?? "";
+        person.Address = person.Address?.Trim() ?? "";
+        person.Zip = person.Zip?.Trim() ?? "";
+        person.City = person.City?.Trim() ?? "";
+        person.State = person.State?.Trim() ?? "";
+        person.Gender = person.Gender?.Trim() ?? "";
 
-        this.checkFields(person.FirstName, person.LastName,
-            person.DateOfBirth, person.ContactPhoneNumber,
-            person.Zip, person.Address, person.City, person.State);
+        var error = PersonValidator.ValidatePerson(
+            person.FirstName,
+            person.LastName,
+            person.DateOfBirth,
+            person.ContactPhoneNumber,
+            person.Zip,
+            person.Address,
+            person.City,
+            person.State,
+            person.Gender);
 
-        this.checkFieldLengths(person.FirstName, person.LastName,
-            person.Address, person.City, person.State);
-
-        this.personDal.EditPerson(person);
-    }
-
-    /// <summary>
-    ///     Validates required fields and their formats.
-    /// </summary>
-    private void checkFields(string firstName, string lastName,
-        DateTime dateOfBirth, string phoneNumber, string zip,
-        string address, string city, string state)
-    {
-        if (string.IsNullOrWhiteSpace(firstName) ||
-            string.IsNullOrWhiteSpace(lastName))
+        if (error != null)
         {
-            throw new ArgumentException(
-                "First name and last name cannot be empty.");
-        }
-
-        if (dateOfBirth == default ||
-            dateOfBirth.Date > DateTime.Today)
-        {
-            throw new ArgumentException("Invalid date of birth.");
-        }
-
-        if (string.IsNullOrWhiteSpace(phoneNumber) ||
-            !Regex.IsMatch(phoneNumber, @"^[0-9]{10}$"))
-        {
-            throw new ArgumentException("Invalid phone number.");
-        }
-
-        if (string.IsNullOrWhiteSpace(zip) ||
-            !Regex.IsMatch(zip, @"^([0-9]{5}|[0-9]{9})$"))
-        {
-            throw new ArgumentException("Invalid zip code.");
-        }
-
-        if (string.IsNullOrWhiteSpace(address) ||
-            string.IsNullOrWhiteSpace(city) ||
-            string.IsNullOrWhiteSpace(state))
-        {
+            throw new ArgumentException(error);
             throw new ArgumentException(
                 "Address, city, and state cannot be empty.");
         }
@@ -193,43 +173,6 @@ public class NurseController
         if (this.accountDal.GetAccountWithUserName(username) != null)
         {
             throw new ArgumentException("Username already exists.");
-        }
-    }
-
-    /// <summary>
-    ///     Validates maximum field lengths.
-    /// </summary>
-    private void checkFieldLengths(string firstName, string lastName,
-        string address, string city, string state)
-    {
-        if (firstName.Trim().Length > 20)
-        {
-            throw new ArgumentException(
-                "First name cannot exceed 20 characters.");
-        }
-
-        if (lastName.Trim().Length > 20)
-        {
-            throw new ArgumentException(
-                "Last name cannot exceed 20 characters.");
-        }
-
-        if (address.Trim().Length > 20)
-        {
-            throw new ArgumentException(
-                "Address cannot exceed 20 characters.");
-        }
-
-        if (city.Trim().Length > 20)
-        {
-            throw new ArgumentException(
-                "City cannot exceed 20 characters.");
-        }
-
-        if (state.Trim().Length > 20)
-        {
-            throw new ArgumentException(
-                "State cannot exceed 20 characters.");
         }
     }
 
