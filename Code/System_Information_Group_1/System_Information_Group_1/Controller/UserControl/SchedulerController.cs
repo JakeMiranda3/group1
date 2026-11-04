@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 using System_Information_Group_1.View.UserControls;
@@ -9,30 +11,50 @@ public class SchedulerController
 {
     private readonly VisitDal visitDal = new();
     private readonly TimeDal timeDal = new();
-    private readonly LabDal labDal = new();
 
-    public TimeCardState DetermineCardState(Appointment appointment)
+    private readonly TestOrderDal orderDal = new();
+
+
+    public DateTime GetCurrentTime()
     {
-        if (appointment == null)
+        return this.timeDal.GetServerDateTimeAsEST();
+    }
+
+    public Dictionary<int, TimeCardState> DetermineCardStates(IList<Appointment> appointments)
+    {
+        if (appointments.Count == 0)
         {
-            return TimeCardState.Available;
+            return new Dictionary<int, TimeCardState>();
         }
 
-        if (this.visitDal.IsVisitFinalized(appointment.AppointmentId))
+        var appointmentIds = appointments.Select(app => app.AppointmentId).Distinct().ToList();
+
+        var finalizedIds = this.visitDal.GetFinalizedAppointmentIds(appointmentIds).ToHashSet();
+
+        var orderIds = this.orderDal.GetAppointmentIdsWithOrders(appointmentIds).ToHashSet();
+
+        var currentTime = this.timeDal.GetServerDateTimeAsEST();
+
+        var states = new Dictionary<int, TimeCardState>();
+
+        foreach (var appointment in appointments)
         {
-            return TimeCardState.Finalized;
+            if (finalizedIds.Contains(appointment.AppointmentId))
+            {
+                states[appointment.AppointmentId] = TimeCardState.Finalized;
+            } else if (orderIds.Contains(appointment.AppointmentId))
+            {
+                states[appointment.AppointmentId] = TimeCardState.PendingLabs;
+            } else if (appointment.Date <= currentTime)
+            {
+                states[appointment.AppointmentId] = TimeCardState.PastDeadline;
+            }
+            else
+            {
+                states[appointment.AppointmentId] = TimeCardState.BeforeDeadline;
+            }
         }
 
-        if (this.labDal.DoesAppointmentHaveAnyLabs(appointment.AppointmentId))
-        {
-            return TimeCardState.PendingLabs;
-        }
-
-        if (appointment.Date <= this.timeDal.GetServerDateTimeAsEST())
-        {
-            return TimeCardState.PastDeadline;
-        }
-
-        return TimeCardState.BeforeDeadline;
+        return states;
     }
 }

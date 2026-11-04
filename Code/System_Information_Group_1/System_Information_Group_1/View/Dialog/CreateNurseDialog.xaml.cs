@@ -70,6 +70,36 @@ public partial class CreateNurseDialog : Window
                 this.cityTextBox.Text,
                 selectedState.Content.ToString()!,
                 selectedGender.Content.ToString()!);
+            var firstName = this.firstNameTextBox.Text;
+            var lastName = this.lastNameTextBox.Text;
+            var dateOfBirth = this.dateOfBirthPicker.SelectedDate;
+            var phoneNumber = this.phoneNumberTextBox.Text;
+            var address = this.addressTextBox.Text;
+            var zip = this.zipTextBox.Text;
+            var city = this.cityTextBox.Text;
+            var state = this.stateTextBox.Text;
+            var gender = this.genderTextBox.Text;
+            var username = this.usernameTextBox.Text;
+            var password = this.passwordTextBox.Password;
+
+            if (!dateOfBirth.HasValue)
+            {
+                MessageBox.Show("Please select a date of birth.");
+                return;
+            }
+
+            this.nurseController.RegisterNurse(
+                lastName,
+                firstName,
+                dateOfBirth.Value,
+                phoneNumber,
+                address,
+                zip,
+                city,
+                state,
+                gender,
+                username,
+                password);
 
             MessageBox.Show(
                 "Nurse successfully registered.",

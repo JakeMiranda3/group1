@@ -15,7 +15,7 @@ public partial class AppointmentInfoDialog : Window
     #region Fields
 
     private readonly Appointment appointment;
-    private readonly AppointmentController appointmentController;
+    private readonly AppointmentEditController appointmentEditController;
 
     #endregion
 
@@ -31,7 +31,7 @@ public partial class AppointmentInfoDialog : Window
         this.InitializeComponent();
 
         this.appointment = appointment;
-        this.appointmentController = new AppointmentController();
+        this.appointmentEditController = new AppointmentEditController();
 
         DataContext = appointment;
     }
@@ -97,7 +97,7 @@ public partial class AppointmentInfoDialog : Window
             editedAppointment.Doctor = this.appointment.Doctor;
             editedAppointment.Patient = this.appointment.Patient;
 
-            this.appointmentController.EditAppointment(editedAppointment);
+            this.appointmentEditController.EditAppointment(editedAppointment);
 
             this.appointment.Reason = editedAppointment.Reason;
             this.appointment.Date = editedAppointment.Date;

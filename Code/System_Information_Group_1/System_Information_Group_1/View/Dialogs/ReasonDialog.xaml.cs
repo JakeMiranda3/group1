@@ -44,15 +44,36 @@ namespace System_Information_Group_1.View.Dialogs
 
         private void confirmButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(this.reasonTextBox.Text))
+            this.clearError();
+
+            var reason = this.reasonTextBox.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(reason))
             {
-                MessageBox.Show("Please enter a valid reason.");
+                this.showError("Please enter a reason for the appointment.");
                 return;
             }
 
-            this.Reason = this.reasonTextBox.Text.Trim();
+            if (reason.Length > 100)
+            {
+                this.showError("The appointment reason cannot exceed 100 characters.");
+                return;
+            }
 
-            DialogResult = true;
+            this.Reason = reason;
+            this.DialogResult = true;
+        }
+
+        private void showError(string message)
+        {
+            this.errorMessage.Text = message;
+            this.errorMessage.Visibility = Visibility.Visible;
+        }
+
+        private void clearError()
+        {
+            this.errorMessage.Text = string.Empty;
+            this.errorMessage.Visibility = Visibility.Collapsed;
         }
     }
 }

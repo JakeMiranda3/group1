@@ -19,26 +19,26 @@ namespace System_Information_Group_1.DAL
         /// <param name="id">The identifier.</param>
         /// <returns>The account with the corresponding person ID</returns>
         /// <exception cref="System.ArgumentNullException">no results were returned from the reader</exception>
-        public Account GetAccountWithPersonId(int id)
-        {
-            using var connection = new MySqlConnection(Connection.ConnectionString());
-            connection.Open();
+        //public Account GetAccountWithPersonId(int id)
+        //{
+        //    using var connection = new MySqlConnection(Connection.ConnectionString());
+        //    connection.Open();
 
-            var query = "SELECT * FROM account WHERE person_id = @id";
+        //    var query = "SELECT * FROM account WHERE person_id = @id";
 
-            using var command = new MySqlCommand(query, connection);
+        //    using var command = new MySqlCommand(query, connection);
 
-            command.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
+        //    command.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
 
-            using var reader = command.ExecuteReader();
+        //    using var reader = command.ExecuteReader();
 
-            int personIdOrdinal = reader.GetOrdinal("person_id");
-            int accountTypeOrdinal = reader.GetOrdinal("account_type");
-            int usernameOrdinal = reader.GetOrdinal("username");
-            int hashedPasswordOrdinal = reader.GetOrdinal("hashed_password");
+        //    int personIdOrdinal = reader.GetOrdinal("person_id");
+        //    int accountTypeOrdinal = reader.GetOrdinal("account_type");
+        //    int usernameOrdinal = reader.GetOrdinal("username");
+        //    int hashedPasswordOrdinal = reader.GetOrdinal("hashed_password");
 
-            return reader.Read() ? createAccount(reader, personIdOrdinal, accountTypeOrdinal, usernameOrdinal, hashedPasswordOrdinal) : throw new ArgumentNullException(nameof(reader), "reader returned no results");
-        }
+        //    return reader.Read() ? createAccount(reader, personIdOrdinal, accountTypeOrdinal, usernameOrdinal, hashedPasswordOrdinal) : throw new ArgumentNullException(nameof(reader), "reader returned no results");
+        //}
 
         /// <summary>
         /// Gets the name of the account with user.
@@ -59,6 +59,29 @@ namespace System_Information_Group_1.DAL
             int usernameOrdinal = reader.GetOrdinal("username");
             int hashedPasswordOrdinal = reader.GetOrdinal("hashed_password");
             return reader.Read() ? createAccount(reader, personIdOrdinal, accountTypeOrdinal, usernameOrdinal, hashedPasswordOrdinal) : null;
+        }
+
+        /// <summary>
+        /// Creates a new account.
+        /// </summary>
+        /// <param name="personId">The person identifier.</param>
+        /// <param name="accountType">Type of the account.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="hashedPassword">The hashed password.</param>
+        public void CreateAccount(int personId, AccountType accountType, String username, String hashedPassword)
+        {
+            using var connection = new MySqlConnection(Connection.ConnectionString());
+            connection.Open();
+
+            var query = "INSERT INTO account (person_id, account_type, username, hashed_password) VALUES (@personId, @accountType, @username, @hashedPassword);";
+            using var command = new MySqlCommand(query, connection);
+
+            command.Parameters.Add("@personId", MySqlDbType.Int32).Value = personId;
+            command.Parameters.Add("@accountType", MySqlDbType.VarChar).Value = accountType.ToString();
+            command.Parameters.Add("@username", MySqlDbType.VarChar).Value = username;
+            command.Parameters.Add("@hashedPassword", MySqlDbType.VarChar).Value = hashedPassword;
+
+            command.ExecuteNonQuery();
         }
 
         #endregion
