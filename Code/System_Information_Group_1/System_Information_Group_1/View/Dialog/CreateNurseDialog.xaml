@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Create Nurse"
-        Height="700"
+        Height="750"
         Width="600"
         MinHeight="700"
         MinWidth="600"
@@ -40,7 +40,6 @@
         <Grid Grid.Row="1" Margin="25,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -52,15 +51,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-
-            <StackPanel Grid.Row="0" Grid.Column="0"
-                        Margin="0,0,10,15">
-                <Label Content="First Name" FontSize="16" />
-                <TextBox x:Name="firstNameTextBox"
-                         Height="32"
-                         FontSize="16"
-                         MaxLength="20" />
-            </StackPanel>
 
         <ScrollViewer Grid.Row="1"
                       VerticalScrollBarVisibility="Auto"
@@ -78,7 +68,9 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
 
                 <StackPanel Grid.Row="0"
@@ -250,7 +242,6 @@
                                Style="{StaticResource FieldErrorStyle}" />
                 </StackPanel>
 
-                <!-- ZIP Code -->
                 <StackPanel Grid.Row="4"
                             Grid.Column="0"
                             Margin="0,0,10,10">
@@ -288,40 +279,32 @@
                     <TextBlock x:Name="genderError"
                                Style="{StaticResource FieldErrorStyle}" />
                 </StackPanel>
+                <StackPanel Grid.Row="4" Grid.Column="1"
+                            Margin="10,0,0,15">
+                    <Label Content="Gender" FontSize="16" />
+                </StackPanel>
 
-            </Grid>
-        </ScrollViewer>
-
-            <StackPanel Grid.Row="4" Grid.Column="1"
-                        Margin="10,0,0,15">
-                <Label Content="Gender" FontSize="16" />
-                <ComboBox x:Name="genderTextBox"
-                          Height="32"
-                          FontSize="16"
-                          IsEditable="False">
-                    <ComboBoxItem Content="Male" />
-                    <ComboBoxItem Content="Female" />
-                    <ComboBoxItem Content="Other" />
-                </ComboBox>
-            </StackPanel>
-
-            <StackPanel Grid.Row="5" Grid.Column="0"
-                        Margin="0,0,10,15">
-                <Label Content="Username" FontSize="16" />
-                <TextBox x:Name="usernameTextBox"
-                         Height="32"
-                         FontSize="16"
-                         MaxLength="50" />
-            </StackPanel>
-
-            <StackPanel Grid.Row="5" Grid.Column="1"
-                        Margin="10,0,0,15">
-                <Label Content="Password" FontSize="16" />
-                <PasswordBox x:Name="passwordTextBox"
+                <StackPanel Grid.Row="5" Grid.Column="0"
+                            Margin="0,0,10,15">
+                    <Label Content="Username" FontSize="16" />
+                    <TextBox x:Name="usernameTextBox"
                              Height="32"
                              FontSize="16"
                              MaxLength="50" />
-            </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Row="5" Grid.Column="1"
+                            Margin="10,0,0,15">
+                    <Label Content="Password" FontSize="16" />
+                    <PasswordBox x:Name="passwordTextBox"
+                                 Height="32"
+                                 FontSize="16"
+                                 MaxLength="50" />
+                </StackPanel>
+                </Grid>
+        </ScrollViewer>
+
+
         </Grid>
 
         <Border Grid.Row="2"

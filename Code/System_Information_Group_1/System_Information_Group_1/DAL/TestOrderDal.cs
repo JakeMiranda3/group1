@@ -138,8 +138,6 @@ public class TestOrderDal
         var query = "SELECT DISTINCT appointment_id FROM test_order WHERE appointment_id IN @appointmentIds;";
 
         return connection.Query<int>(query, new { appointmentIds }).ToList();
-
-
     }
 
     public List<TestOrder> GetAllTestWithAppointmentId(int appointmentId)
