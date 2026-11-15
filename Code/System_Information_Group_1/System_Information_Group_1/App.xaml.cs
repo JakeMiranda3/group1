@@ -7,5 +7,11 @@ namespace System_Information_Group_1;
 /// </summary>
 public partial class App : Application
 {
-
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="App" /> class.
+    /// </summary>
+    public App()
+    {
+        
+    }
 }

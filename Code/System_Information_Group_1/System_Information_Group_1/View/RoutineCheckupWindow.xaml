@@ -150,7 +150,7 @@
                         <TextBox x:Name="temperatureTextBox"
                                  Style="{StaticResource VitalTextBoxStyle}">
                             <TextBox.Text>
-                                <Binding Path="Temperature" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="Temperature" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <inputValidation:RoutineCheckupValidator FieldName="Temp (°F)" Min="90" Max="110" />
                                     </Binding.ValidationRules>
@@ -167,7 +167,7 @@
                         <TextBox x:Name="heightTextBox"
                                  Style="{StaticResource VitalTextBoxStyle}">
                             <TextBox.Text>
-                                <Binding Path="Height" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="Height" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <inputValidation:RoutineCheckupValidator FieldName="Height (in)" Min="12" Max="96" />
                                     </Binding.ValidationRules>
@@ -184,7 +184,7 @@
                         <TextBox x:Name="weightTextBox"
                                  Style="{StaticResource VitalTextBoxStyle}">
                             <TextBox.Text>
-                                <Binding Path="Weight" UpdateSourceTrigger="PropertyChanged">
+                                <Binding Path="Weight" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <inputValidation:RoutineCheckupValidator FieldName="Weight (lbs)" Min="1" Max="1000" />
                                     </Binding.ValidationRules>
