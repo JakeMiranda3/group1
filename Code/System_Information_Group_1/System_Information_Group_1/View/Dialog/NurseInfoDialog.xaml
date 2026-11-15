@@ -7,15 +7,15 @@
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize">
 
-    <Grid Background="LightBlue">
+    <Grid Background="{StaticResource PrimaryBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="65" />
             <RowDefinition Height="*" />
             <RowDefinition Height="65" />
         </Grid.RowDefinitions>
 
-        <Border Background="White"
-                BorderBrush="Black"
+        <Border Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource OutlineBrush}"
                 BorderThickness="0,0,0,2">
             <TextBlock Text="Nurse Information"
                        FontSize="24"
@@ -83,27 +83,27 @@
                 </Grid.Resources>
 
                 <Border Grid.Row="0" Grid.ColumnSpan="2"
-                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                        BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
                 <Border Grid.Row="1" Grid.ColumnSpan="2"
-                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                        BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
                 <Border Grid.Row="2" Grid.ColumnSpan="2"
-                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                        BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
                 <Border Grid.Row="3" Grid.ColumnSpan="2"
-                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                        BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
                 <Border Grid.Row="4" Grid.ColumnSpan="2"
-                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                        BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
                 <Border Grid.Row="5" Grid.ColumnSpan="2"
-                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                        BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
                 <Border Grid.Row="6" Grid.ColumnSpan="2"
-                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                        BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
                 <Border Grid.Row="7" Grid.ColumnSpan="2"
-                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                        BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
                 <Border Grid.Row="8" Grid.ColumnSpan="2"
-                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                        BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
                 <Border Grid.Row="9" Grid.ColumnSpan="2"
-                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                        BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
                 <Border Grid.Row="10" Grid.ColumnSpan="2"
-                        BorderBrush="Black" BorderThickness="0,0,0,1" />
+                        BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
 
                 <TextBlock Grid.Row="0" Grid.Column="0"
                            Text="Nurse ID:" />
@@ -259,8 +259,8 @@
         </ScrollViewer>
 
         <Border Grid.Row="2"
-                Background="White"
-                BorderBrush="Black"
+                Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource OutlineBrush}"
                 BorderThickness="0,2,0,0"
                 Padding="12">
 
@@ -273,7 +273,6 @@
                         Height="38"
                         Margin="0,0,15,0"
                         Style="{StaticResource BlueButtonStyle}"
-                        Background="#FFF1F1F1"
                         Click="EditButton_OnClick" />
 
                 <Button x:Name="saveButton"
@@ -283,7 +282,6 @@
                         Margin="0,0,15,0"
                         Visibility="Collapsed"
                         Style="{StaticResource BlueButtonStyle}"
-                        Background="#FFF1F1F1"
                         Click="SaveButton_OnClick" />
 
                 <Button x:Name="cancelEditButton"
@@ -292,7 +290,6 @@
                         Height="38"
                         Visibility="Collapsed"
                         Style="{StaticResource BlueButtonStyle}"
-                        Background="#FFF1F1F1"
                         Click="CancelEditButton_OnClick" />
 
                 <Button x:Name="closeButton"
@@ -300,7 +297,6 @@
                         Width="110"
                         Height="38"
                         Style="{StaticResource BlueButtonStyle}"
-                        Background="#FFF1F1F1"
                         Click="CloseButton_OnClick" />
 
             </StackPanel>

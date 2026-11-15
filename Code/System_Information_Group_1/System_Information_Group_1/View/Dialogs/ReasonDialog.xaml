@@ -29,7 +29,7 @@
 
             <TextBlock x:Name="errorMessage"
                        Grid.Column="0"
-                       Foreground="DarkRed"
+                       Foreground="{StaticResource ErrorBrush}"
                        FontSize="14"
                        TextWrapping="Wrap"
                        VerticalAlignment="Center"

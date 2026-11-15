@@ -3,7 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="View/LoginWindow.xaml">
     <Application.Resources>
-        <!--#region ButtonStyles -->
+
+        <Color x:Key="PrimaryColor">LightBlue</Color>
+        <Color x:Key="OnPrimaryColor">Black</Color>
+        <Color x:Key="SurfaceColor">White</Color>
+        <Color x:Key="OnSurfaceColor">DarkBlue</Color>
+        <Color x:Key="LightOnSurfaceColor"></Color>
+        <Color x:Key="OutlineColor">Black</Color>
+        <Color x:Key="ErrorColor">Red</Color>
+
+        <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"></SolidColorBrush>
+        <SolidColorBrush x:Key="OnPrimaryBrush" Color="{StaticResource OnPrimaryColor}"></SolidColorBrush>
+        <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}"></SolidColorBrush>
+        <SolidColorBrush x:Key="OnSurfaceBrush" Color="{StaticResource OnSurfaceColor}"></SolidColorBrush>
+        <SolidColorBrush x:Key="OutlineBrush" Color="{StaticResource OutlineColor}"></SolidColorBrush>
+        <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}"></SolidColorBrush>
+        <SolidColorBrush x:Key="LightOnSurfaceBrush" Color="{StaticResource LightOnSurfaceColor}"></SolidColorBrush>
+
+            <!--#region ButtonStyles -->
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -13,7 +30,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFCCCCCC"/>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFF1F1F1"/>
         <SolidColorBrush x:Key="Button.Static.Foreground" Color="Black"/>
 
         <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>

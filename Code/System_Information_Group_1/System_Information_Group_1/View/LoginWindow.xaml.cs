@@ -25,16 +25,6 @@ public partial class LoginWindow : Window
 
     #endregion
 
-    private void onNurseRadioButtonClicked(object sender, RoutedEventArgs e)
-    {
-        this.LoginWindowFrame.Navigate(new NurseLoginPage());
-    }
-
-    private void onAdminRadioButtonClicked(object sender, RoutedEventArgs e)
-    {
-        
-        this.LoginWindowFrame.Navigate(new AdminLoginPage());
-    }
 
 
 }

@@ -8,7 +8,7 @@
         Height="430"
         Width="760"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize" Background="{StaticResource SurfaceBrush}">
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -54,14 +54,12 @@
                     Height="34"
                     Margin="0,0,10,0"
                     Style="{StaticResource BlueButtonStyle}"
-                    Background="#FFF1F1F1"
                     Click="CancelButton_OnClick" />
             <Button x:Name="selectButton"
                     Content="Select"
                     Width="100"
                     Height="34"
                     Style="{StaticResource BlueButtonStyle}"
-                    Background="#FFF1F1F1"
                     Click="SelectButton_OnClick" />
         </StackPanel>
     </Grid>

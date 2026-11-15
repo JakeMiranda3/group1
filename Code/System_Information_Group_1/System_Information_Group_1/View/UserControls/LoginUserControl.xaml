@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="System_Information_Group_1.View.LoginUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             
+             mc:Ignorable="d" d:DesignWidth="500">
+    <Border CornerRadius="12" BorderThickness="1" Padding="25" Background="{StaticResource SurfaceBrush}" BorderBrush="#22232323">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="18" ShadowDepth="2" Opacity="0.18"/>
+        </Border.Effect>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+
+            </Grid.RowDefinitions>
+            <TextBlock  Grid.Row="0" HorizontalAlignment="Center" Text="Welcome!" FontSize="24" Foreground="{StaticResource OnSurfaceBrush}" FontWeight="Bold" Margin="0,0,0,25"/>
+
+            <StackPanel Grid.Row="1" Margin="0,0,0,10">
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" FontFamily="Arial Black" Foreground="{StaticResource OnSurfaceBrush}"/>
+                <TextBox x:Name="usernameTextBox" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="onUsernameTextChange"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Margin="0,0,0,10">
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" FontFamily="Arial Black" Foreground="{StaticResource OnSurfaceBrush}"/>
+                <TextBox x:Name="passwordTextBox" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="onPasswordTextChanged"/>
+            </StackPanel>
+            <TextBlock Grid.Row="3" x:Name="loginErrorMessage"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontFamily="Arial Black" Foreground="{StaticResource ErrorBrush}" FontSize="10" Visibility="Hidden" Margin="0,0,0,10" FontWeight="Bold"/>
+
+            <Button Grid.Row="4" x:Name="loginButton" Content="Login" Style="{StaticResource BlueButtonStyle}"  HorizontalAlignment="Center"  VerticalAlignment="Center" FontFamily="Arial Black" Click="onLoginButtonClicked" FontSize="16" Padding="10,4,10,4" Width="112" />
+
+        </Grid>
+    </Border>
+</UserControl>

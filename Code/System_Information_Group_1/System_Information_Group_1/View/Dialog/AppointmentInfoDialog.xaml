@@ -7,15 +7,15 @@
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize">
 
-    <Grid Background="LightBlue">
+    <Grid Background="{StaticResource PrimaryBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="65" />
             <RowDefinition Height="*" />
             <RowDefinition Height="65" />
         </Grid.RowDefinitions>
 
-        <Border Background="White"
-                BorderBrush="Black"
+        <Border Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource OutlineBrush}"
                 BorderThickness="0,0,0,2">
             <TextBlock Text="Appointment Information"
                        FontSize="24"
@@ -56,7 +56,7 @@
 
                     <Style.Triggers>
                         <Trigger Property="IsReadOnly" Value="False">
-                            <Setter Property="Background" Value="White" />
+                            <Setter Property="Background" Value="{StaticResource Sur}" />
                             <Setter Property="BorderThickness" Value="1" />
                             <Setter Property="Padding" Value="5,0" />
                         </Trigger>
@@ -65,27 +65,27 @@
             </Grid.Resources>
 
             <Border Grid.Row="0" Grid.ColumnSpan="2"
-                    BorderBrush="Black"
+                    BorderBrush="{StaticResource OutlineBrush}"
                     BorderThickness="0,0,0,1" />
 
             <Border Grid.Row="1" Grid.ColumnSpan="2"
-                    BorderBrush="Black"
+                    BorderBrush="{StaticResource OutlineBrush}"
                     BorderThickness="0,0,0,1" />
 
             <Border Grid.Row="2" Grid.ColumnSpan="2"
-                    BorderBrush="Black"
+                    BorderBrush="{StaticResource OutlineBrush}"
                     BorderThickness="0,0,0,1" />
 
             <Border Grid.Row="3" Grid.ColumnSpan="2"
-                    BorderBrush="Black"
+                    BorderBrush="{StaticResource OutlineBrush}"
                     BorderThickness="0,0,0,1" />
 
             <Border Grid.Row="4" Grid.ColumnSpan="2"
-                    BorderBrush="Black"
+                    BorderBrush="{StaticResource OutlineBrush}"
                     BorderThickness="0,0,0,1" />
 
             <Border Grid.Row="5" Grid.ColumnSpan="2"
-                    BorderBrush="Black"
+                    BorderBrush="{StaticResource OutlineBrush}"
                     BorderThickness="0,0,0,1" />
 
             <TextBlock Grid.Row="0" Grid.Column="0"
@@ -172,8 +172,8 @@
         </Grid>
 
         <Border Grid.Row="2"
-                Background="White"
-                BorderBrush="Black"
+                Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource OutlineBrush}"
                 BorderThickness="0,2,0,0"
                 Padding="12">
 
@@ -186,7 +186,6 @@
                         Height="38"
                         Margin="0,0,15,0"
                         Style="{StaticResource BlueButtonStyle}"
-                        Background="#FFF1F1F1"
                         Click="EditAppointmentButton_OnClick" />
 
                 <Button x:Name="saveChangesButton"
@@ -196,7 +195,6 @@
                         Margin="0,0,15,0"
                         Visibility="Collapsed"
                         Style="{StaticResource BlueButtonStyle}"
-                        Background="#FFF1F1F1"
                         Click="SaveChangesButton_OnClick" />
 
                 <Button x:Name="cancelEditButton"
@@ -205,7 +203,6 @@
                         Height="38"
                         Visibility="Collapsed"
                         Style="{StaticResource BlueButtonStyle}"
-                        Background="#FFF1F1F1"
                         Click="CancelEditButton_OnClick" />
 
                 <Button x:Name="closeButton"
@@ -213,7 +210,6 @@
                         Width="110"
                         Height="38"
                         Style="{StaticResource BlueButtonStyle}"
-                        Background="#FFF1F1F1"
                         IsCancel="True" />
 
             </StackPanel>
