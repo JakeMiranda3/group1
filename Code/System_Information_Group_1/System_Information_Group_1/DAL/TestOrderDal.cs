@@ -92,6 +92,7 @@ public class TestOrderDal
         //TODO make this a transaction 
         foreach (var testOrder in testOrders)
         {
+            this.setIsAbnormal(testOrder);
             using var cmd = new MySqlCommand(query, connection);
             cmd.Parameters.AddWithValue("@performedDateTime", testOrder.PerformedDateTime.HasValue
                 ? (object)testOrder.PerformedDateTime.Value
@@ -103,6 +104,34 @@ public class TestOrderDal
             cmd.Parameters.AddWithValue("@appointmentId", testOrder.AppointmentId);
             cmd.Parameters.AddWithValue("@testCode", testOrder.TestCode);
             cmd.ExecuteNonQuery();
+        }
+    }
+
+    private void setIsAbnormal(TestOrderDisplay testOrder)
+    {
+        
+        if (testOrder.LowValue == 0.0)
+        {
+            // low value is not set and therefore abnormality should be input manually
+            return;
+        }
+
+        double testResult;
+        if (!Double.TryParse(testOrder.TestResult, out testResult))
+        {
+            throw new ArgumentException("If low value is set then test result must be a double");
+        }
+
+        if (testOrder.LowValue > testResult)
+        {
+            testOrder.IsAbnormal = true;
+        } else if (testOrder.HighValue < testResult)
+        {
+            testOrder.IsAbnormal = true;
+        }
+        else
+        {
+            testOrder.IsAbnormal = false;
         }
     }
 

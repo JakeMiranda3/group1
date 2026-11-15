@@ -124,6 +124,7 @@ namespace System_Information_Group_1.View
         {
             IEnumerable<TestOrderDisplay> collection = (IEnumerable<TestOrderDisplay>)this.testsDataGrid.ItemsSource;
             this.controller.SubmitTestResults(collection);
+            this.RefreshTestOrders();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
