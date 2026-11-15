@@ -258,7 +258,7 @@
                             Margin="0,0,8,0"
                             Style="{StaticResource BlueButtonStyle}"
                             Background="#FFF1F1F1"
-                            Click="SubmitButton_OnClick" />
+                            Click="OnSubmitCheckupButtonClick" />
 
                     <Button x:Name="orderTestButton"
                             Content="Order Test"

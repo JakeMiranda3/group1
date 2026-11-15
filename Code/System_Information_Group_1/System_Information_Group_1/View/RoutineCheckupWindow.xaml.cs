@@ -24,12 +24,19 @@ namespace System_Information_Group_1.View
             this.testsDataGrid.ItemsSource = new ObservableCollection<TestOrderDisplay>(this.controller.TestOrders);
         }
 
-        private void SubmitButton_OnClick(object sender, RoutedEventArgs e)
+        private void OnSubmitCheckupButtonClick(object sender, RoutedEventArgs e)
         {
             if (this.controller.IsReadOnly)
             {
                 MessageBox.Show("This visit is finalized and cannot be edited.", "Read Only", MessageBoxButton.OK,
                     MessageBoxImage.Information);
+                return;
+            }
+
+            if (!this.areRoutineCheckInputsValid())
+            {
+                MessageBox.Show("Please correct the highlighted vitals before submitting.", "Invalid Input",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -122,6 +129,37 @@ namespace System_Information_Group_1.View
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private bool areRoutineCheckInputsValid()
+        {
+            TextBox[] vitalTextBoxes =
+            {
+                this.systolicTextBox,
+                this.diastolicTextBox,
+                this.pulseTextBox,
+                this.temperatureTextBox,
+                this.heightTextBox,
+                this.weightTextBox
+            };
+
+            bool areAllValid = true;
+            TextBox firstInvalidTextBox = null;
+
+            foreach (TextBox textBox in vitalTextBoxes)
+            {
+                // Re-runs the binding's validation rules so untouched fields are checked too.
+                textBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+
+                if (Validation.GetHasError(textBox))
+                {
+                    areAllValid = false;
+                    firstInvalidTextBox ??= textBox;
+                }
+            }
+
+            firstInvalidTextBox?.Focus();
+            return areAllValid;
         }
     }
 }
