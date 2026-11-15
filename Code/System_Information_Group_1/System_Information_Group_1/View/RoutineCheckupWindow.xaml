@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:barUserControl="clr-namespace:System_Information_Group_1.View.UserControls"
+        xmlns:inputValidation="clr-namespace:System_Information_Group_1.InputValidation"
         mc:Ignorable="d"
         Title="Routine Checkup Entry"
         MinHeight="720"
@@ -12,7 +13,9 @@
         ResizeMode="CanResizeWithGrip">
 
     <Window.Resources>
-       
+
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+
         <Style x:Key="FieldLabelStyle" TargetType="Label">
             <Setter Property="FontSize" Value="15" />
             <Setter Property="Padding" Value="0,0,0,4" />
@@ -34,16 +37,23 @@
             <Setter Property="MaxLength" Value="200" />
             <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         </Style>
-        
+
         <Style x:Key="WrapCellStyle" TargetType="TextBlock">
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style x:Key="ValidationErrorTextStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="DarkRed" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Margin" Value="0,4,0,0" />
         </Style>
     </Window.Resources>
 
     <Grid Background="LightBlue">
         <Grid.ColumnDefinitions>
-         
+
             <ColumnDefinition Width="5*" MinWidth="420" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="5*" MinWidth="460" />
@@ -54,7 +64,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-  
+
         <Border Grid.Row="0"
                 Grid.ColumnSpan="3"
                 BorderThickness="0,0,0,2"
@@ -63,7 +73,7 @@
                                       BarHeader="Routine Checkup Entry" />
         </Border>
 
-        
+
         <ScrollViewer Grid.Row="1"
                       Grid.Column="0"
                       VerticalScrollBarVisibility="Auto"
@@ -81,49 +91,111 @@
                          Height="80"
                          Margin="0,0,0,15" />
 
-               
+
                 <UniformGrid Columns="3" Margin="0,0,0,15">
                     <StackPanel Margin="0,0,10,10">
                         <Label Content="Systolic BP" Style="{StaticResource FieldLabelStyle}" />
                         <TextBox x:Name="systolicTextBox"
-                                 Text="{Binding SystolicBloodPressure, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource VitalTextBoxStyle}" />
+                                 Style="{StaticResource VitalTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="SystolicBloodPressure" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <inputValidation:RoutineCheckupValidator FieldName="Systolic BP" Min="70" Max="250" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock Style="{StaticResource ValidationErrorTextStyle}"
+                                   Text="{Binding ElementName=systolicTextBox, Path=(Validation.Errors)/ErrorContent}"
+                                   Visibility="{Binding ElementName=systolicTextBox, Path=(Validation.HasError), Converter={StaticResource BoolToVisibilityConverter}}" />
                     </StackPanel>
 
                     <StackPanel Margin="0,0,10,10">
                         <Label Content="Diastolic BP" Style="{StaticResource FieldLabelStyle}" />
                         <TextBox x:Name="diastolicTextBox"
-                                 Text="{Binding DiastolicBloodPressure, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource VitalTextBoxStyle}" />
+                                 Style="{StaticResource VitalTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="DiastolicBloodPressure" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <inputValidation:RoutineCheckupValidator FieldName="Diastolic BP" Min="40" Max="150" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock Style="{StaticResource ValidationErrorTextStyle}"
+                                   Text="{Binding ElementName=diastolicTextBox, Path=(Validation.Errors)/ErrorContent}"
+                                   Visibility="{Binding ElementName=diastolicTextBox, Path=(Validation.HasError), Converter={StaticResource BoolToVisibilityConverter}}" />
                     </StackPanel>
 
                     <StackPanel Margin="0,0,0,10">
                         <Label Content="Pulse" Style="{StaticResource FieldLabelStyle}" />
                         <TextBox x:Name="pulseTextBox"
-                                 Text="{Binding Pulse, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource VitalTextBoxStyle}" />
+                                 Style="{StaticResource VitalTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="Pulse" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <inputValidation:RoutineCheckupValidator FieldName="Pulse" Min="30" Max="220" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock Style="{StaticResource ValidationErrorTextStyle}"
+                                   Text="{Binding ElementName=pulseTextBox, Path=(Validation.Errors)/ErrorContent}"
+                                   Visibility="{Binding ElementName=pulseTextBox, Path=(Validation.HasError), Converter={StaticResource BoolToVisibilityConverter}}" />
                     </StackPanel>
+
 
                     <StackPanel Margin="0,0,10,10">
                         <Label Content="Temp (°F)" Style="{StaticResource FieldLabelStyle}" />
                         <TextBox x:Name="temperatureTextBox"
-                                 Text="{Binding Temperature, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource VitalTextBoxStyle}" />
+                                 Style="{StaticResource VitalTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="Temperature" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <inputValidation:RoutineCheckupValidator FieldName="Temp (°F)" Min="90" Max="110" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock Style="{StaticResource ValidationErrorTextStyle}"
+                                   Text="{Binding ElementName=temperatureTextBox, Path=(Validation.Errors)/ErrorContent}"
+                                   Visibility="{Binding ElementName=temperatureTextBox, Path=(Validation.HasError), Converter={StaticResource BoolToVisibilityConverter}}" />
                     </StackPanel>
 
                     <StackPanel Margin="0,0,10,10">
                         <Label Content="Height (in)" Style="{StaticResource FieldLabelStyle}" />
                         <TextBox x:Name="heightTextBox"
-                                 Text="{Binding Height, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource VitalTextBoxStyle}" />
+                                 Style="{StaticResource VitalTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="Height" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <inputValidation:RoutineCheckupValidator FieldName="Height (in)" Min="12" Max="96" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock Style="{StaticResource ValidationErrorTextStyle}"
+                                   Text="{Binding ElementName=heightTextBox, Path=(Validation.Errors)/ErrorContent}"
+                                   Visibility="{Binding ElementName=heightTextBox, Path=(Validation.HasError), Converter={StaticResource BoolToVisibilityConverter}}" />
                     </StackPanel>
 
                     <StackPanel Margin="0,0,0,10">
                         <Label Content="Weight (lbs)" Style="{StaticResource FieldLabelStyle}" />
                         <TextBox x:Name="weightTextBox"
-                                 Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"
-                                 Style="{StaticResource VitalTextBoxStyle}" />
+                                 Style="{StaticResource VitalTextBoxStyle}">
+                            <TextBox.Text>
+                                <Binding Path="Weight" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <inputValidation:RoutineCheckupValidator FieldName="Weight (lbs)" Min="1" Max="1000" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock Style="{StaticResource ValidationErrorTextStyle}"
+                                   Text="{Binding ElementName=weightTextBox, Path=(Validation.Errors)/ErrorContent}"
+                                   Visibility="{Binding ElementName=weightTextBox, Path=(Validation.HasError), Converter={StaticResource BoolToVisibilityConverter}}" />
                     </StackPanel>
+
                 </UniformGrid>
 
                 <Label Content="Initial Diagnosis" Style="{StaticResource SectionLabelStyle}" />
@@ -141,7 +213,7 @@
             </StackPanel>
         </ScrollViewer>
 
-       
+
         <GridSplitter Grid.Row="1"
                       Grid.Column="1"
                       Width="4"
@@ -152,19 +224,19 @@
                       ShowsPreview="False"
                       Cursor="SizeWE" />
 
-      
+
         <Grid Grid.Row="1" Grid.Column="2" Margin="15">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                
+
                 <RowDefinition Height="Auto" />
-               
+
                 <RowDefinition Height="Auto" />
-                
+
                 <RowDefinition Height="*" />
-                
+
                 <RowDefinition Height="Auto" />
-               
+
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0"
@@ -172,7 +244,7 @@
                        FontSize="24"
                        Margin="0,0,0,10" />
 
-           
+
             <Border Grid.Row="1"
                     BorderBrush="Black"
                     BorderThickness="0,0,0,2"
@@ -186,7 +258,7 @@
                             Margin="0,0,8,0"
                             Style="{StaticResource BlueButtonStyle}"
                             Background="#FFF1F1F1"
-                            Click="SubmitButton_OnClick" />
+                            Click="OnSubmitCheckupButtonClick" />
 
                     <Button x:Name="orderTestButton"
                             Content="Order Test"
@@ -204,7 +276,7 @@
                        FontSize="20"
                        Margin="0,0,0,10" />
 
-        
+
             <DataGrid x:Name="testsDataGrid"
                       Grid.Row="3"
                       MinHeight="200"

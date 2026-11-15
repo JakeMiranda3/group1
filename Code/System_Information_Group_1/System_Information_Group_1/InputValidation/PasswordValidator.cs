@@ -14,6 +14,14 @@ namespace System_Information_Group_1.InputValidation
     /// <seealso cref="System.Windows.Controls.ValidationRule" />
     public class PasswordValidator : ValidationRule 
     {
+        /// <summary>
+        /// When overridden in a derived class, performs validation checks on a value.
+        /// </summary>
+        /// <param name="value">The value from the binding target to check.</param>
+        /// <param name="cultureInfo">The culture to use in this rule.</param>
+        /// <returns>
+        /// A <see cref="T:System.Windows.Controls.ValidationResult" /> object.
+        /// </returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             String password = (String)value;
