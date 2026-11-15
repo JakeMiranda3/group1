@@ -107,7 +107,7 @@
                             Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"
                             Value="True"/>
                     </MultiDataTrigger.Conditions>
-                    <Setter Property="Background" Value="#FF884504"/>
+                    <Setter Property="Background" Value="#FFBF6309"/>
                 </MultiDataTrigger>
 
             </Style.Triggers>
