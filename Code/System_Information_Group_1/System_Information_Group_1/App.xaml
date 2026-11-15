@@ -11,6 +11,8 @@
         <Color x:Key="LightOnSurfaceColor"></Color>
         <Color x:Key="OutlineColor">Black</Color>
         <Color x:Key="ErrorColor">Red</Color>
+        <Color x:Key="SecondaryColor">#FF2B579A</Color>
+        <Color x:Key="CancelColor">#FFE68181</Color>
 
         <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"></SolidColorBrush>
         <SolidColorBrush x:Key="OnPrimaryBrush" Color="{StaticResource OnPrimaryColor}"></SolidColorBrush>
@@ -19,6 +21,8 @@
         <SolidColorBrush x:Key="OutlineBrush" Color="{StaticResource OutlineColor}"></SolidColorBrush>
         <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}"></SolidColorBrush>
         <SolidColorBrush x:Key="LightOnSurfaceBrush" Color="{StaticResource LightOnSurfaceColor}"></SolidColorBrush>
+        <SolidColorBrush x:Key="SecondaryColorBrush" Color="{StaticResource SecondaryColor}"></SolidColorBrush>
+        <SolidColorBrush x:Key="CancelColorBrush" Color="{StaticResource CancelColor}"></SolidColorBrush>
 
             <!--#region ButtonStyles -->
         <Style x:Key="FocusVisual">

@@ -55,7 +55,6 @@
                     Binding="{Binding State, RelativeSource={RelativeSource Self}}"
                     Value="{x:Static local:TimeCardState.Finalized}">
                     <Setter Property="Background" Value="#FFDC7A1C"/>
-                    <Setter Property="IsEnabled" Value="False"/>
 
                 </DataTrigger>
 
@@ -97,6 +96,18 @@
                             Value="True"/>
                     </MultiDataTrigger.Conditions>
                     <Setter Property="Background" Value="#FFFFD54F"/>
+                </MultiDataTrigger>
+
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition
+                            Binding="{Binding State, RelativeSource={RelativeSource Self}}"
+                            Value="{x:Static local:TimeCardState.Finalized}"/>
+                        <Condition
+                            Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"
+                            Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Background" Value="#FF884504"/>
                 </MultiDataTrigger>
 
             </Style.Triggers>

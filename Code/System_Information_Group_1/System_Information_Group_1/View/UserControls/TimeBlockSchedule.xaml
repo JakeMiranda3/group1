@@ -9,77 +9,46 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <Style x:Key="FocusVisual">
-            <Setter Property="Control.Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#FFB3E5FC"/>
-        <SolidColorBrush x:Key="Item.MouseOver.Border" Color="#FF0277BD"/>
-        <SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#948C54"/>
-        <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="#FF844B1B"/>
-        <SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="#FFB1A96F"/>
-        <SolidColorBrush x:Key="Item.SelectedInactive.Border" Color="#FFDADADA"/>
-        <SolidColorBrush x:Key="Item.Disabled.Background" Color="#FFDC5A1C"></SolidColorBrush>
-        <Style x:Key="ScheduleListItemTemplate" TargetType="{x:Type ListBoxItem}">
-                <Setter Property="SnapsToDevicePixels" Value="True"/>
-            <Setter Property="Padding" Value="4,1"/>
-            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-            <Setter Property="Background" Value="#FFFFF8BF"/>
-            <Setter Property="BorderBrush" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Style x:Key="ScheduleListItemTemplate"
+               TargetType="ListBoxItem">
+
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    <ControlTemplate TargetType="ListBoxItem">
+
+                        <Border x:Name="Bd"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                BorderThickness="2,5,2,5">
+
+                            <ContentPresenter
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"/>
+
                         </Border>
+
                         <ControlTemplate.Triggers>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="True"/>
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.MouseOver.Border}"/>
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive" Value="False"/>
-                                    <Condition Property="IsSelected" Value="True"/>
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Border}"/>
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive" Value="True"/>
-                                    <Condition Property="IsSelected" Value="True"/>
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Border}"/>
-                            </MultiTrigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                
-                                <Setter Property="Background" Value="{StaticResource Item.Disabled.Background}"></Setter>
+
+
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd"
+                                        Property="BorderBrush"
+                                        Value="{StaticResource SecondaryColorBrush}"/>
                             </Trigger>
+
                         </ControlTemplate.Triggers>
+
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+
         </Style>
     </UserControl.Resources>
-    <Grid Background="#FFDAECED">
+    <Grid Background="{StaticResource PrimaryBrush}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"></RowDefinition>
             <RowDefinition Height="90*"></RowDefinition>
-            <RowDefinition Height="10*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid>
@@ -89,19 +58,19 @@
                 <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="1" Background="White" BorderThickness="2,0,2,0" BorderBrush="Black">
+            <Border Grid.Column="1" Background="{StaticResource SurfaceBrush}" BorderThickness="2,0,2,0" BorderBrush="Black">
                 <Viewbox>
                     <Label>Doctor</Label>
                 </Viewbox>
             </Border>
 
-            <Border Grid.Column="2" Background="White">
+            <Border Grid.Column="2" Background="{StaticResource SurfaceBrush}">
                 <Viewbox>
                     <Label>Patient Name : Phone</Label>
                 </Viewbox>
             </Border>
 
-            <Border Grid.Column="0" Background="White">
+            <Border Grid.Column="0" Background="{StaticResource SurfaceBrush}">
                 <Viewbox>
                     <Label>Date</Label>
                 </Viewbox>
@@ -109,14 +78,5 @@
         </Grid>
         <ListBox Grid.Row="1" ItemContainerStyle="{StaticResource ScheduleListItemTemplate}" x:Name="scheduleListBox" Background="{x:Null}" BorderBrush="#FF434446" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
         </ListBox>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Style="{StaticResource BlueButtonStyle}"  Width="100" Height="30" Margin="0,0,10,0" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Hidden">
-                Previous Day
-            </Button>
-            <Button Style="{StaticResource BlueButtonStyle}" Width="100" Height="30" Margin="0,0,10,0" Background="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Hidden">
-                Next Day
-            </Button>
-
-        </StackPanel>
     </Grid>
 </UserControl>
