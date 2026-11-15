@@ -45,7 +45,7 @@
 
         <Style x:Key="ValidationErrorTextStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="12" />
-            <Setter Property="Foreground" Value="DarkRed" />
+            <Setter Property="Foreground" Value="{StaticResource ErrorBrush}" />
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="Margin" Value="0,4,0,0" />
         </Style>
@@ -257,7 +257,7 @@
                             Height="45"
                             Margin="0,0,8,0"
                             Style="{StaticResource BlueButtonStyle}"
-                            Click="SubmitButton_OnClick" />
+                            Click="OnSubmitCheckupButtonClick" />
 
                     <Button x:Name="orderTestButton"
                             Content="Order Test"
