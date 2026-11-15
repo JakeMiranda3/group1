@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System;
+using System.Data;
 using System.Linq;
 using Dapper;
 using MySqlConnector;
@@ -88,52 +89,46 @@ public class TestOrderDal
         connection.Open();
         var query = "UPDATE test_order SET performed_datetime = @performedDateTime, test_result = @testResult, " +
                     "is_abnormal = @isAbnormal WHERE appointment_id = @appointmentId AND test_code = @testCode";
+        using var transaction = connection.BeginTransaction();
 
-        //TODO make this a transaction 
-        foreach (var testOrder in testOrders)
+        try
         {
-            this.setIsAbnormal(testOrder);
-            using var cmd = new MySqlCommand(query, connection);
-            cmd.Parameters.AddWithValue("@performedDateTime", testOrder.PerformedDateTime.HasValue
-                ? (object)testOrder.PerformedDateTime.Value
-                : DBNull.Value);
-            cmd.Parameters.AddWithValue("@testResult", string.IsNullOrWhiteSpace(testOrder.TestResult)
-                ? (object)DBNull.Value
-                : testOrder.TestResult);
-            cmd.Parameters.AddWithValue("@isAbnormal", testOrder.IsAbnormal);
-            cmd.Parameters.AddWithValue("@appointmentId", testOrder.AppointmentId);
-            cmd.Parameters.AddWithValue("@testCode", testOrder.TestCode);
-            cmd.ExecuteNonQuery();
+
+            foreach (var testOrder in testOrders)
+            {
+
+
+                using var cmd = new MySqlCommand(query, connection, transaction);
+                cmd.Parameters.AddWithValue("@performedDateTime", testOrder.PerformedDateTime.HasValue
+                    ? (object)testOrder.PerformedDateTime.Value
+                    : DBNull.Value);
+                cmd.Parameters.AddWithValue("@testResult", string.IsNullOrWhiteSpace(testOrder.TestResult)
+                    ? (object)DBNull.Value
+                    : testOrder.TestResult);
+                cmd.Parameters.AddWithValue("@isAbnormal", testOrder.IsAbnormal);
+                cmd.Parameters.AddWithValue("@appointmentId", testOrder.AppointmentId);
+                cmd.Parameters.AddWithValue("@testCode", testOrder.TestCode);
+                cmd.ExecuteNonQuery();
+
+                using var procedureCmd = new MySqlCommand("setAbnormality", connection, transaction);
+                procedureCmd.CommandType = CommandType.StoredProcedure;
+                procedureCmd.Parameters.Add("p_appointment_id", MySqlDbType.Int32).Value = testOrder.AppointmentId;
+                procedureCmd.Parameters.Add("p_test_code", MySqlDbType.Int32).Value = testOrder.TestCode;
+                procedureCmd.Parameters.Add("p_test_result", MySqlDbType.String).Value = testOrder.TestResult;
+                procedureCmd.ExecuteNonQuery();
+            }
+
+            transaction.Commit();
+
+        }
+        catch 
+        {
+            transaction.Rollback();
+            throw;
         }
     }
 
-    private void setIsAbnormal(TestOrderDisplay testOrder)
-    {
-        
-        if (testOrder.LowValue == 0.0)
-        {
-            // low value is not set and therefore abnormality should be input manually
-            return;
-        }
-
-        double testResult;
-        if (!Double.TryParse(testOrder.TestResult, out testResult))
-        {
-            throw new ArgumentException("If low value is set then test result must be a double");
-        }
-
-        if (testOrder.LowValue > testResult)
-        {
-            testOrder.IsAbnormal = true;
-        } else if (testOrder.HighValue < testResult)
-        {
-            testOrder.IsAbnormal = true;
-        }
-        else
-        {
-            testOrder.IsAbnormal = false;
-        }
-    }
+    
 
     #endregion
 

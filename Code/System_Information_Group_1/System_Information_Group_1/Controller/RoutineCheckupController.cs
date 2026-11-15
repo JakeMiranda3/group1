@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Windows;
+using System.Windows.Media.Converters;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
@@ -117,9 +118,30 @@ namespace System_Information_Group_1.Controller
 
         public void SubmitTestResults(IEnumerable<TestOrderDisplay> collection)
         {
+            IEnumerable<TestOrderDisplay> testWithResults = collection.Where(x => !String.IsNullOrEmpty(x.TestResult));
+            //TODO make sure this does not remove tests from the test results grid
+
+            //Seeing if a non-numeric string was entered for a test that has a low and high range
+            bool testResultIsNonNumericString = false;
+            double value;
+            foreach (TestOrderDisplay test in testWithResults)
+            {
+                if (test.LowValue != 0 && !Double.TryParse(test.TestResult, out value))
+                {
+                    testResultIsNonNumericString = true;
+                    break;
+                }
+            }
+
+            if (testResultIsNonNumericString)
+            {
+                MessageBox.Show("You must enter a number for the result of a metric test");
+                return;
+            }
+
             try
             {
-                this.testOrderDal.UpdateTestResults(collection);
+                this.testOrderDal.UpdateTestResults(testWithResults);
                 MessageBox.Show("Test Results Submitted Successfully", "Test Results");
             }
             catch (Exception ex)
