@@ -29,7 +29,7 @@ namespace System_Information_Group_1.View
 
         private void onLoginButtonClicked(object sender, System.Windows.RoutedEventArgs e)
         {
-            bool successfulLogin = this.controller.AttemptLogin(this.usernameTextBox.Text, this.passwordTextBox.Text);
+            bool successfulLogin = this.controller.AttemptLogin(this.usernameTextBox.Text, this.passwordTextBox.Password);
 
             Console.WriteLine("LOGIN: " + successfulLogin);
             if (successfulLogin)
@@ -82,9 +82,9 @@ namespace System_Information_Group_1.View
             }
         }
 
-        private void onPasswordTextChanged(object sender, TextChangedEventArgs e)
+        private void onPasswordTextChanged(object sender, RoutedEventArgs e)
         {
-            String passwordText = this.passwordTextBox.Text;
+            String passwordText = this.passwordTextBox.Password;
 
             PasswordValidator passwordValidator = new PasswordValidator();
 

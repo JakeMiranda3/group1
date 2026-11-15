@@ -26,7 +26,7 @@
             </StackPanel>
             <StackPanel Grid.Row="2" Margin="0,0,0,10">
                 <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Password" VerticalAlignment="Top" FontFamily="Arial Black" Foreground="{StaticResource OnSurfaceBrush}" Margin="0,0,0,5"/>
-                <TextBox x:Name="passwordTextBox" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="onPasswordTextChanged"/>
+                <PasswordBox x:Name="passwordTextBox" VerticalAlignment="Top" PasswordChanged="onPasswordTextChanged"/>
             </StackPanel>
             <TextBlock Grid.Row="3" x:Name="loginErrorMessage"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontFamily="Arial Black" Foreground="{StaticResource ErrorBrush}" FontSize="10" Visibility="Hidden" Margin="0,0,0,10" FontWeight="Bold"/>
 
