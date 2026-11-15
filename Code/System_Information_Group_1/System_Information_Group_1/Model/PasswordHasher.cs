@@ -6,6 +6,16 @@ namespace System_Information_Group_1.Model
 {
     /// <summary>
     /// The password hasher class provides methods for hashing and verifying passwords using PBKDF2 with SHA256.
+    ///
+    /// Credits:
+    /// SHA-256 was designed by the U.S. National Security Agency (NSA) and published by the
+    /// National Institute of Standards and Technology (NIST) in FIPS 180-2 (2001), now FIPS 180-4,
+    /// "Secure Hash Standard (SHS)": https://csrc.nist.gov/pubs/fips/180-4/upd1/final
+    /// PBKDF2 was designed by Burt Kaliski of RSA Laboratories and published in
+    /// RFC 2898, "PKCS #5: Password-Based Cryptography Specification Version 2.0" (2000):
+    /// https://www.rfc-editor.org/rfc/rfc2898
+    /// The implementation uses .NET's Rfc2898DeriveBytes class:
+    /// https://learn.microsoft.com/en-us/dotnet/api/system.security.cryptography.rfc2898derivebytes
     /// @author Colby
     /// @version Fall 2026
     /// </summary>
