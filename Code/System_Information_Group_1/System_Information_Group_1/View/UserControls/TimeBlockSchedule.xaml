@@ -24,12 +24,9 @@
                             <ContentPresenter
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"/>
-
                         </Border>
 
                         <ControlTemplate.Triggers>
-
-
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="Bd"
                                         Property="BorderBrush"
@@ -51,32 +48,41 @@
             <RowDefinition Height="90*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="4*"/>
-            </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Background="{StaticResource SurfaceBrush}">
+            <Grid Margin="3,0,20,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
 
-            <Border Grid.Column="1" Background="{StaticResource SurfaceBrush}" BorderThickness="2,0,2,0" BorderBrush="Black">
-                <Viewbox>
-                    <Label>Doctor</Label>
-                </Viewbox>
-            </Border>
+                <Border Grid.Column="1" Background="{StaticResource SurfaceBrush}" BorderThickness="2,0,2,0" BorderBrush="Black">
+                    <Viewbox>
+                        <Label>Doctor</Label>
+                    </Viewbox>
+                </Border>
 
-            <Border Grid.Column="2" Background="{StaticResource SurfaceBrush}">
-                <Viewbox>
-                    <Label>Patient Name : Phone</Label>
-                </Viewbox>
-            </Border>
+                <Border Grid.Column="2" Background="{StaticResource SurfaceBrush}">
+                    <Viewbox>
+                        <Label>Patient Name : Phone</Label>
+                    </Viewbox>
+                </Border>
 
-            <Border Grid.Column="0" Background="{StaticResource SurfaceBrush}">
-                <Viewbox>
-                    <Label>Date</Label>
-                </Viewbox>
-            </Border>
-        </Grid>
-        <ListBox Grid.Row="1" ItemContainerStyle="{StaticResource ScheduleListItemTemplate}" x:Name="scheduleListBox" Background="{x:Null}" BorderBrush="#FF434446" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-        </ListBox>
+                <Border Grid.Column="0" Background="{StaticResource SurfaceBrush}">
+                    <Viewbox>
+                        <Label>Date</Label>
+                    </Viewbox>
+                </Border>
+            </Grid>
+        </Border>
+        <ListBox
+            Grid.Row="1"
+            x:Name="scheduleListBox"
+            ItemContainerStyle="{StaticResource ScheduleListItemTemplate}"
+            Background="Transparent"
+            BorderThickness="0"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+            ScrollViewer.VerticalScrollBarVisibility="Visible"/>
     </Grid>
 </UserControl>
