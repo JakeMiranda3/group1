@@ -89,6 +89,7 @@ public class TestOrderDal
         var query = "UPDATE test_order SET performed_datetime = @performedDateTime, test_result = @testResult, " +
                     "is_abnormal = @isAbnormal WHERE appointment_id = @appointmentId AND test_code = @testCode";
 
+        //TODO make this a transaction 
         foreach (var testOrder in testOrders)
         {
             using var cmd = new MySqlCommand(query, connection);

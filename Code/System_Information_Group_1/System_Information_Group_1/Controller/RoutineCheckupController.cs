@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
+using System.Windows;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
@@ -116,7 +117,15 @@ namespace System_Information_Group_1.Controller
 
         public void SubmitTestResults(IEnumerable<TestOrderDisplay> collection)
         {
-            this.testOrderDal.UpdateTestResults(collection);
+            try
+            {
+                this.testOrderDal.UpdateTestResults(collection);
+                MessageBox.Show("Test Results Submitted Successfully", "Test Results");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Test Results");
+            }
         }
     }
 }
