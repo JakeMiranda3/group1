@@ -20,16 +20,16 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border Grid.ColumnSpan="3" BorderThickness="0,0,0,2" BorderBrush="Black">
+        <Border Grid.ColumnSpan="3" BorderThickness="0,0,0,2" BorderBrush="{StaticResource OutlineBrush}">
 
             <barUserControl:TopAppBar BarHeader="Appointment Schedules"/>
         </Border>
 
         <barUserControl:TimeBlockSchedule x:Name="scheduleControl" Grid.Column="0" Grid.Row="1"></barUserControl:TimeBlockSchedule>
-        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1,0,2,1">
+        <Border Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource OutlineBrush}" BorderThickness="1,0,2,1">
 
 
-            <Grid Background="#4CBED8E6">
+            <Grid Background="{StaticResource ContrastPrimaryBrush}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -61,7 +61,7 @@
 
                 </Grid>
 
-                <Border Grid.Row="1" BorderThickness="0,0,0,2" BorderBrush="Black">
+                <Border Grid.Row="1" BorderThickness="0,0,0,2" BorderBrush="{StaticResource OutlineBrush}">
                     <StackPanel  VerticalAlignment="Top" Margin="0,0,0,10">
                         <Viewbox HorizontalAlignment="Left" StretchDirection="DownOnly" Margin="10,0,0,0">
                             <Label FontSize="16" Content="View Appointments By Date"/>
@@ -69,7 +69,7 @@
                         <DatePicker x:Name="appointmentTimePicker" VerticalAlignment="Center" Margin="15,0,10,0" FontSize="16" SelectedDateChanged="appointmentTimePicker_SelectedDateChanged" />
                     </StackPanel>
                 </Border>
-                <Border Grid.Row="2" BorderBrush="Black" BorderThickness="0,0,0,2">
+                <Border Grid.Row="2" BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,2">
                     <StackPanel  Orientation="Horizontal" >
                         <Viewbox  StretchDirection="DownOnly" Margin="10,0,0,0">
                             <Label x:Name="patientCondenseLabel" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"
@@ -80,14 +80,14 @@
                 </Border>
                 <StackPanel Grid.Row="3" Margin="0,0,0,10">
                 <Viewbox  StretchDirection="DownOnly" Margin="0,10,0,0">
-                    <Button x:Name="createAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFF1F1F1" Click="createAppointmentButton_Click">Schedule Appointment At Selected Time Block</Button>
+                    <Button x:Name="createAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Click="createAppointmentButton_Click">Schedule Appointment At Selected Time Block</Button>
                 </Viewbox>
                     <Viewbox  StretchDirection="DownOnly" Margin="0,15,0,0">
-                        <Button x:Name="editAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFF1F1F1" Click="editAppointmentButton_Click">Edit Appointment Details</Button>
+                        <Button x:Name="editAppointmentButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Click="editAppointmentButton_Click">Edit Appointment Details</Button>
                     </Viewbox>
-                    <Border BorderBrush="Black" BorderThickness="0,2,0,2" Margin="0,10,0,0">
+                    <Border BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,2,0,2" Margin="0,10,0,0">
                         <Viewbox  StretchDirection="DownOnly" Margin="0,10,0,10">
-                            <Button x:Name="viewVisitButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Background="#FFF1F1F1" Click="viewVisitButton_Click">View Appointments Visit Information</Button>
+                            <Button x:Name="viewVisitButton" Style="{StaticResource BlueButtonStyle}" FontSize="16" Padding="4,5,4,5" Click="viewVisitButton_Click">View Appointments Visit Information</Button>
                         </Viewbox>
                     </Border>
                     <Viewbox  StretchDirection="DownOnly" Margin="0,20,0,0">
@@ -95,14 +95,14 @@
                 </Viewbox>
                 </StackPanel>
 
-                <Border Grid.Row="4" BorderBrush="Black" BorderThickness="0,2,0,0">
+                <Border Grid.Row="4" BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,2,0,0">
                     <StackPanel 
                             Margin="15,20,15,0"
                             VerticalAlignment="Top">
 
                         <TextBlock x:Name="errorMessage"
                                Text=""
-                               Foreground="DarkRed"
+                               Foreground="{StaticResource ErrorBrush}"
                                FontSize="16"
                                FontWeight="SemiBold"
                                TextWrapping="Wrap"

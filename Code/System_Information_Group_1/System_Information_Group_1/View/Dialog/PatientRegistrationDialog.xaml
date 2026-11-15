@@ -11,7 +11,7 @@
 
     <Window.Resources>
         <Style x:Key="FieldErrorStyle" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="Foreground" Value="{StaticResource  ErrorBrush}"/>
             <Setter Property="FontSize" Value="11"/>
             <Setter Property="TextWrapping" Value="Wrap"/>
             <Setter Property="MinHeight" Value="16"/>
@@ -19,7 +19,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid Background="LightBlue">
+    <Grid Background="{StaticResource PrimaryBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="65" />
             <RowDefinition Height="*" />
@@ -27,8 +27,8 @@
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0"
-                Background="White"
-                BorderBrush="Black"
+                Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource OutlineBrush}"
                 BorderThickness="0,0,0,2">
 
             <TextBlock Text="Register New Patient"
@@ -258,9 +258,9 @@
         </ScrollViewer>
 
         <Border Grid.Row="2"
-                BorderBrush="Black"
+                BorderBrush="{StaticResource OutlineBrush}"
                 BorderThickness="0,2,0,0"
-                Background="White">
+                Background="{StaticResource SurfaceBrush}">
 
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
@@ -274,7 +274,6 @@
                         FontSize="16"
                         Margin="0,0,15,0"
                         Style="{StaticResource BlueButtonStyle}"
-                        Background="#FFF1F1F1"
                         Click="RegisterButton_OnClick" />
 
                 <Button x:Name="cancelButton"
@@ -284,7 +283,7 @@
                         FontSize="16"
                         IsCancel="True"
                         Style="{StaticResource BlueButtonStyle}"
-                        Background="#FFF1F1F1" />
+                        />
             </StackPanel>
         </Border>
     </Grid>

@@ -19,7 +19,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid Background="LightBlue">
+    <Grid Background="{StaticResource PrimaryBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="65" />
             <RowDefinition Height="*" />
@@ -27,8 +27,8 @@
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0"
-                Background="White"
-                BorderBrush="Black"
+                Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource OutlineBrush}"
                 BorderThickness="0,0,0,2">
 
             <TextBlock Text="Create New Nurse"
@@ -308,9 +308,9 @@
         </Grid>
 
         <Border Grid.Row="2"
-                BorderBrush="Black"
+                BorderBrush="{StaticResource OutlineBrush}"
                 BorderThickness="0,2,0,0"
-                Background="White">
+                Background="{StaticResource SurfaceBrush}">
 
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
@@ -324,7 +324,6 @@
                         FontSize="16"
                         Margin="0,0,15,0"
                         Style="{StaticResource BlueButtonStyle}"
-                        Background="#FFF1F1F1"
                         Click="CreateButton_OnClick" />
 
                 <Button x:Name="cancelButton"
@@ -333,7 +332,6 @@
                         Height="38"
                         FontSize="16"
                         Style="{StaticResource BlueButtonStyle}"
-                        Background="#FFF1F1F1"
                         Click="CancelButton_OnClick" />
 
             </StackPanel>

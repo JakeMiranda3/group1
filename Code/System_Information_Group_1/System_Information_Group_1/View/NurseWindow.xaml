@@ -11,7 +11,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip">
 
-    <Grid Background="LightBlue">
+    <Grid Background="{StaticResource PrimaryBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70*" />
             <ColumnDefinition Width="30*" />
@@ -25,7 +25,7 @@
         <Border Grid.Row="0"
                 Grid.ColumnSpan="2"
                 BorderThickness="0,0,0,2"
-                BorderBrush="Black">
+                BorderBrush="{StaticResource OutlineBrush}">
 
             <barUserControl:TopAppBar
                 x:Name="topAppBarControl"
@@ -35,7 +35,7 @@
 
         <Border Grid.Row="1"
                 Grid.Column="0"
-                BorderBrush="Black"
+                BorderBrush="{StaticResource OutlineBrush}"
                 BorderThickness="0,0,2,0">
 
             <Grid Margin="15">
@@ -51,7 +51,7 @@
                            Margin="0,0,0,15" />
 
                 <Border Grid.Row="1"
-                        BorderBrush="Black"
+                        BorderBrush="{StaticResource OutlineBrush}"
                         BorderThickness="0,0,0,2"
                         Padding="0,0,0,15"
                         Margin="0,0,0,15">
@@ -100,7 +100,6 @@
                                     Height="25"
                                     Margin="0,0,0,3"
                                     Style="{StaticResource BlueButtonStyle}"
-                                    Background="#FFF1F1F1"
                                     Click="ClearButton_OnClick" />
 
                             <Button x:Name="searchButton"
@@ -108,7 +107,6 @@
                                     Width="100"
                                     Height="35"
                                     Style="{StaticResource BlueButtonStyle}"
-                                    Background="#FFF1F1F1"
                                     Click="SearchButton_OnClick" />
 
                         </StackPanel>
@@ -121,8 +119,8 @@
                           IsReadOnly="True"
                           SelectionMode="Single"
                           FontSize="15"
-                          Background="White"
-                          BorderBrush="Black"
+                          Background="{StaticResource SurfaceBrush}"
+                          BorderBrush="{StaticResource OutlineBrush}"
                           BorderThickness="1"
                           RowHeight="35"
                           ColumnHeaderHeight="38">
@@ -173,7 +171,7 @@
                        Margin="15,15,0,15" />
 
             <Border Grid.Row="1"
-                    BorderBrush="Black"
+                    BorderBrush="{StaticResource OutlineBrush}"
                     BorderThickness="0,2,0,2"
                     Padding="15">
 
@@ -200,7 +198,6 @@
                             FontSize="16"
                             Height="45"
                             Style="{StaticResource BlueButtonStyle}"
-                            Background="#FFF1F1F1"
                             Click="MakeNurseButton_OnClick" />
 
                     <Button x:Name="viewNurseButton"
@@ -209,7 +206,6 @@
                             Height="45"
                             Margin="0,15,0,0"
                             Style="{StaticResource SelectedNurseButtonStyle}"
-                            Background="#FFF1F1F1"
                             Click="ViewNurseButton_OnClick" />
 
                 </StackPanel>

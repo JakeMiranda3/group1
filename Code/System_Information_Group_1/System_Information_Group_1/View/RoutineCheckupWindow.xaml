@@ -51,7 +51,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid Background="LightBlue">
+    <Grid Background="{StaticResource PrimaryBrush}">
         <Grid.ColumnDefinitions>
 
             <ColumnDefinition Width="5*" MinWidth="420" />
@@ -68,7 +68,7 @@
         <Border Grid.Row="0"
                 Grid.ColumnSpan="3"
                 BorderThickness="0,0,0,2"
-                BorderBrush="Black">
+                BorderBrush="{StaticResource OutlineBrush}">
             <barUserControl:TopAppBar x:Name="topAppBarControl"
                                       BarHeader="Routine Checkup Entry" />
         </Border>
@@ -220,7 +220,7 @@
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Stretch"
                       ResizeBehavior="PreviousAndNext"
-                      Background="Black"
+                      Background="{StaticResource OutlineBrush}"
                       ShowsPreview="False"
                       Cursor="SizeWE" />
 
@@ -246,7 +246,7 @@
 
 
             <Border Grid.Row="1"
-                    BorderBrush="Black"
+                    BorderBrush="{StaticResource OutlineBrush}"
                     BorderThickness="0,0,0,2"
                     Padding="0,0,0,15"
                     Margin="0,0,0,15">
@@ -257,8 +257,7 @@
                             Height="45"
                             Margin="0,0,8,0"
                             Style="{StaticResource BlueButtonStyle}"
-                            Background="#FFF1F1F1"
-                            Click="OnSubmitCheckupButtonClick" />
+                            Click="SubmitButton_OnClick" />
 
                     <Button x:Name="orderTestButton"
                             Content="Order Test"
@@ -266,7 +265,6 @@
                             Height="45"
                             Margin="8,0,0,0"
                             Style="{StaticResource BlueButtonStyle}"
-                            Background="#FFF1F1F1"
                             Click="OnOrderTestClick" />
                 </UniformGrid>
             </Border>
@@ -334,7 +332,7 @@
                         Width="100"
                         Height="39"
                         Margin="0,12,0,0"
-                        Background="#FFEAA0A0" Click="Button_Click" />
+                        Background="{StaticResource CancelColorBrush}" Click="Button_Click" />
                 <Button Grid.Column="1"
                         Content="Submit Test Results"
                         Style="{StaticResource BlueButtonStyle}"
