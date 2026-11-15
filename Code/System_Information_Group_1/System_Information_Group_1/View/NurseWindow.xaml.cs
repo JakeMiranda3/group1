@@ -85,4 +85,18 @@ public partial class NurseWindow : Window
     }
 
     #endregion
+
+    private void viewStatisticsButton_Click(object sender, RoutedEventArgs e)
+    {
+
+        var statisticWindow = new LabStatisticsWindow();
+        statisticWindow.Show();
+
+        var parentWindow = GetWindow(this);
+        if (parentWindow != null)
+        {
+            parentWindow?.Close();
+        }
+    }
+    
 }

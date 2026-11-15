@@ -136,6 +136,9 @@
     <Compile Include="View\Dialog\PatientRegistrationDialog.xaml.cs">
       <DependentUpon>PatientRegistrationDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\LabStatisticsWindow.xaml.cs">
+      <DependentUpon>LabStatisticsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NurseWindow.xaml.cs">
       <DependentUpon>NurseWindow.xaml</DependentUpon>
     </Compile>
@@ -213,6 +216,10 @@
     <Page Include="View\Dialog\PatientRegistrationDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\LabStatisticsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\LoginUserControl.xaml">
       <SubType>Designer</SubType>

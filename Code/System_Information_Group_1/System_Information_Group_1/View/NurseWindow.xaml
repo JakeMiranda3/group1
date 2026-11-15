@@ -162,6 +162,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -208,6 +209,16 @@
                             Style="{StaticResource SelectedNurseButtonStyle}"
                             Click="ViewNurseButton_OnClick" />
 
+                </StackPanel>
+            </Border>
+            <Border BorderBrush="{StaticResource OutlineBrush}" Grid.Row="2" BorderThickness="0,0,0,2" Padding="15,15,15,15">
+                <StackPanel VerticalAlignment="Center">
+                    <Button  x:Name="viewStatisticsButton"
+                    Content="View Test Statistics"
+                    FontSize="16"
+                    Height="45"
+                    Margin="0,15,0,0"
+                    Style="{StaticResource BlueButtonStyle}" VerticalAlignment="Center" Click="viewStatisticsButton_Click" />
                 </StackPanel>
             </Border>
 
