@@ -5,6 +5,7 @@
     <Application.Resources>
 
         <Color x:Key="PrimaryColor">LightBlue</Color>
+        <Color x:Key="ContrastPrimaryColor">#4CBED8E6</Color>
         <Color x:Key="OnPrimaryColor">Black</Color>
         <Color x:Key="SurfaceColor">White</Color>
         <Color x:Key="OnSurfaceColor">DarkBlue</Color>
@@ -23,6 +24,7 @@
         <SolidColorBrush x:Key="LightOnSurfaceBrush" Color="{StaticResource LightOnSurfaceColor}"></SolidColorBrush>
         <SolidColorBrush x:Key="SecondaryColorBrush" Color="{StaticResource SecondaryColor}"></SolidColorBrush>
         <SolidColorBrush x:Key="CancelColorBrush" Color="{StaticResource CancelColor}"></SolidColorBrush>
+        <SolidColorBrush x:Key="ContrastPrimaryBrush" Color="{StaticResource ContrastPrimaryColor}"></SolidColorBrush>
 
             <!--#region ButtonStyles -->
         <Style x:Key="FocusVisual">

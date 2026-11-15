@@ -29,7 +29,7 @@
         <Border Grid.Column="1" Grid.Row="1" BorderBrush="{StaticResource OutlineBrush}" BorderThickness="1,0,2,1">
 
 
-            <Grid Background="#4CBED8E6">
+            <Grid Background="{StaticResource ContrastPrimaryBrush}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
