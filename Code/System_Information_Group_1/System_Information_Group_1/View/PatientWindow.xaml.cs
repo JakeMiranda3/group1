@@ -54,7 +54,7 @@ public partial class PatientWindow : Window
                 string.IsNullOrWhiteSpace(lastName) &&
                 !dateOfBirth.HasValue)
             {
-                MessageBox.Show("Please enter at least one search criterion.");
+                MessageBox.Show(this, "Please enter at least one search criterion.");
                 return;
             }
 
@@ -65,14 +65,18 @@ public partial class PatientWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "Search Error",
+            MessageBox.Show(this, ex.Message, "Search Error",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
     private void MakePatientButton_OnClick(object sender, RoutedEventArgs e)
     {
-        var patientRegistrationDialog = new PatientRegistrationDialog();
+        var patientRegistrationDialog = new PatientRegistrationDialog
+        {
+            Owner = this,
+            WindowStartupLocation = WindowStartupLocation.CenterOwner
+        };
         patientRegistrationDialog.ShowDialog();
     }
 
@@ -80,7 +84,11 @@ public partial class PatientWindow : Window
     {
         if (this.patientDataGrid.SelectedItem is Patient selectedPatient)
         {
-            var dialog = new PatientInfoDialog(selectedPatient);
+            var dialog = new PatientInfoDialog(selectedPatient)
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
             dialog.ShowDialog();
 
             this.patientDataGrid.Items.Refresh();
@@ -169,7 +177,6 @@ public partial class PatientWindow : Window
         }
     }
 
-
     private void ClearButton_OnClick(object sender, RoutedEventArgs e)
     {
         this.firstNameTextBox.Clear();
@@ -181,4 +188,3 @@ public partial class PatientWindow : Window
 
     #endregion
 }
-
