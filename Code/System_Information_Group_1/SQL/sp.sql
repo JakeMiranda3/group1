@@ -37,3 +37,17 @@ END$
 DELIMITER ;
 
 
+-- William's Stored Procedure
+DELIMITER $
+DROP PROCEDURE IF EXISTS GetTestOrdersByAppointmentId;
+CREATE PROCEDURE GetTestOrdersByAppointmentId(IN p_appointment_id INT)
+BEGIN
+	SELECT o.appointment_id, o.test_code, o.performed_datetime, o.test_result, o.is_abnormal,
+		   t.name, t.low_value, t.high_value, t.measurement_type
+	FROM test_order o
+	JOIN test t ON o.test_code = t.test_code
+	WHERE o.appointment_id = p_appointment_id;
+END$
+DELIMITER ;
+
+

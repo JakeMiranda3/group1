@@ -48,13 +48,9 @@ public class TestOrderDal
         var testOrders = new List<TestOrderDisplay>();
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
-        var query = "SELECT o.appointment_id, o.test_code, o.performed_datetime, o.test_result, o.is_abnormal, " +
-                    "t.name, t.low_value, t.high_value, t.measurement_type " +
-                    "FROM test_order o " +
-                    "JOIN test t ON o.test_code = t.test_code " +
-                    "WHERE o.appointment_id = @appointmentId";
-        using var cmd = new MySqlCommand(query, connection);
-        cmd.Parameters.AddWithValue("@appointmentId", appointmentId);
+        using var cmd = new MySqlCommand("GetTestOrdersByAppointmentId", connection);
+        cmd.CommandType = CommandType.StoredProcedure;
+        cmd.Parameters.Add("p_appointment_id", MySqlDbType.Int32).Value = appointmentId;
         using var reader = cmd.ExecuteReader();
 
         while (reader.Read())
