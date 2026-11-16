@@ -44,7 +44,7 @@ public partial class NurseWindow : Window
                 string.IsNullOrWhiteSpace(lastName) &&
                 !dateOfBirth.HasValue)
             {
-                MessageBox.Show("Please enter at least one search criterion.");
+                MessageBox.Show(this, "Please enter at least one search criterion.");
                 return;
             }
 
@@ -53,14 +53,18 @@ public partial class NurseWindow : Window
         }
         catch (Exception ex)
         {
-            MessageBox.Show(ex.Message, "Search Error",
+            MessageBox.Show(this, ex.Message, "Search Error",
                 MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
     private void MakeNurseButton_OnClick(object sender, RoutedEventArgs e)
     {
-        var nurseRegistrationDialog = new CreateNurseDialog();
+        var nurseRegistrationDialog = new CreateNurseDialog
+        {
+            Owner = this,
+            WindowStartupLocation = WindowStartupLocation.CenterOwner
+        };
         nurseRegistrationDialog.ShowDialog();
     }
 
@@ -68,7 +72,11 @@ public partial class NurseWindow : Window
     {
         if (this.nurseDataGrid.SelectedItem is Nurse selectedNurse)
         {
-            var dialog = new NurseInfoDialog(selectedNurse);
+            var dialog = new NurseInfoDialog(selectedNurse)
+            {
+                Owner = this,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
             dialog.ShowDialog();
 
             this.nurseDataGrid.Items.Refresh();
