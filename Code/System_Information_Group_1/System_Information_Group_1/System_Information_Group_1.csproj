@@ -94,6 +94,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controller\AppointmentEditController.cs" />
+    <Compile Include="Controller\LabStatisticsController.cs" />
     <Compile Include="Controller\ViewAppointmentController.cs" />
     <Compile Include="Controller\NurseController.cs" />
     <Compile Include="Controller\OrderTestController.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Controller\UserControl\SchedulerController.cs" />
     <Compile Include="Controller\UserControl\TopBarController.cs" />
     <Compile Include="DAL\AppointmentDal.cs" />
+    <Compile Include="DAL\StatisticsDal.cs" />
     <Compile Include="DAL\TestDal.cs" />
     <Compile Include="DAL\TestOrderDal.cs" />
     <Compile Include="DAL\TimeDal.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="Model\Test.cs" />
     <Compile Include="Model\TestOrder.cs" />
     <Compile Include="Model\TestOrderDisplay.cs" />
+    <Compile Include="Model\TestStatistic.cs" />
     <Compile Include="Model\Visit.cs" />
     <Compile Include="Model\VisitDisplay.cs" />
     <Compile Include="View\AppointmentWindowState.cs" />

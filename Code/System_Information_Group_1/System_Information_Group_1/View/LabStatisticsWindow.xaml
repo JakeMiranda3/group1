@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:barUserControl="clr-namespace:System_Information_Group_1.View.UserControls"
         mc:Ignorable="d"
-        Title="Nurse Management"
+        Title="Lab Statistics"
         MinHeight="720"
         MinWidth="1280"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanResizeWithGrip">
+        ResizeMode="CanResizeWithGrip" Width="1539">
 
     <Grid Background="{StaticResource PrimaryBrush}">
 
@@ -51,9 +51,9 @@
                       CanUserAddRows="False"
                       CanUserDeleteRows="False"
                       HeadersVisibility="Column"
-                      GridLinesVisibility="Horizontal"
                       HorizontalScrollBarVisibility="Auto"
-                      VerticalScrollBarVisibility="Auto">
+                      VerticalScrollBarVisibility="Auto"
+                      ItemsSource="{Binding Statistics}">
 
                 <DataGrid.Columns>
 
@@ -64,33 +64,33 @@
 
                     <DataGridTextColumn
                         Header="Test Name"
-                        Binding="{Binding TestName}"
+                        Binding="{Binding Name}"
                         Width="150"/>
 
                     <DataGridTextColumn
                         Header="Times Performed"
-                        Binding="{Binding TimesPerformed}"
+                        Binding="{Binding SpecificTestCount}"
                         Width="130"/>
 
                     <DataGridTextColumn
-                        Header="Total Tests"
+                        Header="Total Tests Performed"
                         Binding="{Binding TotalTests}"
-                        Width="110"/>
+                        Width="150"/>
 
                     <DataGridTextColumn
-                        Header="Percentage (%)"
-                        Binding="{Binding Percentage, StringFormat={}{0:F2}%}"
-                        Width="130"/>
+                        Header="Performed Percentage (%)"
+                        Binding="{Binding Percent, StringFormat={}{0:F2}%}"
+                        Width="180"/>
 
                     <DataGridTextColumn
-                        Header="Normal Results"
-                        Binding="{Binding NormalResults}"
-                        Width="130"/>
+                        Header="Normal Results Total"
+                        Binding="{Binding NormalCount}"
+                        Width="135"/>
 
                     <DataGridTextColumn
-                        Header="Abnormal Results"
-                        Binding="{Binding AbnormalResults}"
-                        Width="140"/>
+                        Header="Abnormal Results Total"
+                        Binding="{Binding AbnormalCount}"
+                        Width="145"/>
 
                 </DataGrid.Columns>
             </DataGrid>
@@ -159,7 +159,7 @@
                         Content="Generate Statistics"
                         Height="40"
                         Margin="15,20,15,15"
-                        Style="{StaticResource BlueButtonStyle}"/>
+                        Style="{StaticResource BlueButtonStyle}" Click="generateStatisticsButton_Click"/>
 
                 <Button x:Name="exitButton"
                         Grid.Row="6"
@@ -167,7 +167,7 @@
                         Height="40"
                         Margin="15,15,15,20"
                         Background="{StaticResource CancelColorBrush}"
-                        Style="{StaticResource BlueButtonStyle}"/>
+                        Style="{StaticResource BlueButtonStyle}" FontSize="16" Click="exitButton_Click"/>
 
             </Grid>
         </Border>
