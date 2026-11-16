@@ -46,29 +46,29 @@ BEGIN
   FROM test_order
   WHERE performed_datetime BETWEEN start_date AND end_date;
 
-  SELECT `to`.test_code, `name`, COUNT(*) AS `specific_test_count`, total_test,
-  ROUND((COUNT(*) / total_test) * 100, 2) AS percent, 
+  SELECT `to`.test_code AS TestCode, `name` AS `Name`, COUNT(*) AS `SpecificTestCount`, total_test AS TotalTests,
+  ROUND((COUNT(*) / total_test) * 100, 2) AS Percent, 
   SUM(
     CASE
       WHEN is_abnormal = FALSE THEN 1
       ELSE 0
     END
-  ) AS normal_count,
+  ) AS NormalCount,
   SUM(
     CASE 
       WHEN is_abnormal = TRUE THEN 1
       ELSE 0
     END
-  ) AS abnormal_count
+  ) AS AbnormalCount
   FROM test_order AS `to` join test AS t ON `to`.test_code = t.test_code
   WHERE performed_datetime BETWEEN start_date AND end_date
   GROUP BY `to`.test_code, `name`
-  HAVING specific_test_count >= 2
-  ORDER BY specific_test_count DESC, `to`.test_code DESC;
+  HAVING SpecificTestCount >= 2
+  ORDER BY SpecificTestCount DESC, `to`.test_code DESC;
 END$
 
 DELIMITER ;
 
-call get_most_performed_tests_during_dates("1980-01-01", "2100-12-12"); -- Grabs every performed test
+call get_most_performed_tests_during_dates("1978-01-01", "2100-12-12"); -- Grabs every performed test to test procedure
 
 
