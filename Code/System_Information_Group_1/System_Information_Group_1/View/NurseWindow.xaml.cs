@@ -98,5 +98,4 @@ public partial class NurseWindow : Window
             parentWindow?.Close();
         }
     }
-    
 }
