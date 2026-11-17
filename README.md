@@ -1,4 +1,4 @@
-#Dependencies
+# Dependencies
 ## Dapper == 2.1.89
 ## MySQLConnector == 2.6.2
 
