@@ -47,6 +47,15 @@ public class AppointmentEditController
             throw new ArgumentException("The doctor already has an appointment at this time.");
         }
 
+        if (this.appointmentDal.HasPatientAppointmentConflict(
+                appointment.PatientId,
+                appointment.Date,
+                appointment.AppointmentId))
+        {
+            throw new ArgumentException(
+                "The patient already has an appointment at this time.");
+        }
+
         this.appointmentDal.EditAppointment(appointment);
     }
 
@@ -82,6 +91,19 @@ public class AppointmentEditController
             throw new ArgumentException("Invalid appointment date.");
         }
 
+    }
+
+    public void DeleteAppointment(int appointmentId)
+    {
+        if (appointmentId <= 0)
+        {
+            throw new ArgumentException("Appointment id must be positive");
+        }
+
+        if (!this.appointmentDal.DeleteAppointmentById(appointmentId))
+        {
+            throw new InvalidOperationException("Appointment was not found.");
+        }
     }
 
     #endregion
