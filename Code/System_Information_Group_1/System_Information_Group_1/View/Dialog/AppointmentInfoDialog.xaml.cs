@@ -187,10 +187,6 @@ public partial class AppointmentInfoDialog : Window
             ? Visibility.Collapsed
             : Visibility.Visible;
 
-        this.appointmentDatePicker.Visibility = editing
-            ? Visibility.Visible
-            : Visibility.Collapsed;
-
         this.editAppointmentButton.Visibility = editing
             ? Visibility.Collapsed
             : Visibility.Visible;
