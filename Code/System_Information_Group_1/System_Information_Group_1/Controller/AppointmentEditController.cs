@@ -84,5 +84,18 @@ public class AppointmentEditController
 
     }
 
+    public void DeleteAppointment(int appointmentId)
+    {
+        if (appointmentId <= 0)
+        {
+            throw new ArgumentException("Appointment id must be positive");
+        }
+
+        if (!this.appointmentDal.DeleteAppointmentById(appointmentId))
+        {
+            throw new InvalidOperationException("Appointment was not found.");
+        }
+    }
+
     #endregion
 }

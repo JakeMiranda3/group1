@@ -103,11 +103,12 @@ public class AppointmentDal
         connection.Open();
 
         var query = "update appointment " +
-                    "set reason = @Reason, appointment_datetime = @Date " +
+                    "set doctor_id = @DoctorId, reason = @Reason, appointment_datetime = @Date " +
                     "where appointment_id = @AppointmentId;";
 
         connection.Execute(query, new
         {
+            appointment.DoctorId,
             appointment.Reason,
             appointment.Date,
             appointment.AppointmentId
@@ -247,5 +248,16 @@ public class AppointmentDal
         }
     }
 
+
+    public bool DeleteAppointmentById(int appointmentId)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+
+        connection.Open();
+
+        var query = "DELETE FROM appointment WHERE appointment_id = @appointmentId;";
+
+        return connection.Execute(query, new { appointmentId }) > 0;
+    }
 
 }

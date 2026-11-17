@@ -97,7 +97,7 @@
             <TextBlock Grid.Row="1" Grid.Column="0"
                        Text="Doctor Name:" />
 
-            <TextBlock Grid.Row="1" Grid.Column="1">
+            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="doctorNameTextBlock">
                 <TextBlock.Text>
                     <MultiBinding StringFormat="{}{0} {1}">
                         <MultiBinding.Bindings>
@@ -107,7 +107,24 @@
                     </MultiBinding>
                 </TextBlock.Text>
             </TextBlock>
-
+            <ComboBox x:Name="doctorComboBox"
+                      Grid.Row="1"
+                      Grid.Column="1"
+                      Visibility="Collapsed"
+                      VerticalAlignment="Center">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="Person.FirstName" />
+                                    <Binding Path="Person.LastName" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <TextBlock Grid.Row="2" Grid.Column="0"
                        Text="Patient Name:" />
 
@@ -152,7 +169,8 @@
                         Visibility="Collapsed"
                         VerticalAlignment="Center" />
 
-            <TextBlock Grid.Row="5" Grid.Column="0"
+            <TextBlock Grid.Row="5"
+                       Grid.Column="0"
                        Text="Time:" />
 
             <TextBlock x:Name="appointmentTimeTextBlock"
@@ -160,14 +178,13 @@
                        Grid.Column="1"
                        Text="{Binding Date, StringFormat={}{0:hh:mm tt}}" />
 
-            <TextBox x:Name="appointmentTimeTextBox"
-                     Grid.Row="5"
-                     Grid.Column="1"
-                     Visibility="Collapsed"
-                     VerticalContentAlignment="Center"
-                     FontSize="16"
-                     MaxLength="8"
-                     ToolTip="Enter time as HH:mm (24-hour) or h:mm AM/PM" />
+            <ComboBox x:Name="appointmentTimeComboBox"
+                      Grid.Row="5"
+                      Grid.Column="1"
+                      Visibility="Collapsed"
+                      VerticalAlignment="Center"
+                      FontSize="16"
+                      IsEditable="False" />
 
         </Grid>
 
@@ -176,10 +193,20 @@
                 BorderBrush="{StaticResource OutlineBrush}"
                 BorderThickness="0,2,0,0"
                 Padding="12">
-
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right">
 
+                <Button
+                        x:Name="deleteAppointmentButton"
+                        Content="Delete Appointment"
+                        Width="140"
+                        Height="38"
+                        Margin="0,0,100,0"
+                        Style="{StaticResource BlueButtonStyle}" Click="deleteAppointmentButton_Click">
+                    <Button.Background>
+                        <SolidColorBrush Color="{DynamicResource CancelColor}"/>
+                    </Button.Background>
+                </Button>
                 <Button x:Name="editAppointmentButton"
                         Content="Edit Appointment"
                         Width="140"
