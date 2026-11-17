@@ -89,23 +89,23 @@
                         BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
                 <Border Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
                         BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
-                <Border Grid.Row="3" Grid.ColumnSpan="2"
+                <Border Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0"
                         BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
-                <Border Grid.Row="4" Grid.ColumnSpan="2"
+                <Border Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0"
                         BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
-                <Border Grid.Row="5" Grid.ColumnSpan="2"
+                <Border Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0"
                         BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
-                <Border Grid.Row="6" Grid.ColumnSpan="2"
+                <Border Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0"
                         BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
-                <Border Grid.Row="7" Grid.ColumnSpan="2"
+                <Border Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="0"
                         BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
-                <Border Grid.Row="8" Grid.ColumnSpan="2"
+                <Border Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0"
                         BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
-                <Border Grid.Row="9" Grid.ColumnSpan="2"
+                <Border Grid.Row="9" Grid.ColumnSpan="2" Grid.Column="0"
                         BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
-                <Border Grid.Row="10" Grid.ColumnSpan="2"
+                <Border Grid.Row="10" Grid.ColumnSpan="2" Grid.Column="0"
                         BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
-                <Border Grid.Row="11" Grid.ColumnSpan="2"
+                <Border Grid.Row="11" Grid.ColumnSpan="2" Grid.Column="0"
                         BorderBrush="{StaticResource OutlineBrush}" BorderThickness="0,0,0,1" />
 
                 <TextBlock Grid.Row="0" Grid.Column="0"

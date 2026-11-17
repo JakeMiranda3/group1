@@ -37,11 +37,12 @@ public class Person
     ///     The first name.
     /// </value>
     public string FirstName { get; set; }
+
     /// <summary>
-    /// Gets or sets the date of birth.
+    ///     Gets or sets the date of birth.
     /// </summary>
     /// <value>
-    /// The date of birth.
+    ///     The date of birth.
     /// </value>
     public DateTime DateOfBirth { get; set; }
 
@@ -52,11 +53,12 @@ public class Person
     ///     The contact phone number.
     /// </value>
     public string ContactPhoneNumber { get; set; }
+
     /// <summary>
-    /// Gets or sets the address.
+    ///     Gets or sets the address.
     /// </summary>
     /// <value>
-    /// The address.
+    ///     The address.
     /// </value>
     public string Address { get; set; }
 
@@ -92,16 +94,17 @@ public class Person
     /// </value>
     public string Gender { get; set; }
 
-    /// <summary>
-    ///     Gets or sets roles assigned to the person (comma separated).
-    /// </summary>
-    public string Roles { get; set; }
-
     #endregion
 
     #region Constructors
 
-    public Person() {}
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="Person" /> class.
+    /// </summary>
+    public Person()
+    {
+    }
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="Person" /> class.
     /// </summary>
@@ -146,5 +149,6 @@ public class Person
         this.State = state ?? throw new ArgumentNullException(nameof(state));
         this.Gender = gender ?? string.Empty;
     }
+
     #endregion
 }

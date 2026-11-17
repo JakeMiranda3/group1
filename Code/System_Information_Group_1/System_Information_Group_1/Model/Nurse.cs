@@ -28,10 +28,10 @@ public class Nurse
     public int NurseId { get; set; }
 
     /// <summary>
-    /// Gets or sets the person.
+    ///     Gets or sets the person.
     /// </summary>
     /// <value>
-    /// The person.
+    ///     The person.
     /// </value>
     public Person Person { get; set; }
 

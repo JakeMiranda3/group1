@@ -57,7 +57,6 @@ public partial class CreateNurseDialog : Window
 
         try
         {
-
             var selectedState = (ComboBoxItem)this.stateTextBox.SelectedItem;
             var selectedGender = (ComboBoxItem)this.genderTextBox.SelectedItem;
 

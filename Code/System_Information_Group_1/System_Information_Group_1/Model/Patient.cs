@@ -65,7 +65,12 @@ public class Patient
         this.IsActive = isActive;
     }
 
-    public Patient() {}
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Patient"/> class.
+    /// </summary>
+    public Patient()
+    {
+    }
 
     #endregion
 }

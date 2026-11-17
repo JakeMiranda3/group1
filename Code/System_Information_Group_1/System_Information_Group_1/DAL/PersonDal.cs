@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System;
-using System.Collections.Generic;
 using Dapper;
 using MySqlConnector;
 using System_Information_Group_1.Model;
@@ -21,7 +20,7 @@ public class PersonDal
     /// </summary>
     /// <param name="id">The identifier.</param>
     /// <returns>The person with the identifier</returns>
-    public Person GetPersonWithId(int id)
+    public Person? GetPersonWithId(int id)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
@@ -43,30 +42,13 @@ public class PersonDal
         var stateOrdinal = reader.GetOrdinal("state");
         var genderOrdinal = reader.GetOrdinal("gender");
 
-        // this should only return one person since this ID is a primary key
         if (reader.Read())
         {
-            return createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
+            return MapReaderToPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
                 contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal, genderOrdinal);
         }
 
         return null;
-    }
-
-    /// <summary>
-    ///     Creates a new person row and returns the created Person with generated person id.
-    /// </summary>
-    /// <returns>Person with generated PersonId.</returns>
-    public Person CreatePerson(string lastName, string firstName, DateTime dateOfBirth,
-        string contactPhoneNumber, string address, string zip, string city,
-        string state, string gender = "")
-    {
-        using var connection = new MySqlConnection(Connection.ConnectionString());
-        connection.Open();
-
-        return this.CreatePerson(lastName, firstName, dateOfBirth,
-            contactPhoneNumber, address, zip, city, state, gender,
-            connection, null);
     }
 
     /// <summary>
@@ -111,6 +93,13 @@ public class PersonDal
             contactPhoneNumber, address, zip, city, state, gender);
     }
 
+    /// <summary>
+    ///     Creates the person.
+    /// </summary>
+    /// <param name="person">The person.</param>
+    /// <param name="connection">The connection.</param>
+    /// <param name="transaction">The transaction.</param>
+    /// <returns>The created person.</returns>
     public Person CreatePerson(Person person, MySqlConnection connection, MySqlTransaction? transaction)
     {
         return this.CreatePerson(
@@ -128,94 +117,21 @@ public class PersonDal
     }
 
     /// <summary>
-    ///     Gets all persons from the person table.
+    ///     Maps the reader to person.
     /// </summary>
-    /// <returns>List of Person</returns>
-    public List<Person> GetAllPersons()
-    {
-        var list = new List<Person>();
-        using var connection = new MySqlConnection(Connection.ConnectionString());
-        connection.Open();
-        var query = "select * from person;";
-        using var command = new MySqlCommand(query, connection);
-        using var reader = command.ExecuteReader();
-
-        var personIdOrdinal = reader.GetOrdinal("person_id");
-        var firstNameOrdinal = reader.GetOrdinal("first_name");
-        var lastNameOrdinal = reader.GetOrdinal("last_name");
-        var dateOfBirthOrdinal = reader.GetOrdinal("date_of_birth");
-        var contactPhoneNumberOrdinal = reader.GetOrdinal("contact_phone_number");
-        var addressOrdinal = reader.GetOrdinal("address");
-        var zipOrdinal = reader.GetOrdinal("zip");
-        var cityOrdinal = reader.GetOrdinal("city");
-        var stateOrdinal = reader.GetOrdinal("state");
-        var genderOrdinal = reader.GetOrdinal("gender");
-
-        while (reader.Read())
-        {
-            list.Add(createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal, dateOfBirthOrdinal,
-                contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal, genderOrdinal));
-        }
-
-        return list;
-    }
-
-    /// <summary>
-    ///     Returns which roles the person has (administrator, doctor, nurse).
-    /// </summary>
-    /// <param name="personId">person id to check.</param>
-    /// <returns>Array of role names the person belongs to. Empty if none.</returns>
-    public string[] GetPersonRoles(int personId)
-    {
-        using var connection = new MySqlConnection(Connection.ConnectionString());
-        connection.Open();
-
-        var roles = new List<string>();
-
-        using (var cmd = new MySqlCommand("select count(*) from administrator where person_id = @id;", connection))
-        {
-            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = personId;
-            var count = Convert.ToInt32(cmd.ExecuteScalar());
-            if (count > 0)
-            {
-                roles.Add("administrator");
-            }
-        }
-
-        using (var cmd = new MySqlCommand("select count(*) from doctor where person_id = @id;", connection))
-        {
-            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = personId;
-            var count = Convert.ToInt32(cmd.ExecuteScalar());
-            if (count > 0)
-            {
-                roles.Add("doctor");
-            }
-        }
-
-        using (var cmd = new MySqlCommand("select count(*) from nurse where person_id = @id;", connection))
-        {
-            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = personId;
-            var count = Convert.ToInt32(cmd.ExecuteScalar());
-            if (count > 0)
-            {
-                roles.Add("nurse");
-            }
-        }
-
-        using (var cmd = new MySqlCommand("select count(*) from patient where person_id = @id;", connection))
-        {
-            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = personId;
-            var count = Convert.ToInt32(cmd.ExecuteScalar());
-            if (count > 0)
-            {
-                roles.Add("patient");
-            }
-        }
-
-        return roles.ToArray();
-    }
-
-    public static Person createPerson(MySqlDataReader reader, int personIdOrdinal, int firstNameOrdinal,
+    /// <param name="reader">The reader.</param>
+    /// <param name="personIdOrdinal">The person identifier ordinal.</param>
+    /// <param name="firstNameOrdinal">The first name ordinal.</param>
+    /// <param name="lastNameOrdinal">The last name ordinal.</param>
+    /// <param name="dateOfBirthOrdinal">The date of birth ordinal.</param>
+    /// <param name="contactPhoneNumberOrdinal">The contact phone number ordinal.</param>
+    /// <param name="addressOrdinal">The address ordinal.</param>
+    /// <param name="zipOrdinal">The zip ordinal.</param>
+    /// <param name="cityOrdinal">The city ordinal.</param>
+    /// <param name="stateOrdinal">The state ordinal.</param>
+    /// <param name="genderOrdinal">The gender ordinal.</param>
+    /// <returns>The mapped person.</returns>
+    public static Person MapReaderToPerson(MySqlDataReader reader, int personIdOrdinal, int firstNameOrdinal,
         int lastNameOrdinal, int dateOfBirthOrdinal,
         int contactPhoneNumberOrdinal, int addressOrdinal, int zipOrdinal, int cityOrdinal, int stateOrdinal,
         int genderOrdinal)
