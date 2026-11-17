@@ -3,7 +3,7 @@
 -- Colby's Stored Procedure
 
 DELIMITER $
-drop procedure if exists setAbnormality;
+drop procedure if exists setAbnormality$
 CREATE PROCEDURE setAbnormality(IN p_appointment_id INT, IN p_test_code INT, IN p_test_result varchar(1024))
 proc: BEGIN
     DECLARE v_low    DECIMAL(5,2);
@@ -34,7 +34,42 @@ proc: BEGIN
     END IF;
 END$
 
+-- Mathew Stored Procedure
+DELIMITER $
+DROP PROCEDURE IF EXISTS get_most_performed_tests_during_dates$
+
+CREATE PROCEDURE get_most_performed_tests_during_dates(IN start_date DATE, IN end_date DATE)
+BEGIN 
+  DECLARE total_test INT;
+
+  SELECT COUNT(*) INTO total_test
+  FROM test_order
+  WHERE performed_datetime BETWEEN start_date AND end_date;
+
+  SELECT `to`.test_code AS TestCode, `name` AS `Name`, COUNT(*) AS `SpecificTestCount`, total_test AS TotalTests,
+  ROUND((COUNT(*) / total_test) * 100, 2) AS Percent, 
+  SUM(
+    CASE
+      WHEN is_abnormal = FALSE THEN 1
+      ELSE 0
+    END
+  ) AS NormalCount,
+  SUM(
+    CASE 
+      WHEN is_abnormal = TRUE THEN 1
+      ELSE 0
+    END
+  ) AS AbnormalCount
+  FROM test_order AS `to` join test AS t ON `to`.test_code = t.test_code
+  WHERE performed_datetime BETWEEN start_date AND end_date
+  GROUP BY `to`.test_code, `name`
+  HAVING SpecificTestCount >= 2
+  ORDER BY SpecificTestCount DESC, `to`.test_code DESC;
+END$
+
 DELIMITER ;
+
+call get_most_performed_tests_during_dates("1978-01-01", "2100-12-12"); -- Grabs every performed test to test procedure
 
 
 -- William's Stored Procedure
