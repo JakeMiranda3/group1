@@ -364,7 +364,7 @@
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Test Result Entered"
-                                        Binding="{Binding TestResultDatetime, StringFormat={}{0:MM/dd/yyyy hh:mm tt}}"
+                                        Binding="{Binding TestResultDatetime, StringFormat={}{0:MM/dd/yyyy}}"
                                         IsReadOnly="True"
                                         Width="Auto"
                                         MinWidth="150" />
