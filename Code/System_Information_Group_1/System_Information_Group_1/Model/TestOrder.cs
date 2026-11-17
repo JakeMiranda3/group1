@@ -104,6 +104,9 @@ public class TestOrder
         this.TestResultDatetime = testResultDatetime;
     }
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="TestOrder" /> class.
+    /// </summary>
     public TestOrder()
     {
 

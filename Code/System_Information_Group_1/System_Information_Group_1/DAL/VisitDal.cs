@@ -27,7 +27,7 @@ namespace System_Information_Group_1.DAL
                          "VALUES (@appointment_id, @symptoms, @nurse_id, @systolic_blood_pressure, @diastolic_blood_pressure, @temperature, @pulse, @height, @weight, @initial_diagnosis, @final_diagnosis, @final_diagnosis_entered_datetime)";
 
             using var command = new MySqlCommand(insert, connection);
-            this.BindVisitParameters(command, visit);
+            bindVisitParameters(command, visit);
             command.ExecuteNonQuery();
         }
 
@@ -107,7 +107,7 @@ namespace System_Information_Group_1.DAL
                          "where appointment_id = @appointment_id and (final_diagnosis is null or trim(final_diagnosis) = '');";
 
             using var command = new MySqlCommand(update, connection);
-            this.BindVisitParameters(command, visit);
+            bindVisitParameters(command, visit);
             return command.ExecuteNonQuery() > 0;
         }
 
@@ -130,7 +130,7 @@ namespace System_Information_Group_1.DAL
             return connection.Query<int>(query, new { appointmentIds }).ToList();
         }
 
-        private void BindVisitParameters(MySqlCommand command, Visit visit)
+        private static void bindVisitParameters(MySqlCommand command, Visit visit)
         {
             command.Parameters.AddWithValue("@appointment_id", visit.AppointmentId);
             command.Parameters.AddWithValue("@symptoms", visit.Symptoms);

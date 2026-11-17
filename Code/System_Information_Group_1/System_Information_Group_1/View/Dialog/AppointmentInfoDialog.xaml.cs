@@ -1,7 +1,5 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System_Information_Group_1.Controller;
@@ -27,8 +25,9 @@ public partial class AppointmentInfoDialog : Window
     /// <summary>
     /// Initializes the appointment info dialog.
     /// </summary>
-    /// <param name="appointment"></param>
-    /// <param name="canDelete"></param>
+    /// <param name="appointment">The appointment to display.</param>
+    /// <param name="canDelete">if set to <c>true</c> the delete appointment button is shown.</param>
+    /// <param name="doctors">The doctors the appointment can be assigned to.</param>
     public AppointmentInfoDialog(Appointment appointment, bool canDelete, ICollection<Doctor> doctors) 
     {
         this.InitializeComponent();

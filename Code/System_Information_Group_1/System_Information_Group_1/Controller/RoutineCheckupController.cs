@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Windows;
-using System.Windows.Media.Converters;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
@@ -24,9 +21,19 @@ namespace System_Information_Group_1.Controller
         /// The visit.
         /// </value>
         public Visit Visit { get; private set; }
-
+        /// <summary>
+        /// Gets the test orders.
+        /// </summary>
+        /// <value>
+        /// The test orders.
+        /// </value>
         public List<TestOrderDisplay> TestOrders { get; private set; }
-
+        /// <summary>
+        /// Gets a value indicating whether this instance is read only.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is read only; otherwise, <c>false</c>.
+        /// </value>
         public bool IsReadOnly { get; private set; }
 
         /// <summary>
@@ -39,6 +46,12 @@ namespace System_Information_Group_1.Controller
 
         private readonly VisitDal visitDal;
         private readonly TestOrderDal testOrderDal;
+        /// <summary>
+        /// Gets a value indicating whether this instance has existing visit.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance has existing visit; otherwise, <c>false</c>.
+        /// </value>
         public bool HasExistingVisit { get; private set; }
 
         /// <summary>
@@ -118,12 +131,18 @@ namespace System_Information_Group_1.Controller
                 .Select(order => order.Name)
                 .ToList();
         }
-
+        /// <summary>
+        /// Refreshes the test orders.
+        /// </summary>
         public void RefreshTestOrders()
         {
             this.TestOrders = this.testOrderDal.GetTestOrdersByAppointmentId(this.Visit.AppointmentId);
         }
 
+        /// <summary>
+        /// Submits the test results.
+        /// </summary>
+        /// <param name="collection">The collection.</param>
         public void SubmitTestResults(IEnumerable<TestOrderDisplay> collection)
         {
            
@@ -131,10 +150,10 @@ namespace System_Information_Group_1.Controller
 
            
             bool testResultIsNonNumericString = false;
-            double value;
-            foreach (TestOrderDisplay test in collection)
+            var testOrderDisplays = collection.ToList();
+            foreach (TestOrderDisplay test in testOrderDisplays)
             {
-                if (test.LowValue != 0 && !String.IsNullOrEmpty(test.TestResult) && !Double.TryParse(test.TestResult, out value))
+                if (test.LowValue != 0 && !String.IsNullOrEmpty(test.TestResult) && !Double.TryParse(test.TestResult, out _))
                 {
                     testResultIsNonNumericString = true;
                     break;
@@ -148,19 +167,19 @@ namespace System_Information_Group_1.Controller
             }
 
             var resultEnteredDatetime = DateTime.Now;
-            foreach (TestOrderDisplay test in collection)
+            foreach (TestOrderDisplay test in testOrderDisplays)
             {
                 if (test.HasTestResultChanged)
                 {
                     test.TestResultDatetime = string.IsNullOrWhiteSpace(test.TestResult)
-                        ? (DateTime?)null
+                        ? null
                         : resultEnteredDatetime;
                 }
             }
 
             try
             {
-                this.testOrderDal.UpdateTestResults(collection);
+                this.testOrderDal.UpdateTestResults(testOrderDisplays);
                 MessageBox.Show("Test Results Submitted Successfully", "Test Results");
             }
             catch (Exception ex)

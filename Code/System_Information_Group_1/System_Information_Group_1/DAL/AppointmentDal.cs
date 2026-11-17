@@ -12,15 +12,11 @@ namespace System_Information_Group_1.DAL;
 /// </summary>
 public class AppointmentDal
 {
-
-
-
-
-    /// <summary>
-    /// Gets the appointment by appointment identifier.
-    /// </summary>
-    /// <param name="appointmentId">The appointment identifier.</param>
-    /// <returns>The requested appointment</returns>
+    //// <summary>
+    //// Gets the appointment by appointment identifier.
+    //// </summary>
+    //// <param name="appointmentId">The appointment identifier.</param>
+    //// <returns>The requested appointment</returns>
     //public Appointment GetAppointmentByAppointmentId(int appointmentId)
     //{
     //    using var connection = new MySqlConnection(Connection.ConnectionString());
@@ -37,11 +33,11 @@ public class AppointmentDal
     //    return createAppointment(reader, appointmentIdOrdinal, doctorIdOrdinal, patientIdOrdinal, reasonOrdinal, appointmentDateTimeOrdinal);
     //}
 
-    /// <summary>
-    /// Gets the doctors appointments by doctor identifier.
-    /// </summary>
-    /// <param name="doctorId">The doctor identifier.</param>
-    /// <returns>The list of appointments for the given doctors id</returns>
+    //// <summary>
+    //// Gets the doctors appointments by doctor identifier.
+    //// </summary>
+    //// <param name="doctorId">The doctor identifier.</param>
+    //// <returns>The list of appointments for the given doctors id</returns>
     //public IList<Appointment> GetDoctorsAppointmentsByDoctorId(int doctorId)
     //{
     //    IList<Appointment> appointments = new List<Appointment>();
@@ -77,6 +73,11 @@ public class AppointmentDal
         return connection.ExecuteScalar<DateTime>(query, new { appointmentId });
     }
 
+    /// <summary>
+    /// Gets all appointments for a patient, including the doctor and patient person details.
+    /// </summary>
+    /// <param name="patientId">The patient identifier.</param>
+    /// <returns>The list of appointments for the given patient.</returns>
     public IList<Appointment> GetAllAppointmentsByPatientId(int patientId)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
@@ -110,6 +111,10 @@ public class AppointmentDal
         return appointments;
     }
 
+    /// <summary>
+    /// Updates the doctor, reason, and date of an existing appointment.
+    /// </summary>
+    /// <param name="appointment">The appointment containing the updated values.</param>
     public void EditAppointment(Appointment appointment)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
@@ -174,7 +179,7 @@ public class AppointmentDal
     /// <returns>List of appointments for the selected patient.</returns>
     public IList<Appointment> GetAppointmentsContainingDoctorAndPatientByPatientId(int patientId)
     {
-        IList<Appointment> appointments = new List<Appointment>();
+        
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
         var query = "SELECT app.appointment_id AS AppointmentId, app.reason AS Reason, app.appointment_datetime AS `Date`," +
@@ -230,6 +235,13 @@ public class AppointmentDal
         return cmd.ExecuteNonQuery() > 0;
     }
 
+    /// <summary>
+    /// Determines whether the doctor already has another appointment at the given date and time.
+    /// </summary>
+    /// <param name="doctorId">The doctor identifier.</param>
+    /// <param name="date">The appointment date and time.</param>
+    /// <param name="appointmentId">The identifier of the appointment being checked, which is excluded from the search.</param>
+    /// <returns><c>true</c> if the doctor has a conflicting appointment; otherwise, <c>false</c>.</returns>
     public bool HasDoctorAppointmentConflict(int doctorId, DateTime date, int appointmentId)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
@@ -238,6 +250,13 @@ public class AppointmentDal
         return connection.ExecuteScalar<bool>(query, new { doctorId, date, appointmentId });
     }
 
+    /// <summary>
+    /// Gets the appointment identifier for a patient's appointment at the given date and time.
+    /// </summary>
+    /// <param name="patientId">The patient identifier.</param>
+    /// <param name="date">The appointment date and time.</param>
+    /// <returns>The matching appointment identifier.</returns>
+    /// <exception cref="System.Exception">No appointment found for the given patient ID and date.</exception>
     public int GetAppointmentIdByPatientIdWithDate(int patientId, DateTime date)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
@@ -261,6 +280,13 @@ public class AppointmentDal
         }
     }
 
+    /// <summary>
+    /// Determines whether the patient already has another appointment at the given date and time.
+    /// </summary>
+    /// <param name="patientId">The patient identifier.</param>
+    /// <param name="date">The appointment date and time.</param>
+    /// <param name="appointmentId">The identifier of the appointment being checked, which is excluded from the search.</param>
+    /// <returns><c>true</c> if the patient has a conflicting appointment; otherwise, <c>false</c>.</returns>
     public bool HasPatientAppointmentConflict(
         int patientId, DateTime date, int appointmentId)
     {
@@ -274,6 +300,11 @@ public class AppointmentDal
     }
 
 
+    /// <summary>
+    /// Deletes the appointment with the given identifier.
+    /// </summary>
+    /// <param name="appointmentId">The appointment identifier.</param>
+    /// <returns><c>true</c> if an appointment was deleted; otherwise, <c>false</c>.</returns>
     public bool DeleteAppointmentById(int appointmentId)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());

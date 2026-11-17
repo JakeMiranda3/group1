@@ -13,6 +13,10 @@ public class TestDal
 {
     #region Methods
 
+    /// <summary>
+    /// Gets all tests.
+    /// </summary>
+    /// <returns>The list of all tests.</returns>
     public List<Test> GetAllTest()
     {
         var testList = new List<Test>();
@@ -41,6 +45,16 @@ public class TestDal
         return testList;
     }
 
+    /// <summary>
+    /// Creates a test from the current row of the reader.
+    /// </summary>
+    /// <param name="reader">The reader positioned on a test row.</param>
+    /// <param name="testCodeOrdinal">The test code column ordinal.</param>
+    /// <param name="nameOrdinal">The name column ordinal.</param>
+    /// <param name="lowValueOrdinal">The low value column ordinal.</param>
+    /// <param name="highValueOrdinal">The high value column ordinal.</param>
+    /// <param name="measurementTypeOrdinal">The measurement type column ordinal.</param>
+    /// <returns>The test built from the current row.</returns>
     public static Test CreateTest(MySqlDataReader reader, int testCodeOrdinal, int nameOrdinal, int lowValueOrdinal,
         int highValueOrdinal, int measurementTypeOrdinal)
     {
@@ -52,6 +66,11 @@ public class TestDal
         return new Test(testCode, name, lowValue, highValue, measurementType);
     }
 
+    /// <summary>
+    /// Gets all tests ordered for an appointment.
+    /// </summary>
+    /// <param name="appointmentId">The appointment identifier.</param>
+    /// <returns>The list of tests ordered for the appointment.</returns>
     public List<Test> GetAllTestOrderedByAppointmentId(int appointmentId)
     {
         var testList = new List<Test>();

@@ -68,7 +68,7 @@ public class PersonDal
     /// <returns>Person with generated PersonId.</returns>
     public Person CreatePerson(string lastName, string firstName, DateTime dateOfBirth,
         string contactPhoneNumber, string address, string zip, string city,
-        string state, string gender, MySqlConnection connection,
+        string state, string? gender, MySqlConnection connection,
         MySqlTransaction? transaction)
     {
         var insertQuery =

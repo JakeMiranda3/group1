@@ -9,8 +9,18 @@ namespace System_Information_Group_1.View.Dialog
     /// </summary>
     public partial class AppointmentSelectionDialog : Window
     {
+        /// <summary>
+        /// Gets the identifier of the appointment the user selected.
+        /// </summary>
+        /// <value>
+        /// The selected appointment identifier, or <c>null</c> if none was selected.
+        /// </value>
         public int? SelectedAppointmentId { get; private set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AppointmentSelectionDialog"/> class.
+        /// </summary>
+        /// <param name="appointments">The appointments to choose from.</param>
         public AppointmentSelectionDialog(IList<Appointment> appointments)
         {
             this.InitializeComponent();

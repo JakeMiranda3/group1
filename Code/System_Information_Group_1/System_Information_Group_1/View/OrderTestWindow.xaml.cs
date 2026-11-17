@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System_Information_Group_1.Controller;
 using System_Information_Group_1.Model;
 
@@ -21,21 +20,28 @@ public partial class OrderTestWindow : Window
     private List<Test> newlyOrderedTests;    
     private int appointmentId;
 
+    /// <summary>
+    ///     Occurs when the ordered tests have been submitted.
+    /// </summary>
     public event EventHandler? TestsSubmitted;
 
     #endregion
 
     #region Constructors
 
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="OrderTestWindow" /> class.
+    /// </summary>
+    /// <param name="appointmentId">The appointment to order tests for.</param>
     public OrderTestWindow(int appointmentId)
     {
         this.InitializeComponent();
         this.controller = new OrderTestController();
         this.appointmentId = appointmentId;
         this.LoadAllTests();
-        this.AddTestButton.Click += this.AddTestButton_Click;
-        this.RemoveTestButton.Click += this.RemoveTestButton_Click;
-        this.SubmitButton.Click += this.SubmitButton_Click;
+        this.addTestButton.Click += this.AddTestButton_Click;
+        this.removeTestButton.Click += this.RemoveTestButton_Click;
+        this.submitButton.Click += this.SubmitButton_Click;
     }
 
     #endregion
@@ -45,7 +51,7 @@ public partial class OrderTestWindow : Window
     private void LoadAllTests()
     {
         this.allTests = this.controller.GetAllTest();
-        this.AllTestsListView.ItemsSource = this.allTests;
+        this.allTestsListView.ItemsSource = this.allTests;
 
         this.existingOrderedTests = this.controller.GetTestAlreadyOrderedByAppointmentId(this.appointmentId);
         this.newlyOrderedTests = new List<Test>();
@@ -57,13 +63,13 @@ public partial class OrderTestWindow : Window
         var orderedTests = this.existingOrderedTests.Concat(this.newlyOrderedTests).ToList();
         var orderedTestCodes = orderedTests.Select(test => test.TestCode).ToHashSet();
 
-        this.OrderedTestsListView.ItemsSource = orderedTests;
-        this.AllTestsListView.ItemsSource = this.allTests.Where(test => !orderedTestCodes.Contains(test.TestCode)).ToList();
+        this.orderedTestsListView.ItemsSource = orderedTests;
+        this.allTestsListView.ItemsSource = this.allTests.Where(test => !orderedTestCodes.Contains(test.TestCode)).ToList();
     }
 
     private void AddTestButton_Click(object sender, RoutedEventArgs e)
     {
-        if (this.AllTestsListView.SelectedItem is Test selectedTest)
+        if (this.allTestsListView.SelectedItem is Test selectedTest)
         {
             
             bool alreadyOrdered = this.existingOrderedTests.Any(t => t.TestCode == selectedTest.TestCode)
@@ -78,7 +84,7 @@ public partial class OrderTestWindow : Window
 
     private void RemoveTestButton_Click(object sender, RoutedEventArgs e)
     {
-        if (this.OrderedTestsListView.SelectedItem is Test selectedTest)
+        if (this.orderedTestsListView.SelectedItem is Test selectedTest)
         {
             // Only allow removing from newly added tests
             if (this.newlyOrderedTests.RemoveAll(t => t.TestCode == selectedTest.TestCode) > 0)

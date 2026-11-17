@@ -2,22 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.Remoting.Channels;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System_Information_Group_1.Controller;
-using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 using System_Information_Group_1.View.Dialog;
-using System_Information_Group_1.View.Dialogs;
 using System_Information_Group_1.View.UserControls;
 
 namespace System_Information_Group_1.View
@@ -86,7 +75,7 @@ namespace System_Information_Group_1.View
                 return;
             }
 
-            var selectedDate = selectedCard.scheduledTime;
+            var selectedDate = selectedCard.ScheduledTime;
             if (this.doctorComboBox.SelectedItem is not Doctor currentDoctor)
             {
                 this.showError("Please first select a doctor.");
@@ -134,7 +123,7 @@ namespace System_Information_Group_1.View
         private void refreshSchedules()
         {
             this.clearError();
-            this.scheduleControl.clearScheduleSlots();
+            this.scheduleControl.ClearScheduleSlots();
 
             if (this.filterCheckbox.IsChecked == true)
             {
@@ -163,7 +152,7 @@ namespace System_Information_Group_1.View
         {
             this.clearError();
             var patientWindow = new PatientWindow();
-            var parentWindow = Window.GetWindow(this);
+            var parentWindow = GetWindow(this);
             patientWindow.Show();
             if (parentWindow != null)
             {
@@ -190,13 +179,13 @@ namespace System_Information_Group_1.View
                     Owner = this
                 };
 
-                this.Hide();
+                Hide();
 
                 routineCheckupWindow.ShowDialog();
 
-                this.Show();
+                Show();
                 this.refreshSchedules();
-                this.Activate();
+                Activate();
             }
             catch (Exception ex)
             {
@@ -245,7 +234,7 @@ namespace System_Information_Group_1.View
                     return;
                 }
 
-                if (selectedCard.scheduledTime <= this.controller.GetCurrentTimeAsEastern())
+                if (selectedCard.ScheduledTime <= this.controller.GetCurrentTimeAsEastern())
                 {
                     this.showError("Appointment time has passed and cannot be edited");
                     return;

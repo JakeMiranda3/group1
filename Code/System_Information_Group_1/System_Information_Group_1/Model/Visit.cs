@@ -32,6 +32,12 @@ public class Visit
     /// The nurse identifier.
     /// </value>
     public int NurseId { get; set; }
+    /// <summary>
+    /// Gets or sets the systolic blood pressure.
+    /// </summary>
+    /// <value>
+    /// The systolic blood pressure.
+    /// </value>
     public int SystolicBloodPressure { get; set; }
     /// <summary>
     /// Gets or sets the diastolic blood pressure.

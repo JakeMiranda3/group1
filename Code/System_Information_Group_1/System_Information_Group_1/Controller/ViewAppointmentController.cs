@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Documents;
+using System_Information_Group_1.Authorization;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
@@ -64,15 +64,18 @@ public class ViewAppointmentController
 
         return this.appointmentDal.GetAppointmentsContainingDoctorAndPatient(doctor.DoctorId);
     }
-
+    /// <summary>
+    /// Gets the current time as eastern.
+    /// </summary>
+    /// <returns>Time as eastern</returns>
     public DateTime GetCurrentTimeAsEastern()
     {
         var serverDate = this.timeDal.GetServerDateTime();
-        DateTime serverUTCDate = DateTime.SpecifyKind(serverDate, DateTimeKind.Utc);
+        DateTime serverUtcDate = DateTime.SpecifyKind(serverDate, DateTimeKind.Utc);
 
         TimeZoneInfo easernZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
 
-        return TimeZoneInfo.ConvertTimeFromUtc(serverUTCDate, easernZone);
+        return TimeZoneInfo.ConvertTimeFromUtc(serverUtcDate, easernZone);
     }
 
     /// <summary>
@@ -100,16 +103,20 @@ public class ViewAppointmentController
         return this.appointmentDal.StoreNewAppointment(doctorId, patientId, date, reason);
     }
 
-    public int GetAppointmentId(int patientId, DateTime date)
-    {
-        return this.appointmentDal.GetAppointmentIdByPatientIdWithDate(patientId, date);
-    }
-
+    /// <summary>
+    /// Gets the patient appointments.
+    /// </summary>
+    /// <returns>List of patient appointments</returns>
     public IList<Appointment> GetPatientAppointments()
     {
         return this.appointmentDal.GetAllAppointmentsByPatientId(this.SelectedPatientId);
     }
-
+    /// <summary>
+    /// Gets the visit for appointment.
+    /// </summary>
+    /// <param name="appointmentId">The appointment identifier.</param>
+    /// <returns>The visit for an appointment</returns>
+    /// <exception cref="System.InvalidOperationException">Unable to find the currently logged-in nurse.</exception>
     public Visit GetVisitForAppointment(int appointmentId)
     {
         var personId = AuthServiceSingleton.GetAccount().PersonId;

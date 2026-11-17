@@ -1,5 +1,4 @@
 using System;
-using System.Windows;
 
 namespace System_Information_Group_1.Model;
 
@@ -57,6 +56,9 @@ public class Doctor
         this.DoctorId = doctorId != 0 ? doctorId : throw new ArgumentException("DoctorId cannot be zero");
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Doctor"/> class.
+    /// </summary>
     public Doctor() {}
 
     /// <summary>

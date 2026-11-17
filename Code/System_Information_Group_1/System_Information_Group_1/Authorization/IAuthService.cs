@@ -1,13 +1,10 @@
-﻿
-
-using System;
-using System.Windows.Controls;
+﻿using System;
 using System_Information_Group_1.Constants;
 
-namespace System_Information_Group_1.Controller;
+namespace System_Information_Group_1.Authorization;
 
 /// <summary>
-/// Defines the autherization service interface.
+/// Defines the authorization service interface.
 /// </summary>
 public interface IAuthService
 {

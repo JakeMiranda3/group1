@@ -36,7 +36,7 @@ public class AdministratorDal
         }
 
         using var idCmd = new MySqlCommand("select last_insert_id();", connection);
-        var newId = System.Convert.ToInt32(idCmd.ExecuteScalar());
+        var newId = Convert.ToInt32(idCmd.ExecuteScalar());
         return new Administrator(personId, newId);
     }
 

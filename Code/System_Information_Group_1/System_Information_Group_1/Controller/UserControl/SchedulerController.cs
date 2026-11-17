@@ -6,7 +6,11 @@ using System_Information_Group_1.Model;
 using System_Information_Group_1.View.UserControls;
 
 namespace System_Information_Group_1.Controller.UserControl;
-
+/// <summary>
+/// The scheduler controller
+/// @author Matthew
+/// @version Fall 2026
+/// </summary>
 public class SchedulerController
 {
     private readonly VisitDal visitDal = new();
@@ -14,12 +18,19 @@ public class SchedulerController
 
     private readonly TestOrderDal orderDal = new();
 
-
+    /// <summary>
+    /// Gets the current time.
+    /// </summary>
+    /// <returns>Current time of the SQL server</returns>
     public DateTime GetCurrentTime()
     {
-        return this.timeDal.GetServerDateTimeAsEST();
+        return this.timeDal.GetServerDateTimeAsEst();
     }
-
+    /// <summary>
+    /// Determines the card states.
+    /// </summary>
+    /// <param name="appointments">The appointments.</param>
+    /// <returns>The state of each card as a dict</returns>
     public Dictionary<int, TimeCardState> DetermineCardStates(IList<Appointment> appointments)
     {
         if (appointments.Count == 0)
@@ -33,7 +44,7 @@ public class SchedulerController
 
         var orderIds = this.orderDal.GetAppointmentIdsWithOrders(appointmentIds).ToHashSet();
 
-        var currentTime = this.timeDal.GetServerDateTimeAsEST();
+        var currentTime = this.timeDal.GetServerDateTimeAsEst();
 
         var states = new Dictionary<int, TimeCardState>();
 

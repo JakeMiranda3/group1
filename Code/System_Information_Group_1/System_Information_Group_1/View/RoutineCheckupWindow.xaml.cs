@@ -15,11 +15,15 @@ namespace System_Information_Group_1.View
     {
         private readonly RoutineCheckupController controller;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RoutineCheckupWindow"/> class.
+        /// </summary>
+        /// <param name="visitDisplay">The visit to record the routine checkup for.</param>
         public RoutineCheckupWindow(Visit visitDisplay)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.controller = new RoutineCheckupController(visitDisplay);
-            this.DataContext = this.controller.Visit;
+            DataContext = this.controller.Visit;
             this.appointmentDateTimeRun.Text = this.controller.AppointmentDateTime.ToString("MM/dd/yyyy hh:mm tt");
             this.applyReadOnlyState();
             this.testsDataGrid.ItemsSource = new ObservableCollection<TestOrderDisplay>(this.controller.TestOrders);
@@ -77,8 +81,8 @@ namespace System_Information_Group_1.View
                     this.applyReadOnlyState();
                 }
 
-                this.DialogResult = true;
-                this.Close();
+                DialogResult = true;
+                Close();
             }
             catch (Exception ex)
             {
@@ -121,14 +125,14 @@ namespace System_Information_Group_1.View
 
             OrderTestWindow orderTestWindow = new OrderTestWindow(this.controller.Visit.AppointmentId);
 
-            orderTestWindow.TestsSubmitted += (sen, args) =>
+            orderTestWindow.TestsSubmitted += (_, _) =>
             {
-                this.RefreshTestOrders();
+                this.refreshTestOrders();
             };
             orderTestWindow.Show();
         }
 
-        private void RefreshTestOrders()
+        private void refreshTestOrders()
         {
             this.controller.RefreshTestOrders();
 
@@ -154,12 +158,12 @@ namespace System_Information_Group_1.View
 
             IEnumerable<TestOrderDisplay> collection = (IEnumerable<TestOrderDisplay>)this.testsDataGrid.ItemsSource;
             this.controller.SubmitTestResults(collection);
-            this.RefreshTestOrders();
+            this.refreshTestOrders();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private bool areRoutineCheckInputsValid()

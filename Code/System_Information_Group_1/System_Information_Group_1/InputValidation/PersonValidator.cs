@@ -23,7 +23,7 @@ public static class PersonValidator
             return "First name cannot be empty.";
         }
 
-        if (firstName.Trim().Length > 20)
+        if (firstName != null && firstName.Trim().Length > 20)
         {
             return "First name cannot exceed 20 characters.";
         }
@@ -43,7 +43,7 @@ public static class PersonValidator
             return "Last name cannot be empty.";
         }
 
-        if (lastName.Trim().Length > 20)
+        if (lastName?.Trim().Length > 20)
         {
             return "Last name cannot exceed 20 characters.";
         }
@@ -110,7 +110,7 @@ public static class PersonValidator
             return "Address cannot be empty.";
         }
 
-        if (address.Trim().Length > 20)
+        if (address?.Trim().Length > 20)
         {
             return "Address cannot exceed 20 characters.";
         }
@@ -130,7 +130,7 @@ public static class PersonValidator
             return "City cannot be empty.";
         }
 
-        if (city.Trim().Length > 20)
+        if (city?.Trim().Length > 20)
         {
             return "City cannot exceed 20 characters.";
         }
@@ -150,7 +150,7 @@ public static class PersonValidator
             return "Please select a state.";
         }
 
-        if (state.Trim().Length > 20)
+        if (state?.Trim().Length > 20)
         {
             return "State cannot exceed 20 characters.";
         }

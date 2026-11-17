@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System_Information_Group_1.Authorization;
 using System_Information_Group_1.Controller;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;

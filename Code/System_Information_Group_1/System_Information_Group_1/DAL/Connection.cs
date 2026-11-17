@@ -20,7 +20,7 @@ public static class Connection
     /// <returns>A connection string to MySQL DB</returns>
     public static string ConnectionString()
     {
-        var env = LoadDotEnv();
+        var env = loadDotEnv();
 
         var builder = new MySqlConnectionStringBuilder
         {
@@ -34,7 +34,7 @@ public static class Connection
         return builder.ToString();
     }
 
-    private static Dictionary<string, string> LoadDotEnv()
+    private static Dictionary<string, string> loadDotEnv()
     {
         var directory = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory);
         while (directory != null && !File.Exists(Path.Combine(directory.FullName, ".env")))
@@ -48,10 +48,10 @@ public static class Connection
         }
 
         return File.ReadAllLines(Path.Combine(directory.FullName, ".env"))
-           .Select(line => line.Trim())
-           .Where(line => line.Length > 0 && !line.StartsWith("#") && line.Contains("="))
-           .Select(line => line.Split(new[] { '=' }, 2))
-           .ToDictionary(parts => parts[0].Trim(), parts => parts[1].Trim().Trim('"'));
+            .Select(line => line.Trim())
+            .Where(line => line.Length > 0 && !line.StartsWith("#") && line.Contains("="))
+            .Select(line => line.Split(new[] { '=' }, 2))
+            .ToDictionary(parts => parts[0].Trim(), parts => parts[1].Trim().Trim('"'));
     }
 
     #endregion

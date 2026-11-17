@@ -103,7 +103,7 @@ public partial class NurseWindow : Window
         var parentWindow = GetWindow(this);
         if (parentWindow != null)
         {
-            parentWindow?.Close();
+            parentWindow.Close();
         }
     }
 }
