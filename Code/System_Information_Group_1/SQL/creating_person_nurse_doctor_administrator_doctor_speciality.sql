@@ -97,6 +97,7 @@ CREATE TABLE visit (
     weight INT,
     initial_diagnosis VARCHAR(200),
     final_diagnosis VARCHAR(200),
+    final_diagnosis_entered_datetime DATETIME,
     CONSTRAINT visit_fk_appointment FOREIGN KEY (appointment_id)
         REFERENCES appointment (appointment_id),
     CONSTRAINT visit_fk_nurse FOREIGN KEY (nurse_id)
@@ -117,6 +118,7 @@ CREATE TABLE test_order (
     performed_datetime DATETIME,
     test_result VARCHAR(1024),
     is_abnormal BOOLEAN,
+    result_entered_datetime DATETIME, 
     PRIMARY KEY (appointment_id, test_code),
     CONSTRAINT test_order_fk_test FOREIGN KEY (test_code) REFERENCES test(test_code),
     CONSTRAINT test_order_fk_visit FOREIGN KEY (appointment_id) REFERENCES visit(appointment_id)

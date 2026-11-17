@@ -20,6 +20,7 @@ namespace System_Information_Group_1.View
             InitializeComponent();
             this.controller = new RoutineCheckupController(visitDisplay);
             this.DataContext = this.controller.Visit;
+            this.appointmentDateTimeRun.Text = this.controller.AppointmentDateTime.ToString("MM/dd/yyyy hh:mm tt");
             this.applyReadOnlyState();
             this.testsDataGrid.ItemsSource = new ObservableCollection<TestOrderDisplay>(this.controller.TestOrders);
         }

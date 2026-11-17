@@ -64,6 +64,19 @@ public class AppointmentDal
     //}
 
 
+    /// <summary>
+    /// Gets the scheduled date and time of an appointment.
+    /// </summary>
+    /// <param name="appointmentId">The appointment identifier.</param>
+    /// <returns>The appointment's date and time.</returns>
+    public DateTime GetAppointmentDateTime(int appointmentId)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+
+        var query = "SELECT appointment_datetime FROM appointment WHERE appointment_id = @appointmentId;";
+        return connection.ExecuteScalar<DateTime>(query, new { appointmentId });
+    }
+
     public IList<Appointment> GetAllAppointmentsByPatientId(int patientId)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());

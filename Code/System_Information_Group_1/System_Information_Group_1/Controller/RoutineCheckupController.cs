@@ -29,6 +29,14 @@ namespace System_Information_Group_1.Controller
 
         public bool IsReadOnly { get; private set; }
 
+        /// <summary>
+        /// Gets the scheduled date and time of the visit's appointment.
+        /// </summary>
+        /// <value>
+        /// The appointment date and time.
+        /// </value>
+        public DateTime AppointmentDateTime { get; private set; }
+
         private readonly VisitDal visitDal;
         private readonly TestOrderDal testOrderDal;
         public bool HasExistingVisit { get; private set; }
@@ -42,6 +50,7 @@ namespace System_Information_Group_1.Controller
             this.visitDal = new VisitDal();
             this.testOrderDal = new TestOrderDal();
             this.TestOrders = this.testOrderDal.GetTestOrdersByAppointmentId(visit.AppointmentId);
+            this.AppointmentDateTime = new AppointmentDal().GetAppointmentDateTime(visit.AppointmentId);
             var existingVisit = this.visitDal.GetVisitByAppointmentId(visit.AppointmentId);
             if (existingVisit != null)
             {
@@ -49,7 +58,7 @@ namespace System_Information_Group_1.Controller
                 this.Visit = new VisitDisplay(existingVisit.AppointmentId, existingVisit.Symptoms, existingVisit.NurseId,
                     existingVisit.SystolicBloodPressure, existingVisit.DiastolicBloodPressure, existingVisit.Temperature,
                     existingVisit.Pulse, existingVisit.Height, existingVisit.Weight, existingVisit.InitialDiagnosis,
-                    existingVisit.FinalDiagnosis);
+                    existingVisit.FinalDiagnosis, existingVisit.FinalDiagnosisEnteredDatetime);
                 this.IsReadOnly = !string.IsNullOrWhiteSpace(existingVisit.FinalDiagnosis);
             }
             else
@@ -70,16 +79,14 @@ namespace System_Information_Group_1.Controller
                 throw new InvalidOperationException("Final diagnosis is already set. This visit is read-only.");
             }
 
-            if (!string.IsNullOrWhiteSpace(this.Visit.FinalDiagnosis))
+            var isFinalizing = !string.IsNullOrWhiteSpace(this.Visit.FinalDiagnosis);
+            if (isFinalizing && this.GetTestsMissingResults().Count > 0)
             {
-                if (this.GetTestsMissingResults().Count > 0)
-                {
-                    throw new InvalidOperationException(
-                        "Cannot finalize visit. All test results must be filled in and submitted.");
-                }
-
-                this.IsReadOnly = true;
+                throw new InvalidOperationException(
+                    "Cannot finalize visit. All test results must be filled in and submitted.");
             }
+
+            this.Visit.FinalDiagnosisEnteredDatetime = isFinalizing ? DateTime.Now : null;
 
             if (this.HasExistingVisit)
             {
@@ -93,6 +100,9 @@ namespace System_Information_Group_1.Controller
             {
                 this.visitDal.AddVisit(this.Visit);
             }
+
+            // Only lock the visit once the final diagnosis has actually been saved.
+            this.IsReadOnly = isFinalizing;
         }
 
         /// <summary>

@@ -82,7 +82,13 @@
 
                 <TextBlock Text="Patient Vitals &amp; Diagnosis"
                            FontSize="24"
-                           Margin="0,0,0,15" />
+                           Margin="0,0,0,5" />
+
+                <TextBlock FontSize="16"
+                           Margin="0,0,0,15">
+                    <Run Text="Appointment Time: " FontWeight="Bold" />
+                    <Run x:Name="appointmentDateTimeRun" />
+                </TextBlock>
 
                 <Label Content="Symptoms" Style="{StaticResource SectionLabelStyle}" />
                 <TextBox x:Name="symptomsTextBox"
@@ -210,6 +216,12 @@
                          Text="{Binding FinalDiagnosis, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource NotesTextBoxStyle}"
                          Height="60" />
+
+                <TextBlock FontSize="15"
+                           Margin="0,8,0,0">
+                    <Run Text="Final Diagnosis Entered: " FontWeight="Bold" />
+                    <Run Text="{Binding FinalDiagnosisEnteredDatetime, Mode=OneWay, TargetNullValue='Not yet entered', StringFormat={}{0:MM/dd/yyyy hh:mm tt}}" />
+                </TextBlock>
             </StackPanel>
         </ScrollViewer>
 
