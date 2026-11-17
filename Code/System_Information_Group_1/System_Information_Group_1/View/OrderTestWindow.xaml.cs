@@ -47,7 +47,7 @@ public partial class OrderTestWindow : Window
         this.allTests = this.controller.GetAllTest();
         this.AllTestsListView.ItemsSource = this.allTests;
 
-        this.existingOrderedTests = this.controller.GetAllTestOrderedByAppointmentId(this.appointmentId);
+        this.existingOrderedTests = this.controller.GetTestAlreadyOrderedByAppointmentId(this.appointmentId);
         this.newlyOrderedTests = new List<Test>();
         this.RefreshOrderedTestsListView();
     }

@@ -48,13 +48,17 @@ public class TestOrderDal
         var testOrders = new List<TestOrderDisplay>();
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
+
         var query = "SELECT o.appointment_id, o.test_code, o.performed_datetime, o.test_result, o.is_abnormal, " +
-                    "t.name, t.low_value, t.high_value, t.measurement_type " +
+                    "t.name, t.low_value, t.high_value, t.measurement_type, o.result_entered_datetime " +
                     "FROM test_order o " +
                     "JOIN test t ON o.test_code = t.test_code " +
                     "WHERE o.appointment_id = @appointmentId";
+
+
         using var cmd = new MySqlCommand(query, connection);
         cmd.Parameters.AddWithValue("@appointmentId", appointmentId);
+
         using var reader = cmd.ExecuteReader();
 
         while (reader.Read())
@@ -62,11 +66,16 @@ public class TestOrderDal
             var performedDateTime = reader.IsDBNull(reader.GetOrdinal("performed_datetime"))
                 ? (DateTime?)null
                 : reader.GetDateTime(reader.GetOrdinal("performed_datetime"));
+
             var testResult = reader.IsDBNull(reader.GetOrdinal("test_result"))
                 ? null
                 : reader.GetString(reader.GetOrdinal("test_result"));
+
             var isAbnormal = !reader.IsDBNull(reader.GetOrdinal("is_abnormal")) &&
                              reader.GetBoolean(reader.GetOrdinal("is_abnormal"));
+
+            var testResultDateTime =
+                reader.GetFieldValueCheckNull<DateTime?>(reader.GetOrdinal("result_entered_datetime"));
 
             testOrders.Add(new TestOrderDisplay(
                 reader.GetFieldValueCheckNull<Int32>(reader.GetOrdinal("appointment_id")),
@@ -77,7 +86,8 @@ public class TestOrderDal
                 reader.GetFieldValue<String>(reader.GetOrdinal("measurement_type")),
                 performedDateTime,
                 testResult,
-                isAbnormal));
+                isAbnormal,
+                testResultDateTime));
         }
 
         return testOrders;
@@ -87,7 +97,8 @@ public class TestOrderDal
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
-        var query = "UPDATE test_order SET performed_datetime = @performedDateTime, test_result = @testResult, " +
+        var query = "UPDATE test_order SET performed_datetime = @performedDateTime, " +
+                    "result_entered_datetime = @resultEnteredDateTime, test_result = @testResult, " +
                     "is_abnormal = @isAbnormal WHERE appointment_id = @appointmentId AND test_code = @testCode";
         using var transaction = connection.BeginTransaction();
 
@@ -99,8 +110,11 @@ public class TestOrderDal
 
 
                 using var cmd = new MySqlCommand(query, connection, transaction);
-                cmd.Parameters.AddWithValue("@performedDateTime", testOrder.PerformedDateTime.HasValue
-                    ? (object)testOrder.PerformedDateTime.Value
+                cmd.Parameters.AddWithValue("@performedDateTime", testOrder.PerformedDatetime.HasValue
+                    ? (object)testOrder.PerformedDatetime.Value
+                    : DBNull.Value);
+                cmd.Parameters.AddWithValue("@resultEnteredDateTime", testOrder.TestResultDatetime.HasValue
+                    ? (object)testOrder.TestResultDatetime.Value
                     : DBNull.Value);
                 cmd.Parameters.AddWithValue("@testResult", string.IsNullOrWhiteSpace(testOrder.TestResult)
                     ? (object)DBNull.Value
@@ -165,43 +179,16 @@ public class TestOrderDal
         return connection.Query<int>(query, new { appointmentIds }).ToList();
     }
 
-    public List<TestOrder> GetAllTestWithAppointmentId(int appointmentId)
-    {
-        List<TestOrder> orderList = new List<TestOrder>();
 
-
-        using var connection = new MySqlConnection(Connection.ConnectionString());
-        connection.Open();
-        var query = "Select * from test_order where appointment_id = @appointmentId";
-
-        using var cmd = new MySqlCommand(query, connection);
-
-        cmd.Parameters.AddWithValue("@appointmentId", appointmentId);
-
-        var reader = cmd.ExecuteReader();
-
-        int appointmentIdOrdinal = reader.GetOrdinal("appointment_id");
-        int testCodeOrdinal = reader.GetOrdinal("test_code");
-        int performedDatetimeOrdinal = reader.GetOrdinal("performed_datetime");
-        int testResultOrdinal = reader.GetOrdinal("test_result");
-        int isAbnormalOrdinal = reader.GetOrdinal("is_abnormal");
-
-
-        while (reader.Read())
-        {
-            orderList.Add(CreateOrder(reader, appointmentIdOrdinal, testCodeOrdinal, performedDatetimeOrdinal, testResultOrdinal, isAbnormalOrdinal));    
-        }
-        return orderList;
-    }
-
-    public static TestOrder CreateOrder(MySqlDataReader reader, int appointmentIdOrdinal, int testCodeOrdinal, int performedDatetimeOrdinal, int testResultOrdinal, int isAbnormalOrdinal)
+    public static TestOrder CreateOrder(MySqlDataReader reader, int appointmentIdOrdinal, int testCodeOrdinal, int performedDatetimeOrdinal, int testResultOrdinal, int isAbnormalOrdinal, int testResultEnteredDatetimeOrdinal)
     {
         var appointmentId = reader.GetFieldValue<Int32>(appointmentIdOrdinal);
         var testCode = reader.GetFieldValue<Int32>(testCodeOrdinal);
         var performedDatetime = reader.IsDBNull(performedDatetimeOrdinal) ? (DateTime?)null : reader.GetDateTime(performedDatetimeOrdinal);
         var testResult = reader.IsDBNull(testResultOrdinal) ? null : reader.GetString(testResultOrdinal);
         var isAbnormal = !reader.IsDBNull(isAbnormalOrdinal) && reader.GetBoolean(isAbnormalOrdinal);
-        return new TestOrder(appointmentId, testCode, performedDatetime ?? DateTime.MinValue, testResult ?? string.Empty, isAbnormal);
+        var testResultDatetime = reader.GetFieldValueCheckNull<DateTime>(testResultEnteredDatetimeOrdinal);
+        return new TestOrder(appointmentId, testCode, performedDatetime ?? DateTime.MinValue, testResult ?? string.Empty, isAbnormal, testResultDatetime);
     }
 
 }

@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Routine Checkup Entry"
         MinHeight="720"
-        MinWidth="1080"
+        MinWidth="1500"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip">
 
@@ -314,10 +314,48 @@
                     <DataGridTextColumn Header="Result"
                                         Binding="{Binding TestResult, UpdateSourceTrigger=PropertyChanged}"
                                         Width="*"
-                                        MinWidth="90" />
+                                        MinWidth="40" />
                     <DataGridCheckBoxColumn Header="Abnormal"
                                             Binding="{Binding IsAbnormal, UpdateSourceTrigger=PropertyChanged}"
                                             Width="Auto" />
+                    <DataGridTemplateColumn Header="Date Performed"
+                                            Width="Auto"
+                                            MinWidth="130">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding PerformedDatetime, StringFormat={}{0:MM/dd/yyyy}}"
+                                           VerticalAlignment="Center"
+                                           Margin="4,0" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding PerformedDatetime, Mode=TwoWay}"
+                                            VerticalContentAlignment="Center">
+                                    <DatePicker.Resources>
+                                    
+                                        <Style TargetType="DatePickerTextBox">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="DatePickerTextBox">
+                                                        <TextBox x:Name="PART_TextBox"
+                                                                 BorderThickness="0"
+                                                                 VerticalContentAlignment="Center"
+                                                                 Text="{Binding SelectedDate, RelativeSource={RelativeSource AncestorType=DatePicker}, StringFormat={}{0:MM/dd/yyyy}}" />
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DatePicker.Resources>
+                                </DatePicker>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Test Result Entered"
+                                        Binding="{Binding TestResultDatetime, StringFormat={}{0:MM/dd/yyyy hh:mm tt}}"
+                                        IsReadOnly="True"
+                                        Width="Auto"
+                                        MinWidth="150" />
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Grid.Row="4">
@@ -333,7 +371,8 @@
                         Height="39"
                         Margin="0,12,0,0"
                         Background="{StaticResource CancelColorBrush}" Click="Button_Click" />
-                <Button Grid.Column="1"
+                <Button x:Name="submitTestResultsButton"
+                        Grid.Column="1"
                         Content="Submit Test Results"
                         Style="{StaticResource BlueButtonStyle}"
                         HorizontalAlignment="Right"
