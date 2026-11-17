@@ -15,6 +15,14 @@ public class TestOrderDisplay : TestOrder, INotifyPropertyChanged
     public double HighValue { get; private set; }
     public string MeasurementType { get; private set; }
 
+    /// <summary>
+    ///     Gets the normal range for display, e.g. "70 - 99 mg/dL". Empty for tests without a numeric range.
+    /// </summary>
+    public string NormalRange =>
+        this.LowValue == 0 && this.HighValue == 0
+            ? string.Empty
+            : $"{this.LowValue:0.##} - {this.HighValue:0.##} {this.MeasurementType}".TrimEnd();
+
     public TestOrderDisplay(int appointmentId, int testCode, string name, double lowValue, double highValue,
         string measurementType, DateTime? performedDatetime, string testResult, bool isAbnormal,
         DateTime? testResultDatetime)
