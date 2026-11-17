@@ -38,9 +38,13 @@
             <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
         </Style>
 
-        <Style x:Key="WrapCellStyle" TargetType="TextBlock">
-            <Setter Property="TextWrapping" Value="Wrap" />
+        <!-- Single-line grid cell; long text is cut off with "..." and shown in full on hover. -->
+        <Style x:Key="GridCellTextStyle" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="NoWrap" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
             <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="4,0" />
+            <Setter Property="ToolTip" Value="{Binding Text, RelativeSource={RelativeSource Self}}" />
         </Style>
 
         <Style x:Key="ValidationErrorTextStyle" TargetType="TextBlock">
@@ -54,9 +58,9 @@
     <Grid Background="{StaticResource PrimaryBrush}">
         <Grid.ColumnDefinitions>
 
-            <ColumnDefinition Width="5*" MinWidth="420" />
+            <ColumnDefinition Width="2*" MinWidth="420" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="5*" MinWidth="460" />
+            <ColumnDefinition Width="3*" MinWidth="460" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -305,28 +309,20 @@
                     <DataGridTextColumn Header="Test"
                                         Binding="{Binding Name}"
                                         IsReadOnly="True"
-                                        ElementStyle="{StaticResource WrapCellStyle}"
-                                        Width="2*"
-                                        MinWidth="120" />
-                    <DataGridTextColumn Header="Low"
-                                        Binding="{Binding LowValue}"
-                                        IsReadOnly="True"
+                                        ElementStyle="{StaticResource GridCellTextStyle}"
                                         Width="Auto"
-                                        MinWidth="50" />
-                    <DataGridTextColumn Header="High"
-                                        Binding="{Binding HighValue}"
+                                        MinWidth="140"
+                                        MaxWidth="280" />
+                    <DataGridTextColumn Header="Normal Range"
+                                        Binding="{Binding NormalRange}"
                                         IsReadOnly="True"
+                                        ElementStyle="{StaticResource GridCellTextStyle}"
                                         Width="Auto"
-                                        MinWidth="50" />
-                    <DataGridTextColumn Header="Unit"
-                                        Binding="{Binding MeasurementType}"
-                                        IsReadOnly="True"
-                                        Width="Auto"
-                                        MinWidth="50" />
+                                        MinWidth="110" />
                     <DataGridTextColumn Header="Result"
                                         Binding="{Binding TestResult, UpdateSourceTrigger=PropertyChanged}"
                                         Width="*"
-                                        MinWidth="40" />
+                                        MinWidth="80" />
                     <DataGridCheckBoxColumn Header="Abnormal"
                                             Binding="{Binding IsAbnormal, UpdateSourceTrigger=PropertyChanged}"
                                             Width="Auto" />
@@ -363,11 +359,12 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Test Result Entered"
-                                        Binding="{Binding TestResultDatetime, StringFormat={}{0:MM/dd/yyyy}}"
+                    <DataGridTextColumn Header="Result Entered"
+                                        Binding="{Binding TestResultDatetime, StringFormat={}{0:MM/dd/yyyy hh:mm tt}}"
                                         IsReadOnly="True"
+                                        ElementStyle="{StaticResource GridCellTextStyle}"
                                         Width="Auto"
-                                        MinWidth="150" />
+                                        MinWidth="160" />
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Grid.Row="4">

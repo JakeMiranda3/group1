@@ -139,6 +139,16 @@ namespace System_Information_Group_1.View
 
         private void OnSubmitTestResultClick(object sender, RoutedEventArgs e)
         {
+            var confirmation = MessageBox.Show(
+                "Are you sure you want to submit these test results?",
+                "Confirm Test Results",
+                MessageBoxButton.OKCancel,
+                MessageBoxImage.Question);
+
+            if (confirmation != MessageBoxResult.OK)
+            {
+                return;
+            }
            
             this.testsDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
 
