@@ -56,7 +56,7 @@
 
                     <Style.Triggers>
                         <Trigger Property="IsReadOnly" Value="False">
-                            <Setter Property="Background" Value="{StaticResource Sur}" />
+                            <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
                             <Setter Property="BorderThickness" Value="1" />
                             <Setter Property="Padding" Value="5,0" />
                         </Trigger>
