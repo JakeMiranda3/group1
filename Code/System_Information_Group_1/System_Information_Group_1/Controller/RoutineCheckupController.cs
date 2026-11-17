@@ -124,7 +124,7 @@ namespace System_Information_Group_1.Controller
             double value;
             foreach (TestOrderDisplay test in collection)
             {
-                if (test.LowValue != 0 && !Double.TryParse(test.TestResult, out value))
+                if (test.LowValue != 0 && !String.IsNullOrEmpty(test.TestResult) && !Double.TryParse(test.TestResult, out value))
                 {
                     testResultIsNonNumericString = true;
                     break;
