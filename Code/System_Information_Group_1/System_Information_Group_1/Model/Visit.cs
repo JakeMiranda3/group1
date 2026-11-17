@@ -1,4 +1,6 @@
-﻿namespace System_Information_Group_1.Model;
+﻿using System;
+
+namespace System_Information_Group_1.Model;
 
 /// <summary>
 ///     This class represents a visit.
@@ -80,10 +82,18 @@ public class Visit
     /// The final diagnosis.
     /// </value>
     public string FinalDiagnosis { get; set; }
+    /// <summary>
+    /// Gets or sets the final diagnosis entered datetime.
+    /// </summary>
+    /// <value>
+    /// The final diagnosis entered datetime.
+    /// </value>
+    public DateTime? FinalDiagnosisEnteredDatetime { get; set; }
 
     #endregion
 
-    #region Constructors    
+    #region Constructors
+
     /// <summary>
     /// Initializes a new instance of the <see cref="Visit"/> class.
     /// </summary>
@@ -98,9 +108,10 @@ public class Visit
     /// <param name="weight">The weight.</param>
     /// <param name="initialDiagnosis">The initial diagnosis.</param>
     /// <param name="finalDiagnosis">The final diagnosis.</param>
+    /// <param name="finalDiagnosisEnteredDatetime">The time the final diagnosis was entered</param>
     public Visit(int appointmentId, string symptoms, int nurseId, int systolicBloodPressure,
         int diastolicBloodPressure, double temperature, int pulse, double height, double weight, string initialDiagnosis,
-        string finalDiagnosis)
+        string finalDiagnosis, DateTime? finalDiagnosisEnteredDatetime)
     {
         this.AppointmentId = appointmentId;
         this.Symptoms = symptoms;
@@ -113,6 +124,7 @@ public class Visit
         this.Weight = weight;
         this.InitialDiagnosis = initialDiagnosis;
         this.FinalDiagnosis = finalDiagnosis;
+        this.FinalDiagnosisEnteredDatetime = finalDiagnosisEnteredDatetime;
     }
 
     /// <summary>

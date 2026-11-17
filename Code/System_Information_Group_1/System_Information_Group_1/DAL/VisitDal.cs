@@ -23,23 +23,29 @@ namespace System_Information_Group_1.DAL
             using var connection = new MySqlConnection(Connection.ConnectionString());
             connection.Open();
 
-            var typoInsert = "INSERT INTO visit (apointment_id, symptoms, nurse_id, systelic_blood_pressure, diastolic_blood_pressure, temperature, pulse, height, weight, initial_diagnosis, final_diagnosis) " +
-                             "VALUES (@appointment_id, @symptoms, @nurse_id, @systolic_blood_pressure, @diastolic_blood_pressure, @temperature, @pulse, @height, @weight, @initial_diagnosis, @final_diagnosis)";
-            var standardInsert = "INSERT INTO visit (appointment_id, symptoms, nurse_id, systolic_blood_pressure, diastolic_blood_pressure, temperature, pulse, height, weight, initial_diagnosis, final_diagnosis) " +
-                                 "VALUES (@appointment_id, @symptoms, @nurse_id, @systolic_blood_pressure, @diastolic_blood_pressure, @temperature, @pulse, @height, @weight, @initial_diagnosis, @final_diagnosis)";
+            var insert = "INSERT INTO visit (appointment_id, symptoms, nurse_id, systolic_blood_pressure, diastolic_blood_pressure, temperature, pulse, height, weight, initial_diagnosis, final_diagnosis, final_diagnosis_entered_datetime) " +
+                         "VALUES (@appointment_id, @symptoms, @nurse_id, @systolic_blood_pressure, @diastolic_blood_pressure, @temperature, @pulse, @height, @weight, @initial_diagnosis, @final_diagnosis, @final_diagnosis_entered_datetime)";
 
-            this.ExecuteWithFallback(connection, typoInsert, standardInsert, visit);
+            using var command = new MySqlCommand(insert, connection);
+            this.BindVisitParameters(command, visit);
+            command.ExecuteNonQuery();
         }
 
+        /// <summary>
+        /// Gets the visit for the given appointment.
+        /// </summary>
+        /// <param name="appointmentId">The appointment identifier.</param>
+        /// <returns>The visit, or null if no visit has been saved for the appointment yet.</returns>
         public Visit GetVisitByAppointmentId(int appointmentId)
         {
             using var connection = new MySqlConnection(Connection.ConnectionString());
             connection.Open();
 
-            var typoQuery = "select apointment_id as appointment_id, symptoms, nurse_id, systelic_blood_pressure as systolic_blood_pressure, diastolic_blood_pressure, temperature, pulse, height, weight, initial_diagnosis, final_diagnosis from visit where apointment_id = @appointment_id limit 1;";
-            var standardQuery = "select appointment_id, symptoms, nurse_id, systolic_blood_pressure, diastolic_blood_pressure, temperature, pulse, height, weight, initial_diagnosis, final_diagnosis from visit where appointment_id = @appointment_id limit 1;";
+            var query = "select appointment_id, symptoms, nurse_id, systolic_blood_pressure, diastolic_blood_pressure, temperature, pulse, height, weight, initial_diagnosis, final_diagnosis, final_diagnosis_entered_datetime from visit where appointment_id = @appointment_id limit 1;";
 
-            using var reader = this.ExecuteReaderWithFallback(connection, typoQuery, standardQuery, appointmentId);
+            using var command = new MySqlCommand(query, connection);
+            command.Parameters.Add("@appointment_id", MySqlDbType.Int32).Value = appointmentId;
+            using var reader = command.ExecuteReader();
             if (!reader.Read())
             {
                 return null;
@@ -56,31 +62,26 @@ namespace System_Information_Group_1.DAL
                 reader.GetFieldValueCheckNull<double>(reader.GetOrdinal("height")),
                 reader.GetFieldValueCheckNull<double>(reader.GetOrdinal("weight")),
                 reader.GetFieldValueCheckNull<string>(reader.GetOrdinal("initial_diagnosis")),
-                reader.GetFieldValueCheckNull<string>(reader.GetOrdinal("final_diagnosis"))
+                reader.GetFieldValueCheckNull<string>(reader.GetOrdinal("final_diagnosis")),
+                reader.GetFieldValueCheckNull<DateTime?>(reader.GetOrdinal("final_diagnosis_entered_datetime"))
             );
         }
 
+        /// <summary>
+        /// Determines whether the visit for the given appointment has a final diagnosis.
+        /// </summary>
+        /// <param name="appointmentId">The appointment identifier.</param>
+        /// <returns>True if the visit has a final diagnosis; otherwise false.</returns>
         public bool IsVisitFinalized(int appointmentId)
         {
             using var connection = new MySqlConnection(Connection.ConnectionString());
             connection.Open();
 
-            var typoQuery = "select final_diagnosis from visit where apointment_id = @appointment_id limit 1;";
-            var standardQuery = "select final_diagnosis from visit where appointment_id = @appointment_id limit 1;";
+            var query = "select final_diagnosis from visit where appointment_id = @appointment_id limit 1;";
 
-            object finalDiagnosisValue;
-            try
-            {
-                using var command = new MySqlCommand(typoQuery, connection);
-                command.Parameters.Add("@appointment_id", MySqlDbType.Int32).Value = appointmentId;
-                finalDiagnosisValue = command.ExecuteScalar();
-            }
-            catch (MySqlException)
-            {
-                using var fallbackCommand = new MySqlCommand(standardQuery, connection);
-                fallbackCommand.Parameters.Add("@appointment_id", MySqlDbType.Int32).Value = appointmentId;
-                finalDiagnosisValue = fallbackCommand.ExecuteScalar();
-            }
+            using var command = new MySqlCommand(query, connection);
+            command.Parameters.Add("@appointment_id", MySqlDbType.Int32).Value = appointmentId;
+            var finalDiagnosisValue = command.ExecuteScalar();
 
             if (finalDiagnosisValue == null || finalDiagnosisValue == DBNull.Value)
             {
@@ -90,21 +91,24 @@ namespace System_Information_Group_1.DAL
             return !string.IsNullOrWhiteSpace(finalDiagnosisValue.ToString());
         }
 
+        /// <summary>
+        /// Updates the visit, as long as it has not already been finalized.
+        /// </summary>
+        /// <param name="visit">The visit.</param>
+        /// <returns>True if the visit was updated; false if it was already finalized or does not exist.</returns>
         public bool UpdateVisit(Visit visit)
         {
             using var connection = new MySqlConnection(Connection.ConnectionString());
             connection.Open();
 
-            var typoUpdate = "update visit set symptoms = @symptoms, nurse_id = @nurse_id, systelic_blood_pressure = @systolic_blood_pressure, " +
-                             "diastolic_blood_pressure = @diastolic_blood_pressure, temperature = @temperature, pulse = @pulse, height = @height, weight = @weight, " +
-                             "initial_diagnosis = @initial_diagnosis, final_diagnosis = @final_diagnosis " +
-                             "where apointment_id = @appointment_id and (final_diagnosis is null or trim(final_diagnosis) = '');";
-            var standardUpdate = "update visit set symptoms = @symptoms, nurse_id = @nurse_id, systolic_blood_pressure = @systolic_blood_pressure, " +
-                                 "diastolic_blood_pressure = @diastolic_blood_pressure, temperature = @temperature, pulse = @pulse, height = @height, weight = @weight, " +
-                                 "initial_diagnosis = @initial_diagnosis, final_diagnosis = @final_diagnosis " +
-                                 "where appointment_id = @appointment_id and (final_diagnosis is null or trim(final_diagnosis) = '');";
+            var update = "update visit set symptoms = @symptoms, nurse_id = @nurse_id, systolic_blood_pressure = @systolic_blood_pressure, " +
+                         "diastolic_blood_pressure = @diastolic_blood_pressure, temperature = @temperature, pulse = @pulse, height = @height, weight = @weight, " +
+                         "initial_diagnosis = @initial_diagnosis, final_diagnosis = @final_diagnosis, final_diagnosis_entered_datetime = @final_diagnosis_entered_datetime " +
+                         "where appointment_id = @appointment_id and (final_diagnosis is null or trim(final_diagnosis) = '');";
 
-            return this.ExecuteWithFallback(connection, typoUpdate, standardUpdate, visit) > 0;
+            using var command = new MySqlCommand(update, connection);
+            this.BindVisitParameters(command, visit);
+            return command.ExecuteNonQuery() > 0;
         }
 
         /// <summary>
@@ -126,38 +130,6 @@ namespace System_Information_Group_1.DAL
             return connection.Query<int>(query, new { appointmentIds }).ToList();
         }
 
-        private int ExecuteWithFallback(MySqlConnection connection, string primarySql, string fallbackSql, Visit visit)
-        {
-            try
-            {
-                using var primaryCommand = new MySqlCommand(primarySql, connection);
-                this.BindVisitParameters(primaryCommand, visit);
-                return primaryCommand.ExecuteNonQuery();
-            }
-            catch (MySqlException)
-            {
-                using var fallbackCommand = new MySqlCommand(fallbackSql, connection);
-                this.BindVisitParameters(fallbackCommand, visit);
-                return fallbackCommand.ExecuteNonQuery();
-            }
-        }
-
-        private MySqlDataReader ExecuteReaderWithFallback(MySqlConnection connection, string primarySql, string fallbackSql, int appointmentId)
-        {
-            try
-            {
-                var primaryCommand = new MySqlCommand(primarySql, connection);
-                primaryCommand.Parameters.Add("@appointment_id", MySqlDbType.Int32).Value = appointmentId;
-                return primaryCommand.ExecuteReader();
-            }
-            catch (MySqlException)
-            {
-                var fallbackCommand = new MySqlCommand(fallbackSql, connection);
-                fallbackCommand.Parameters.Add("@appointment_id", MySqlDbType.Int32).Value = appointmentId;
-                return fallbackCommand.ExecuteReader();
-            }
-        }
-
         private void BindVisitParameters(MySqlCommand command, Visit visit)
         {
             command.Parameters.AddWithValue("@appointment_id", visit.AppointmentId);
@@ -171,6 +143,8 @@ namespace System_Information_Group_1.DAL
             command.Parameters.AddWithValue("@weight", visit.Weight);
             command.Parameters.AddWithValue("@initial_diagnosis", visit.InitialDiagnosis);
             command.Parameters.AddWithValue("@final_diagnosis", visit.FinalDiagnosis);
+            command.Parameters.Add("@final_diagnosis_entered_datetime", MySqlDbType.DateTime).Value =
+                visit.FinalDiagnosisEnteredDatetime;
         }
     }
 }

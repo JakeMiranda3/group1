@@ -28,12 +28,24 @@ public class TestOrder
     public int TestCode { get; private set; }
 
     /// <summary>
-    ///     Gets or sets the performed datetime.
+    ///     Gets or sets the date the test was performed. Only the date is kept; any time of day is dropped.
     /// </summary>
     /// <value>
-    ///     The performed datetime.
+    ///     The date the test was performed.
     /// </value>
-    public DateTime PerformedDatetime { get; set; }
+    public DateTime? PerformedDatetime
+    {
+        get => this.performedDatetime;
+        set => this.performedDatetime = value?.Date;
+    }
+
+    /// <summary>
+    /// Gets or sets the test result datetime.
+    /// </summary>
+    /// <value>
+    /// The test result datetime.
+    /// </value>
+    public DateTime? TestResultDatetime { get; set; }
 
     /// <summary>
     ///     Gets or sets the test result.
@@ -51,6 +63,22 @@ public class TestOrder
     /// </value>
     public bool IsAbnormal { get; set; }
 
+    /// <summary>
+    ///     Gets a value indicating whether the test result differs from the one this order was loaded with.
+    /// </summary>
+    /// <value>
+    ///     <c>true</c> if the test result has been changed; otherwise, <c>false</c>.
+    /// </value>
+    public bool HasTestResultChanged =>
+        !string.Equals(this.loadedTestResult ?? string.Empty, this.TestResult ?? string.Empty);
+
+    #endregion
+
+    #region Data members
+
+    private readonly string loadedTestResult;
+    private DateTime? performedDatetime;
+
     #endregion
 
     #region Constructors
@@ -63,13 +91,22 @@ public class TestOrder
     /// <param name="performedDatetime">The performed datetime.</param>
     /// <param name="testResult">The test result.</param>
     /// <param name="isAbnormal">if set to <c>true</c> [is abnormal].</param>
-    public TestOrder(int appointmentId, int testCode, DateTime performedDatetime, string testResult, bool isAbnormal)
+    /// <param name="testResultDatetime">the time that the test result was entered</param>
+    public TestOrder(int appointmentId, int testCode, DateTime? performedDatetime, string testResult, bool isAbnormal,
+        DateTime? testResultDatetime)
     {
         this.AppointmentId = appointmentId;
         this.TestCode = testCode;
         this.PerformedDatetime = performedDatetime;
         this.TestResult = testResult;
+        this.loadedTestResult = testResult;
         this.IsAbnormal = isAbnormal;
+        this.TestResultDatetime = testResultDatetime;
+    }
+
+    public TestOrder()
+    {
+
     }
 
     #endregion

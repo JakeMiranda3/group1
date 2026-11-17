@@ -29,6 +29,14 @@ namespace System_Information_Group_1.Controller
 
         public bool IsReadOnly { get; private set; }
 
+        /// <summary>
+        /// Gets the scheduled date and time of the visit's appointment.
+        /// </summary>
+        /// <value>
+        /// The appointment date and time.
+        /// </value>
+        public DateTime AppointmentDateTime { get; private set; }
+
         private readonly VisitDal visitDal;
         private readonly TestOrderDal testOrderDal;
         public bool HasExistingVisit { get; private set; }
@@ -42,6 +50,7 @@ namespace System_Information_Group_1.Controller
             this.visitDal = new VisitDal();
             this.testOrderDal = new TestOrderDal();
             this.TestOrders = this.testOrderDal.GetTestOrdersByAppointmentId(visit.AppointmentId);
+            this.AppointmentDateTime = new AppointmentDal().GetAppointmentDateTime(visit.AppointmentId);
             var existingVisit = this.visitDal.GetVisitByAppointmentId(visit.AppointmentId);
             if (existingVisit != null)
             {
@@ -49,7 +58,7 @@ namespace System_Information_Group_1.Controller
                 this.Visit = new VisitDisplay(existingVisit.AppointmentId, existingVisit.Symptoms, existingVisit.NurseId,
                     existingVisit.SystolicBloodPressure, existingVisit.DiastolicBloodPressure, existingVisit.Temperature,
                     existingVisit.Pulse, existingVisit.Height, existingVisit.Weight, existingVisit.InitialDiagnosis,
-                    existingVisit.FinalDiagnosis);
+                    existingVisit.FinalDiagnosis, existingVisit.FinalDiagnosisEnteredDatetime);
                 this.IsReadOnly = !string.IsNullOrWhiteSpace(existingVisit.FinalDiagnosis);
             }
             else
@@ -70,16 +79,14 @@ namespace System_Information_Group_1.Controller
                 throw new InvalidOperationException("Final diagnosis is already set. This visit is read-only.");
             }
 
-            if (!string.IsNullOrWhiteSpace(this.Visit.FinalDiagnosis))
+            var isFinalizing = !string.IsNullOrWhiteSpace(this.Visit.FinalDiagnosis);
+            if (isFinalizing && this.GetTestsMissingResults().Count > 0)
             {
-                IList<TestOrderDisplay> ordersWhereTestResultsIsEmpty = this.TestOrders.Where(x => String.IsNullOrEmpty(x.TestResult)).ToList();
-                if (ordersWhereTestResultsIsEmpty.Count > 0)
-                {
-                    throw new InvalidOperationException("Cannot finalize visit. All test results must be filled in.");
-                }
-
-                this.IsReadOnly = true;
+                throw new InvalidOperationException(
+                    "Cannot finalize visit. All test results must be filled in and submitted.");
             }
+
+            this.Visit.FinalDiagnosisEnteredDatetime = isFinalizing ? DateTime.Now : null;
 
             if (this.HasExistingVisit)
             {
@@ -94,21 +101,22 @@ namespace System_Information_Group_1.Controller
                 this.visitDal.AddVisit(this.Visit);
             }
 
-            
+            // Only lock the visit once the final diagnosis has actually been saved.
+            this.IsReadOnly = isFinalizing;
+        }
 
-            foreach (var testOrder in this.TestOrders)
-            {
-                if (string.IsNullOrWhiteSpace(testOrder.TestResult))
-                {
-                    testOrder.PerformedDateTime = DateTime.MinValue;
-                }
-                else
-                {
-                    testOrder.PerformedDateTime = DateTime.Now;
-                }
-            }
-
-            this.testOrderDal.UpdateTestResults(this.TestOrders);
+        /// <summary>
+        /// Gets the names of the ordered tests that have no saved result.
+        /// Results typed into the grid only count once Submit Test Results has saved them, so a visit
+        /// can't be finalized with results that were never saved.
+        /// </summary>
+        /// <returns>The names of the tests missing a saved result; empty if every test has one.</returns>
+        public IList<string> GetTestsMissingResults()
+        {
+            return this.testOrderDal.GetTestOrdersByAppointmentId(this.Visit.AppointmentId)
+                .Where(order => string.IsNullOrWhiteSpace(order.TestResult))
+                .Select(order => order.Name)
+                .ToList();
         }
 
         public void RefreshTestOrders()
@@ -118,15 +126,15 @@ namespace System_Information_Group_1.Controller
 
         public void SubmitTestResults(IEnumerable<TestOrderDisplay> collection)
         {
-            IEnumerable<TestOrderDisplay> testWithResults = collection.Where(x => !String.IsNullOrEmpty(x.TestResult));
-            //TODO make sure this does not remove tests from the test results grid
+           
+            
 
-            //Seeing if a non-numeric string was entered for a test that has a low and high range
+           
             bool testResultIsNonNumericString = false;
             double value;
-            foreach (TestOrderDisplay test in testWithResults)
+            foreach (TestOrderDisplay test in collection)
             {
-                if (test.LowValue != 0 && !Double.TryParse(test.TestResult, out value))
+                if (test.LowValue != 0 && !String.IsNullOrEmpty(test.TestResult) && !Double.TryParse(test.TestResult, out value))
                 {
                     testResultIsNonNumericString = true;
                     break;
@@ -139,9 +147,20 @@ namespace System_Information_Group_1.Controller
                 return;
             }
 
+            var resultEnteredDatetime = DateTime.Now;
+            foreach (TestOrderDisplay test in collection)
+            {
+                if (test.HasTestResultChanged)
+                {
+                    test.TestResultDatetime = string.IsNullOrWhiteSpace(test.TestResult)
+                        ? (DateTime?)null
+                        : resultEnteredDatetime;
+                }
+            }
+
             try
             {
-                this.testOrderDal.UpdateTestResults(testWithResults);
+                this.testOrderDal.UpdateTestResults(collection);
                 MessageBox.Show("Test Results Submitted Successfully", "Test Results");
             }
             catch (Exception ex)
