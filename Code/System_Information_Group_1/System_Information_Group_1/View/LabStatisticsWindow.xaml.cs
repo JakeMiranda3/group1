@@ -26,7 +26,7 @@ namespace System_Information_Group_1.View
             this.InitializeComponent();
             this.Statistics = new ObservableCollection<TestStatistic>();
             this.controller = new LabStatisticsController();
-            this.DataContext = this;
+            DataContext = this;
         }
 
         private void generateStatisticsButton_Click(object sender, RoutedEventArgs e)
@@ -82,7 +82,7 @@ namespace System_Information_Group_1.View
             nurseWindow.Show();
             if (parentWindow != null)
             {
-                parentWindow?.Close();
+                parentWindow.Close();
             }
         }
     }

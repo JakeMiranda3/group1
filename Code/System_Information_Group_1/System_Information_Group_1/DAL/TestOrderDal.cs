@@ -17,6 +17,11 @@ public class TestOrderDal
 {
     #region Methods
 
+    /// <summary>
+    /// Gets all tests ordered for an appointment.
+    /// </summary>
+    /// <param name="appointmentId">The appointment identifier.</param>
+    /// <returns>The list of tests ordered for the appointment.</returns>
     public List<Test> GetAllTestOrderedByAppointmentId(int appointmentId)
     {
         var testList = new List<Test>();
@@ -43,6 +48,11 @@ public class TestOrderDal
         return testList;
     }
 
+    /// <summary>
+    /// Gets the test orders for an appointment, including test details and any entered results.
+    /// </summary>
+    /// <param name="appointmentId">The appointment identifier.</param>
+    /// <returns>The list of test orders for the appointment.</returns>
     public List<TestOrderDisplay> GetTestOrdersByAppointmentId(int appointmentId)
     {
         var testOrders = new List<TestOrderDisplay>();
@@ -85,6 +95,10 @@ public class TestOrderDal
         return testOrders;
     }
 
+    /// <summary>
+    /// Saves the results of the given test orders and recalculates their abnormality in a single transaction.
+    /// </summary>
+    /// <param name="testOrders">The test orders to update.</param>
     public void UpdateTestResults(IEnumerable<TestOrderDisplay> testOrders)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
@@ -103,13 +117,13 @@ public class TestOrderDal
 
                 using var cmd = new MySqlCommand(query, connection, transaction);
                 cmd.Parameters.AddWithValue("@performedDateTime", testOrder.PerformedDatetime.HasValue
-                    ? (object)testOrder.PerformedDatetime.Value
+                    ? testOrder.PerformedDatetime.Value
                     : DBNull.Value);
                 cmd.Parameters.AddWithValue("@resultEnteredDateTime", testOrder.TestResultDatetime.HasValue
-                    ? (object)testOrder.TestResultDatetime.Value
+                    ? testOrder.TestResultDatetime.Value
                     : DBNull.Value);
                 cmd.Parameters.AddWithValue("@testResult", string.IsNullOrWhiteSpace(testOrder.TestResult)
-                    ? (object)DBNull.Value
+                    ? DBNull.Value
                     : testOrder.TestResult);
                 cmd.Parameters.AddWithValue("@isAbnormal", testOrder.IsAbnormal);
                 cmd.Parameters.AddWithValue("@appointmentId", testOrder.AppointmentId);
@@ -138,6 +152,11 @@ public class TestOrderDal
 
     #endregion
 
+    /// <summary>
+    /// Orders the given tests for an appointment.
+    /// </summary>
+    /// <param name="orderedTests">The tests to order.</param>
+    /// <param name="appointmentId">The appointment identifier.</param>
     public void OrderTest(List<Test> orderedTests, int appointmentId)
     {
 
@@ -157,6 +176,11 @@ public class TestOrderDal
         }
     }
 
+    /// <summary>
+    /// Gets which of the given appointments have at least one test order.
+    /// </summary>
+    /// <param name="appointmentIds">The appointment identifiers to check.</param>
+    /// <returns>The appointment identifiers that have test orders.</returns>
     public IList<int> GetAppointmentIdsWithOrders(IList<int> appointmentIds)
     {
         if (appointmentIds.Count == 0)
@@ -172,6 +196,17 @@ public class TestOrderDal
     }
 
 
+    /// <summary>
+    /// Creates a test order from the current row of the reader.
+    /// </summary>
+    /// <param name="reader">The reader positioned on a test order row.</param>
+    /// <param name="appointmentIdOrdinal">The appointment identifier column ordinal.</param>
+    /// <param name="testCodeOrdinal">The test code column ordinal.</param>
+    /// <param name="performedDatetimeOrdinal">The performed date time column ordinal.</param>
+    /// <param name="testResultOrdinal">The test result column ordinal.</param>
+    /// <param name="isAbnormalOrdinal">The is abnormal column ordinal.</param>
+    /// <param name="testResultEnteredDatetimeOrdinal">The result entered date time column ordinal.</param>
+    /// <returns>The test order built from the current row.</returns>
     public static TestOrder CreateOrder(MySqlDataReader reader, int appointmentIdOrdinal, int testCodeOrdinal, int performedDatetimeOrdinal, int testResultOrdinal, int isAbnormalOrdinal, int testResultEnteredDatetimeOrdinal)
     {
         var appointmentId = reader.GetFieldValue<Int32>(appointmentIdOrdinal);

@@ -1,13 +1,12 @@
-﻿
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using System_Information_Group_1.Authorization;
 using System_Information_Group_1.Constants;
 using System_Information_Group_1.Controller;
 using System_Information_Group_1.InputValidation;
 
-namespace System_Information_Group_1.View
+namespace System_Information_Group_1.View.UserControls
 {
     /// <summary>
     /// Interaction logic for LoginUserControl.xaml
@@ -15,8 +14,8 @@ namespace System_Information_Group_1.View
     public partial class LoginUserControl : UserControl
     {
         private LoginController controller;
-        private bool usernameValid = false;
-        private bool passwordValid = false;
+        private bool usernameValid;
+        private bool passwordValid;
         /// <summary>
         /// Initializes a new instance of the <see cref="LoginUserControl"/> class.
         /// </summary>
@@ -27,7 +26,7 @@ namespace System_Information_Group_1.View
             this.loginButton.IsEnabled = false;
         }
 
-        private void onLoginButtonClicked(object sender, System.Windows.RoutedEventArgs e)
+        private void onLoginButtonClicked(object sender, RoutedEventArgs e)
         {
             bool successfulLogin = this.controller.AttemptLogin(this.usernameTextBox.Text, this.passwordTextBox.Password);
 
@@ -49,13 +48,13 @@ namespace System_Information_Group_1.View
                 Window parentWindow = Window.GetWindow(this);
                 if (parentWindow != null)
                 {
-                    parentWindow?.Close();
+                    parentWindow.Close();
                 }
 
             }
             else
             {
-                System.Windows.MessageBox.Show("Login failed. Please check your username and password.");
+                MessageBox.Show("Login failed. Please check your username and password.");
             }
         }
 
@@ -70,14 +69,14 @@ namespace System_Information_Group_1.View
             if (!validationResult.IsValid)
             {
                 this.usernameValid = false;
-                this.loginErrorMessage.Visibility = System.Windows.Visibility.Visible;
+                this.loginErrorMessage.Visibility = Visibility.Visible;
                 this.loginErrorMessage.Text = validationResult.ErrorContent.ToString();
                 this.loginButton.IsEnabled = false;
             }
             else
             {
                 this.usernameValid = true;
-                this.loginErrorMessage.Visibility = System.Windows.Visibility.Hidden;
+                this.loginErrorMessage.Visibility = Visibility.Hidden;
                 this.loginButton.IsEnabled = this.passwordValid;
             }
         }
@@ -93,14 +92,14 @@ namespace System_Information_Group_1.View
             if (!validationResult.IsValid)
             {
                 this.passwordValid = false;
-                this.loginErrorMessage.Visibility = System.Windows.Visibility.Visible;
+                this.loginErrorMessage.Visibility = Visibility.Visible;
                 this.loginErrorMessage.Text = validationResult.ErrorContent.ToString();
                 this.loginButton.IsEnabled = false;
             }
             else
             {
                 this.passwordValid = true;
-                this.loginErrorMessage.Visibility = System.Windows.Visibility.Hidden;
+                this.loginErrorMessage.Visibility = Visibility.Hidden;
                 this.loginButton.IsEnabled = this.usernameValid;
             }
         }

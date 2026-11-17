@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
@@ -92,7 +91,12 @@ public class AppointmentEditController
         }
 
     }
-
+    /// <summary>
+    /// Deletes the appointment.
+    /// </summary>
+    /// <param name="appointmentId">The appointment identifier.</param>
+    /// <exception cref="System.ArgumentException">Appointment id must be positive</exception>
+    /// <exception cref="System.InvalidOperationException">Appointment was not found.</exception>
     public void DeleteAppointment(int appointmentId)
     {
         if (appointmentId <= 0)

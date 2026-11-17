@@ -3,14 +3,14 @@ using System_Information_Group_1.Constants;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
-namespace System_Information_Group_1.Controller;
+namespace System_Information_Group_1.Authorization;
 
 /// <summary>
 /// The authentication singleton class that attempts login and stores the account persistently across the application.
 /// @author Matthew + Colby
 /// @version Fall 2026
 /// </summary>
-/// <seealso cref="System_Information_Group_1.Controller.IAuthService" />
+/// <seealso cref="IAuthService" />
 public class AuthServiceSingleton : IAuthService
 {
     private static Account currentAccount;
@@ -83,7 +83,10 @@ public class AuthServiceSingleton : IAuthService
         return AuthServiceSingleton.currentAccount != null ? AuthServiceSingleton.currentAccount 
             : throw new AccessViolationException("user is not logged in ");
     }
-
+    /// <summary>
+    /// Logouts the user.
+    /// </summary>
+    /// <returns>true if there is an account to logout throws error if not</returns>
     public static bool LogoutUser()
     {
         AuthServiceSingleton.currentAccount = null;

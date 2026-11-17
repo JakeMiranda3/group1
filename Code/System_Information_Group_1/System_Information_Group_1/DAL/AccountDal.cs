@@ -12,13 +12,14 @@ namespace System_Information_Group_1.DAL
     /// </summary>
     public class AccountDal
     {
-        #region Access Methods        
-        /// <summary>
-        /// Gets the account with person identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns>The account with the corresponding person ID</returns>
-        /// <exception cref="System.ArgumentNullException">no results were returned from the reader</exception>
+        #region Access Methods
+
+        //// <summary>
+        //// Gets the account with person identifier.
+        //// </summary>
+        //// <param name="id">The identifier.</param>
+        //// <returns>The account with the corresponding person ID</returns>
+        //// <exception cref="System.ArgumentNullException">no results were returned from the reader</exception>
         //public Account GetAccountWithPersonId(int id)
         //{
         //    using var connection = new MySqlConnection(Connection.ConnectionString());

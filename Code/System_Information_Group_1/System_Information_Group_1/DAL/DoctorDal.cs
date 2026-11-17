@@ -143,7 +143,10 @@ public class DoctorDal
         if (reader.Read())
         {
             var doctorsPerson = personDal.GetPersonWithId(reader.GetFieldValueCheckNull<int>(personIdOrdinal));
-            return $"{doctorsPerson.FirstName} {doctorsPerson.LastName}";
+            if (doctorsPerson != null)
+            {
+                return $"{doctorsPerson.FirstName} {doctorsPerson.LastName}";
+            }
         }
 
         return null;

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
-
+﻿using System.Windows;
 
 namespace System_Information_Group_1.View;
 

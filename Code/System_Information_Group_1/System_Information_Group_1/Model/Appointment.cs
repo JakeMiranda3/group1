@@ -68,7 +68,12 @@ public class Appointment
     /// </value>
     public Patient Patient { get; set; }
 
-
+    /// <summary>
+    /// Gets or sets the visit for this appointment.
+    /// </summary>
+    /// <value>
+    /// The visit, or <c>null</c> if no visit has been recorded.
+    /// </value>
     public Visit? Visit { get; set; }
 
     /// <summary>
@@ -108,5 +113,8 @@ public class Appointment
         this.Date = date;
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Appointment"/> class.
+    /// </summary>
     public Appointment() {}
 }

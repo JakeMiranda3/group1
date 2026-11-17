@@ -1,21 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System_Information_Group_1.Controller.UserControl;
-using System_Information_Group_1.DAL;
 using System_Information_Group_1.Model;
 
 namespace System_Information_Group_1.View.UserControls
@@ -25,7 +12,12 @@ namespace System_Information_Group_1.View.UserControls
     /// </summary>
     public partial class TimeBlockSchedule : UserControl
     {
-
+        /// <summary>
+        /// Gets the appointment identifier of the selected card.
+        /// </summary>
+        /// <value>
+        /// The selected appointment identifier, or <c>null</c> if no card or an open time slot is selected.
+        /// </value>
         public int? SelectedAppointmentId
         {
             get
@@ -61,7 +53,7 @@ namespace System_Information_Group_1.View.UserControls
         /// <param name="doctorName">Name of the doctor.</param>
         public void AddCardsWithScheduledAndOpenCards(IList<Appointment> appointments, DateTime selectedDay, string doctorName)
         {
-            this.clearScheduleSlots();
+            this.ClearScheduleSlots();
             var appointmentsOnDate = this.filterAppointmentsByDate(appointments, selectedDay);
             this.fillAppointmentCards(appointmentsOnDate);
             var timeSlot = ClinicStartTime;
@@ -79,9 +71,13 @@ namespace System_Information_Group_1.View.UserControls
 
         }
 
+        /// <summary>
+        /// Replaces the schedule with a card for each of the given appointments, sorted by date.
+        /// </summary>
+        /// <param name="appointments">The appointments.</param>
         public void AddCardsFromAppointments(IList<Appointment> appointments)
         {
-            this.clearScheduleSlots();
+            this.ClearScheduleSlots();
             this.fillAppointmentCards(appointments);
             this.sortCardsByDate();
         }
@@ -90,7 +86,7 @@ namespace System_Information_Group_1.View.UserControls
         {
             var sortedCards = this.scheduleListBox.Items
                 .Cast<ListBoxItem>()
-                .OrderBy(item => ((TimeCard)item.Content).scheduledTime)
+                .OrderBy(item => ((TimeCard)item.Content).ScheduledTime)
                 .ToList();
 
             this.scheduleListBox.Items.Clear();
@@ -156,12 +152,16 @@ namespace System_Information_Group_1.View.UserControls
         /// <summary>
         /// Clears the schedule slots.
         /// </summary>
-        public void clearScheduleSlots()
+        public void ClearScheduleSlots()
         {
             this.scheduleListBox.Items.Clear();
         }
 
 
+        /// <summary>
+        /// Determines whether the selected card is an open time slot.
+        /// </summary>
+        /// <returns><c>true</c> if the selected card is available; otherwise, <c>false</c>.</returns>
         public bool IsSelectedCardAvailable()
         {
             return this.scheduleListBox.SelectedItem is ListBoxItem item && item.Content is TimeCard card &&
