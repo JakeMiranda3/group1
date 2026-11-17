@@ -47,6 +47,15 @@ public class AppointmentEditController
             throw new ArgumentException("The doctor already has an appointment at this time.");
         }
 
+        if (this.appointmentDal.HasPatientAppointmentConflict(
+                appointment.PatientId,
+                appointment.Date,
+                appointment.AppointmentId))
+        {
+            throw new ArgumentException(
+                "The patient already has an appointment at this time.");
+        }
+
         this.appointmentDal.EditAppointment(appointment);
     }
 

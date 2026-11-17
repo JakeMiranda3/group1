@@ -248,6 +248,18 @@ public class AppointmentDal
         }
     }
 
+    public bool HasPatientAppointmentConflict(
+        int patientId, DateTime date, int appointmentId)
+    {
+        using var connection =
+            new MySqlConnection(Connection.ConnectionString());
+
+        var query = ("SELECT EXISTS(SELECT 1 FROM appointment WHERE patient_id = @patientId AND appointment_dateTime = @date AND appointment_id != @appointmentId);");
+
+        return connection.ExecuteScalar<bool>(
+            query, new { patientId, date, appointmentId });
+    }
+
 
     public bool DeleteAppointmentById(int appointmentId)
     {

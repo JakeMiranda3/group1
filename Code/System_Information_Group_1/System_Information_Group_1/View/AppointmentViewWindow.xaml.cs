@@ -251,12 +251,29 @@ namespace System_Information_Group_1.View
                     return;
                 }
 
-                var selectedDate = selectedCard.scheduledTime;
+                if (this.scheduleControl.SelectedAppointmentId is not int appointmentId)
+                {
+                    this.showError("Please select an appointment.");
+                    return;
+                }
 
-                var appointmentId = this.controller.GetAppointmentId(
-                    this.controller.SelectedPatientId, selectedDate);
+                IList<Appointment> appointments;
 
-                var selectedAppointment = this.controller.GetPatientAppointments()
+                if (this.filterCheckbox.IsChecked == true)
+                {
+                    appointments = this.controller.GetPatientAppointments();
+                }
+                else if (this.doctorComboBox.SelectedItem is Doctor doctor)
+                {
+                    appointments = this.controller.GetDoctorsAppointments(doctor);
+                }
+                else
+                {
+                    this.showError("Please select a doctor.");
+                    return;
+                }
+
+                var selectedAppointment = appointments
                     .FirstOrDefault(appointment =>
                         appointment.AppointmentId == appointmentId);
 
