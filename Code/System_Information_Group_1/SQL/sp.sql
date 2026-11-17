@@ -87,8 +87,8 @@ DELIMITER ;
 
 
 -- Jake Stored Procedure
-DROP PROCEDURE IF EXISTS SearchPatients$
 DELIMITER $
+DROP PROCEDURE IF EXISTS SearchPatients$
 CREATE PROCEDURE SearchPatients(p_firstName VARCHAR(100),p_lastName VARCHAR(100),p_dateOfBirth DATE
 )
 BEGIN
