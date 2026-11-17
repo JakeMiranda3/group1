@@ -1,6 +1,7 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
+using System.Data;
 using MySqlConnector;
 using System_Information_Group_1.Model;
 
@@ -100,44 +101,19 @@ public class PatientDal
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
 
-        var query = "select patient.* from patient inner join person on patient.person_id = person.person_id where 1=1";
+        using var cmd = new MySqlCommand("SearchPatients", connection);
+        cmd.CommandType = CommandType.StoredProcedure;
 
-        if (!string.IsNullOrWhiteSpace(firstName))
-        {
-            query += " and person.first_name like @firstName";
-        }
+        cmd.Parameters.Add("@p_firstName", MySqlDbType.VarChar).Value =
+            string.IsNullOrWhiteSpace(firstName) ? DBNull.Value : firstName.Trim();
 
-        if (!string.IsNullOrWhiteSpace(lastName))
-        {
-            query += " and person.last_name like @lastName";
-        }
+        cmd.Parameters.Add("@p_lastName", MySqlDbType.VarChar).Value =
+            string.IsNullOrWhiteSpace(lastName) ? DBNull.Value : lastName.Trim();
 
-        if (dateOfBirth.HasValue)
-        {
-            query += " and date(person.date_of_birth) = @dateOfBirth";
-        }
+        cmd.Parameters.Add("@p_dateOfBirth", MySqlDbType.Date).Value =
+            dateOfBirth.HasValue ? dateOfBirth.Value.Date : DBNull.Value;
 
-        query += " order by person.last_name, person.first_name;";
-
-        using var command = new MySqlCommand(query, connection);
-
-        if (!string.IsNullOrWhiteSpace(firstName))
-        {
-            command.Parameters.Add("@firstName", MySqlDbType.VarChar).Value = $"{firstName.Trim()}%";
-        }
-
-        if (!string.IsNullOrWhiteSpace(lastName))
-        {
-            command.Parameters.Add("@lastName", MySqlDbType.VarChar).Value = $"{lastName.Trim()}%";
-        }
-
-        if (dateOfBirth.HasValue)
-        {
-            command.Parameters.Add("@dateOfBirth", MySqlDbType.Date)
-                .Value = dateOfBirth.Value.Date;
-        }
-
-        using var reader = command.ExecuteReader();
+        using var reader = cmd.ExecuteReader();
 
         var personIdOrdinal = reader.GetOrdinal("person_id");
         var patientIdOrdinal = reader.GetOrdinal("patient_id");

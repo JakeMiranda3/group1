@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Routine Checkup Entry"
         MinHeight="720"
-        MinWidth="1080"
+        MinWidth="1500"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResizeWithGrip">
 
@@ -82,7 +82,13 @@
 
                 <TextBlock Text="Patient Vitals &amp; Diagnosis"
                            FontSize="24"
-                           Margin="0,0,0,15" />
+                           Margin="0,0,0,5" />
+
+                <TextBlock FontSize="16"
+                           Margin="0,0,0,15">
+                    <Run Text="Appointment Time: " FontWeight="Bold" />
+                    <Run x:Name="appointmentDateTimeRun" />
+                </TextBlock>
 
                 <Label Content="Symptoms" Style="{StaticResource SectionLabelStyle}" />
                 <TextBox x:Name="symptomsTextBox"
@@ -210,6 +216,12 @@
                          Text="{Binding FinalDiagnosis, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource NotesTextBoxStyle}"
                          Height="60" />
+
+                <TextBlock FontSize="15"
+                           Margin="0,8,0,0">
+                    <Run Text="Final Diagnosis Entered: " FontWeight="Bold" />
+                    <Run Text="{Binding FinalDiagnosisEnteredDatetime, Mode=OneWay, TargetNullValue='Not yet entered', StringFormat={}{0:MM/dd/yyyy hh:mm tt}}" />
+                </TextBlock>
             </StackPanel>
         </ScrollViewer>
 
@@ -314,10 +326,48 @@
                     <DataGridTextColumn Header="Result"
                                         Binding="{Binding TestResult, UpdateSourceTrigger=PropertyChanged}"
                                         Width="*"
-                                        MinWidth="90" />
+                                        MinWidth="40" />
                     <DataGridCheckBoxColumn Header="Abnormal"
                                             Binding="{Binding IsAbnormal, UpdateSourceTrigger=PropertyChanged}"
                                             Width="Auto" />
+                    <DataGridTemplateColumn Header="Date Performed"
+                                            Width="Auto"
+                                            MinWidth="130">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding PerformedDatetime, StringFormat={}{0:MM/dd/yyyy}}"
+                                           VerticalAlignment="Center"
+                                           Margin="4,0" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding PerformedDatetime, Mode=TwoWay}"
+                                            VerticalContentAlignment="Center">
+                                    <DatePicker.Resources>
+                                    
+                                        <Style TargetType="DatePickerTextBox">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="DatePickerTextBox">
+                                                        <TextBox x:Name="PART_TextBox"
+                                                                 BorderThickness="0"
+                                                                 VerticalContentAlignment="Center"
+                                                                 Text="{Binding SelectedDate, RelativeSource={RelativeSource AncestorType=DatePicker}, StringFormat={}{0:MM/dd/yyyy}}" />
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DatePicker.Resources>
+                                </DatePicker>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Test Result Entered"
+                                        Binding="{Binding TestResultDatetime, StringFormat={}{0:MM/dd/yyyy}}"
+                                        IsReadOnly="True"
+                                        Width="Auto"
+                                        MinWidth="150" />
                 </DataGrid.Columns>
             </DataGrid>
             <Grid Grid.Row="4">
@@ -333,7 +383,8 @@
                         Height="39"
                         Margin="0,12,0,0"
                         Background="{StaticResource CancelColorBrush}" Click="Button_Click" />
-                <Button Grid.Column="1"
+                <Button x:Name="submitTestResultsButton"
+                        Grid.Column="1"
                         Content="Submit Test Results"
                         Style="{StaticResource BlueButtonStyle}"
                         HorizontalAlignment="Right"

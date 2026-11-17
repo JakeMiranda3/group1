@@ -37,7 +37,8 @@ public class OrderTestController
         return this.testDal.GetAllTest();
     }
 
-    public List<Test> GetAllTestOrderedByAppointmentId(int appointmentId)
+
+    public List<Test> GetTestAlreadyOrderedByAppointmentId(int appointmentId)
     {
         return this.testOrderDal.GetAllTestOrderedByAppointmentId(appointmentId);
     }

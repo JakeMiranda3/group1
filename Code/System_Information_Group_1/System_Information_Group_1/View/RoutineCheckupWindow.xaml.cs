@@ -20,6 +20,7 @@ namespace System_Information_Group_1.View
             InitializeComponent();
             this.controller = new RoutineCheckupController(visitDisplay);
             this.DataContext = this.controller.Visit;
+            this.appointmentDateTimeRun.Text = this.controller.AppointmentDateTime.ToString("MM/dd/yyyy hh:mm tt");
             this.applyReadOnlyState();
             this.testsDataGrid.ItemsSource = new ObservableCollection<TestOrderDisplay>(this.controller.TestOrders);
         }
@@ -42,6 +43,17 @@ namespace System_Information_Group_1.View
 
             if (!string.IsNullOrWhiteSpace(this.controller.Visit.FinalDiagnosis))
             {
+                var testsMissingResults = this.controller.GetTestsMissingResults();
+                if (testsMissingResults.Count > 0)
+                {
+                    MessageBox.Show(
+                        "A final diagnosis can't be saved until every ordered test has a result. " +
+                        "Enter the results and click Submit Test Results first.\n\nMissing results:\n" +
+                        string.Join("\n", testsMissingResults),
+                        "Missing Test Results", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
                 var confirmation = MessageBox.Show(
                     "Final diagnosis is filled. After saving, this visit will become read-only and no longer appear for editing. Continue?",
                     "Confirm Final Diagnosis",
@@ -92,6 +104,11 @@ namespace System_Information_Group_1.View
             this.finalDiagnosisTextBox.IsReadOnly = true;
             this.submitButton.IsEnabled = false;
             this.submitButton.Content = "Finalized";
+
+            // Once finalized, tests can't be added or results cleared, or the visit could end up with missing results.
+            this.orderTestButton.IsEnabled = false;
+            this.testsDataGrid.IsReadOnly = true;
+            this.submitTestResultsButton.IsEnabled = false;
         }
 
         private void OnOrderTestClick(object sender, RoutedEventArgs e)
@@ -132,6 +149,8 @@ namespace System_Information_Group_1.View
             {
                 return;
             }
+           
+            this.testsDataGrid.CommitEdit(DataGridEditingUnit.Row, true);
 
             IEnumerable<TestOrderDisplay> collection = (IEnumerable<TestOrderDisplay>)this.testsDataGrid.ItemsSource;
             this.controller.SubmitTestResults(collection);
