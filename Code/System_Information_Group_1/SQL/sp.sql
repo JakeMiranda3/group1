@@ -77,12 +77,33 @@ DELIMITER $
 DROP PROCEDURE IF EXISTS GetTestOrdersByAppointmentId;
 CREATE PROCEDURE GetTestOrdersByAppointmentId(IN p_appointment_id INT)
 BEGIN
-	SELECT o.appointment_id, o.test_code, o.performed_datetime, o.test_result, o.is_abnormal,
-		   t.name, t.low_value, t.high_value, t.measurement_type
-	FROM test_order o
-	JOIN test t ON o.test_code = t.test_code
-	WHERE o.appointment_id = p_appointment_id;
+    SELECT o.appointment_id, o.test_code, o.performed_datetime, o.test_result, o.is_abnormal,
+           t.name, t.low_value, t.high_value, t.measurement_type, o.result_entered_datetime
+    FROM test_order o
+    JOIN test t ON o.test_code = t.test_code
+    WHERE o.appointment_id = p_appointment_id;
 END$
 DELIMITER ;
 
+
+-- Jake Stored Procedure
+DROP PROCEDURE IF EXISTS SearchPatients$
+DELIMITER $
+CREATE PROCEDURE SearchPatients(p_firstName VARCHAR(100),p_lastName VARCHAR(100),p_dateOfBirth DATE
+)
+BEGIN
+    SELECT patient.*
+    FROM patient
+    INNER JOIN person
+        ON patient.person_id = person.person_id
+    WHERE (p_firstName IS NULL
+        OR person.first_name LIKE CONCAT(p_firstName, '%'))
+    AND (p_lastName IS NULL
+        OR person.last_name LIKE CONCAT(p_lastName, '%'))
+    AND (p_dateOfBirth IS NULL
+        OR DATE(person.date_of_birth) = p_dateOfBirth)
+    ORDER BY person.last_name, person.first_name;
+END$
+
+DELIMITER ;
 
