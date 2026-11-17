@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System_Information_Group_1.Constants;
 using System_Information_Group_1.DAL;
 using System_Information_Group_1.InputValidation;
@@ -72,7 +71,7 @@ public class NurseController
 
         this.checkCredentials(username, password);
 
-        var nursePerson = new Person()
+        var nursePerson = new Person
         {
             FirstName = firstName,
             LastName = lastName,
@@ -148,9 +147,9 @@ public class NurseController
         if (error != null)
         {
             throw new ArgumentException(error);
-            throw new ArgumentException(
-                "Address, city, and state cannot be empty.");
         }
+
+        this.personDal.EditPerson(person);
     }
 
     /// <summary>

@@ -52,257 +52,257 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Row="1"
-                      VerticalScrollBarVisibility="Auto"
-                      HorizontalScrollBarVisibility="Disabled">
+            <ScrollViewer Grid.Row="1"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
 
-            <Grid Margin="25,15">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                <Grid Margin="25,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
 
-                <StackPanel Grid.Row="0"
-                            Grid.Column="0"
-                            Margin="0,0,10,10">
+                    <StackPanel Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="0,0,10,10">
 
-                    <Label Content="First Name"
-                           FontSize="16" />
+                        <Label Content="First Name"
+                               FontSize="16" />
 
-                    <TextBox x:Name="firstNameTextBox"
-                             Height="32"
-                             FontSize="16"
-                             MaxLength="20" />
+                        <TextBox x:Name="firstNameTextBox"
+                                 Height="32"
+                                 FontSize="16"
+                                 MaxLength="20" />
 
-                    <TextBlock x:Name="firstNameError"
-                               Style="{StaticResource FieldErrorStyle}" />
-                </StackPanel>
-
-
-                <StackPanel Grid.Row="0"
-                            Grid.Column="1"
-                            Margin="10,0,0,10">
-
-                    <Label Content="Last Name"
-                           FontSize="16" />
-
-                    <TextBox x:Name="lastNameTextBox"
-                             Height="32"
-                             FontSize="16"
-                             MaxLength="20" />
-
-                    <TextBlock x:Name="lastNameError"
-                               Style="{StaticResource FieldErrorStyle}" />
-                </StackPanel>
+                        <TextBlock x:Name="firstNameError"
+                                   Style="{StaticResource FieldErrorStyle}" />
+                    </StackPanel>
 
 
-                <StackPanel Grid.Row="1"
-                            Grid.Column="0"
-                            Margin="0,0,10,10">
+                    <StackPanel Grid.Row="0"
+                                Grid.Column="1"
+                                Margin="10,0,0,10">
 
-                    <Label Content="Date of Birth"
-                           FontSize="16" />
+                        <Label Content="Last Name"
+                               FontSize="16" />
 
-                    <DatePicker x:Name="dateOfBirthPicker"
-                                Height="32"
-                                FontSize="16" />
+                        <TextBox x:Name="lastNameTextBox"
+                                 Height="32"
+                                 FontSize="16"
+                                 MaxLength="20" />
 
-                    <TextBlock x:Name="dateOfBirthError"
-                               Style="{StaticResource FieldErrorStyle}" />
-                </StackPanel>
-
-
-                <StackPanel Grid.Row="1"
-                            Grid.Column="1"
-                            Margin="10,0,0,10">
-
-                    <Label Content="Phone Number (10 digits)"
-                           FontSize="16" />
-
-                    <TextBox x:Name="phoneNumberTextBox"
-                             Height="32"
-                             FontSize="16"
-                             MaxLength="10" />
-
-                    <TextBlock x:Name="phoneNumberError"
-                               Style="{StaticResource FieldErrorStyle}" />
-                </StackPanel>
+                        <TextBlock x:Name="lastNameError"
+                                   Style="{StaticResource FieldErrorStyle}" />
+                    </StackPanel>
 
 
-                <StackPanel Grid.Row="2"
-                            Grid.ColumnSpan="2"
-                            Margin="0,0,0,10">
+                    <StackPanel Grid.Row="1"
+                                Grid.Column="0"
+                                Margin="0,0,10,10">
 
-                    <Label Content="Street Address"
-                           FontSize="16" />
+                        <Label Content="Date of Birth"
+                               FontSize="16" />
 
-                    <TextBox x:Name="addressTextBox"
-                             Height="32"
-                             FontSize="16"
-                             MaxLength="20" />
+                        <DatePicker x:Name="dateOfBirthPicker"
+                                    Height="32"
+                                    FontSize="16" />
 
-                    <TextBlock x:Name="addressError"
-                               Style="{StaticResource FieldErrorStyle}" />
-                </StackPanel>
-
-
-                <StackPanel Grid.Row="3"
-                            Grid.Column="0"
-                            Margin="0,0,10,10">
-
-                    <Label Content="City"
-                           FontSize="16" />
-
-                    <TextBox x:Name="cityTextBox"
-                             Height="32"
-                             FontSize="16"
-                             MaxLength="20" />
-
-                    <TextBlock x:Name="cityError"
-                               Style="{StaticResource FieldErrorStyle}" />
-                </StackPanel>
+                        <TextBlock x:Name="dateOfBirthError"
+                                   Style="{StaticResource FieldErrorStyle}" />
+                    </StackPanel>
 
 
-                <StackPanel Grid.Row="3"
-                            Grid.Column="1"
-                            Margin="10,0,0,10">
+                    <StackPanel Grid.Row="1"
+                                Grid.Column="1"
+                                Margin="10,0,0,10">
 
-                    <Label Content="State"
-                           FontSize="16" />
+                        <Label Content="Phone Number (10 digits)"
+                               FontSize="16" />
 
-                    <ComboBox x:Name="stateTextBox"
-                              Height="32"
-                              FontSize="16"
-                              IsEditable="False">
+                        <TextBox x:Name="phoneNumberTextBox"
+                                 Height="32"
+                                 FontSize="16"
+                                 MaxLength="10" />
 
-                        <ComboBoxItem Content="AL" />
-                        <ComboBoxItem Content="AK" />
-                        <ComboBoxItem Content="AZ" />
-                        <ComboBoxItem Content="AR" />
-                        <ComboBoxItem Content="CA" />
-                        <ComboBoxItem Content="CO" />
-                        <ComboBoxItem Content="CT" />
-                        <ComboBoxItem Content="DE" />
-                        <ComboBoxItem Content="FL" />
-                        <ComboBoxItem Content="GA" />
-                        <ComboBoxItem Content="HI" />
-                        <ComboBoxItem Content="ID" />
-                        <ComboBoxItem Content="IL" />
-                        <ComboBoxItem Content="IN" />
-                        <ComboBoxItem Content="IA" />
-                        <ComboBoxItem Content="KS" />
-                        <ComboBoxItem Content="KY" />
-                        <ComboBoxItem Content="LA" />
-                        <ComboBoxItem Content="ME" />
-                        <ComboBoxItem Content="MD" />
-                        <ComboBoxItem Content="MA" />
-                        <ComboBoxItem Content="MI" />
-                        <ComboBoxItem Content="MN" />
-                        <ComboBoxItem Content="MS" />
-                        <ComboBoxItem Content="MO" />
-                        <ComboBoxItem Content="MT" />
-                        <ComboBoxItem Content="NE" />
-                        <ComboBoxItem Content="NV" />
-                        <ComboBoxItem Content="NH" />
-                        <ComboBoxItem Content="NJ" />
-                        <ComboBoxItem Content="NM" />
-                        <ComboBoxItem Content="NY" />
-                        <ComboBoxItem Content="NC" />
-                        <ComboBoxItem Content="ND" />
-                        <ComboBoxItem Content="OH" />
-                        <ComboBoxItem Content="OK" />
-                        <ComboBoxItem Content="OR" />
-                        <ComboBoxItem Content="PA" />
-                        <ComboBoxItem Content="RI" />
-                        <ComboBoxItem Content="SC" />
-                        <ComboBoxItem Content="SD" />
-                        <ComboBoxItem Content="TN" />
-                        <ComboBoxItem Content="TX" />
-                        <ComboBoxItem Content="UT" />
-                        <ComboBoxItem Content="VT" />
-                        <ComboBoxItem Content="VA" />
-                        <ComboBoxItem Content="WA" />
-                        <ComboBoxItem Content="WV" />
-                        <ComboBoxItem Content="WI" />
-                        <ComboBoxItem Content="WY" />
-                    </ComboBox>
-
-                    <TextBlock x:Name="stateError"
-                               Style="{StaticResource FieldErrorStyle}" />
-                </StackPanel>
-
-                <StackPanel Grid.Row="4"
-                            Grid.Column="0"
-                            Margin="0,0,10,10">
-
-                    <Label Content="ZIP Code (5 or 9 digits)"
-                           FontSize="16" />
-
-                    <TextBox x:Name="zipTextBox"
-                             Height="32"
-                             FontSize="16"
-                             MaxLength="9" />
-
-                    <TextBlock x:Name="zipError"
-                               Style="{StaticResource FieldErrorStyle}" />
-                </StackPanel>
+                        <TextBlock x:Name="phoneNumberError"
+                                   Style="{StaticResource FieldErrorStyle}" />
+                    </StackPanel>
 
 
-                <StackPanel Grid.Row="4"
-                            Grid.Column="1"
-                            Margin="10,0,0,10">
+                    <StackPanel Grid.Row="2"
+                                Grid.ColumnSpan="2" Grid.Column="0"
+                                Margin="0,0,0,10">
 
-                    <Label Content="Gender"
-                           FontSize="16" />
+                        <Label Content="Street Address"
+                               FontSize="16" />
 
-                    <ComboBox x:Name="genderTextBox"
-                              Height="32"
-                              FontSize="16"
-                              IsEditable="False">
+                        <TextBox x:Name="addressTextBox"
+                                 Height="32"
+                                 FontSize="16"
+                                 MaxLength="20" />
 
-                        <ComboBoxItem Content="Male" />
-                        <ComboBoxItem Content="Female" />
-                        <ComboBoxItem Content="Other" />
-                    </ComboBox>
+                        <TextBlock x:Name="addressError"
+                                   Style="{StaticResource FieldErrorStyle}" />
+                    </StackPanel>
 
-                    <TextBlock x:Name="genderError"
-                               Style="{StaticResource FieldErrorStyle}" />
-                </StackPanel>
-                <StackPanel Grid.Row="4" Grid.Column="1"
-                            Margin="10,0,0,15">
-                    <Label Content="Gender" FontSize="16" />
-                </StackPanel>
 
-                <StackPanel Grid.Row="5" Grid.Column="0"
-                            Margin="0,0,10,15">
-                    <Label Content="Username" FontSize="16" />
-                    <TextBox x:Name="usernameTextBox"
-                             Height="32"
-                             FontSize="16"
-                             MaxLength="50" />
-                </StackPanel>
+                    <StackPanel Grid.Row="3"
+                                Grid.Column="0"
+                                Margin="0,0,10,10">
 
-                <StackPanel Grid.Row="5" Grid.Column="1"
-                            Margin="10,0,0,15">
-                    <Label Content="Password" FontSize="16" />
-                    <PasswordBox x:Name="passwordTextBox"
+                        <Label Content="City"
+                               FontSize="16" />
+
+                        <TextBox x:Name="cityTextBox"
+                                 Height="32"
+                                 FontSize="16"
+                                 MaxLength="20" />
+
+                        <TextBlock x:Name="cityError"
+                                   Style="{StaticResource FieldErrorStyle}" />
+                    </StackPanel>
+
+
+                    <StackPanel Grid.Row="3"
+                                Grid.Column="1"
+                                Margin="10,0,0,10">
+
+                        <Label Content="State"
+                               FontSize="16" />
+
+                        <ComboBox x:Name="stateTextBox"
+                                  Height="32"
+                                  FontSize="16"
+                                  IsEditable="False">
+
+                            <ComboBoxItem Content="AL" />
+                            <ComboBoxItem Content="AK" />
+                            <ComboBoxItem Content="AZ" />
+                            <ComboBoxItem Content="AR" />
+                            <ComboBoxItem Content="CA" />
+                            <ComboBoxItem Content="CO" />
+                            <ComboBoxItem Content="CT" />
+                            <ComboBoxItem Content="DE" />
+                            <ComboBoxItem Content="FL" />
+                            <ComboBoxItem Content="GA" />
+                            <ComboBoxItem Content="HI" />
+                            <ComboBoxItem Content="ID" />
+                            <ComboBoxItem Content="IL" />
+                            <ComboBoxItem Content="IN" />
+                            <ComboBoxItem Content="IA" />
+                            <ComboBoxItem Content="KS" />
+                            <ComboBoxItem Content="KY" />
+                            <ComboBoxItem Content="LA" />
+                            <ComboBoxItem Content="ME" />
+                            <ComboBoxItem Content="MD" />
+                            <ComboBoxItem Content="MA" />
+                            <ComboBoxItem Content="MI" />
+                            <ComboBoxItem Content="MN" />
+                            <ComboBoxItem Content="MS" />
+                            <ComboBoxItem Content="MO" />
+                            <ComboBoxItem Content="MT" />
+                            <ComboBoxItem Content="NE" />
+                            <ComboBoxItem Content="NV" />
+                            <ComboBoxItem Content="NH" />
+                            <ComboBoxItem Content="NJ" />
+                            <ComboBoxItem Content="NM" />
+                            <ComboBoxItem Content="NY" />
+                            <ComboBoxItem Content="NC" />
+                            <ComboBoxItem Content="ND" />
+                            <ComboBoxItem Content="OH" />
+                            <ComboBoxItem Content="OK" />
+                            <ComboBoxItem Content="OR" />
+                            <ComboBoxItem Content="PA" />
+                            <ComboBoxItem Content="RI" />
+                            <ComboBoxItem Content="SC" />
+                            <ComboBoxItem Content="SD" />
+                            <ComboBoxItem Content="TN" />
+                            <ComboBoxItem Content="TX" />
+                            <ComboBoxItem Content="UT" />
+                            <ComboBoxItem Content="VT" />
+                            <ComboBoxItem Content="VA" />
+                            <ComboBoxItem Content="WA" />
+                            <ComboBoxItem Content="WV" />
+                            <ComboBoxItem Content="WI" />
+                            <ComboBoxItem Content="WY" />
+                        </ComboBox>
+
+                        <TextBlock x:Name="stateError"
+                                   Style="{StaticResource FieldErrorStyle}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="4"
+                                Grid.Column="0"
+                                Margin="0,0,10,10">
+
+                        <Label Content="ZIP Code (5 or 9 digits)"
+                               FontSize="16" />
+
+                        <TextBox x:Name="zipTextBox"
+                                 Height="32"
+                                 FontSize="16"
+                                 MaxLength="9" />
+
+                        <TextBlock x:Name="zipError"
+                                   Style="{StaticResource FieldErrorStyle}" />
+                    </StackPanel>
+
+
+                    <StackPanel Grid.Row="4"
+                                Grid.Column="1"
+                                Margin="10,0,0,10">
+
+                        <Label Content="Gender"
+                               FontSize="16" />
+
+                        <ComboBox x:Name="genderTextBox"
+                                  Height="32"
+                                  FontSize="16"
+                                  IsEditable="False">
+
+                            <ComboBoxItem Content="Male" />
+                            <ComboBoxItem Content="Female" />
+                            <ComboBoxItem Content="Other" />
+                        </ComboBox>
+
+                        <TextBlock x:Name="genderError"
+                                   Style="{StaticResource FieldErrorStyle}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="4" Grid.Column="1"
+                                Margin="10,0,0,15">
+                        <Label Content="Gender" FontSize="16" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="5" Grid.Column="0"
+                                Margin="0,0,10,15">
+                        <Label Content="Username" FontSize="16" />
+                        <TextBox x:Name="usernameTextBox"
                                  Height="32"
                                  FontSize="16"
                                  MaxLength="50" />
-                </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="5" Grid.Column="1"
+                                Margin="10,0,0,15">
+                        <Label Content="Password" FontSize="16" />
+                        <PasswordBox x:Name="passwordTextBox"
+                                     Height="32"
+                                     FontSize="16"
+                                     MaxLength="50" />
+                    </StackPanel>
                 </Grid>
-        </ScrollViewer>
+            </ScrollViewer>
 
 
         </Grid>

@@ -14,59 +14,7 @@ public class PatientDal
     #region Methods
 
     /// <summary>
-    ///     Gets the patient from reader with person identifier.
-    /// </summary>
-    /// <param name="personId">The person identifier.</param>
-    /// <returns>The patient.</returns>
-    /// <exception cref="System.InvalidOperationException">Patient not found.</exception>
-    public Patient GetPatientFromReaderWithPersonId(int personId)
-    {
-        using var connection = new MySqlConnection(Connection.ConnectionString());
-
-        connection.Open();
-        var query = "select * from patient where person_id = @person_id;";
-
-        using var command = new MySqlCommand(query, connection);
-        command.Parameters.Add("@person_id", MySqlDbType.Int32);
-        command.Parameters["@person_id"].Value = personId;
-
-        using var reader = command.ExecuteReader();
-        var personIdOrdinal = reader.GetOrdinal("person_id");
-        var patientIdOrdinal = reader.GetOrdinal("patient_id");
-        var isActiveOrdinal = reader.GetOrdinal("is_active");
-
-        if (!reader.Read())
-        {
-            throw new InvalidOperationException("Patient not found.");
-        }
-
-        var patient = readPatient(reader, personIdOrdinal, patientIdOrdinal, isActiveOrdinal);
-        var personDal = new PersonDal();
-        patient.Person = personDal.GetPersonWithId(patient.PersonId);
-
-        return patient;
-    }
-
-    /// <summary>
     ///     Creates the patient.
-    /// </summary>
-    /// <param name="personId">The person identifier.</param>
-    /// <returns>The created patient.</returns>
-    public Patient CreatePatient(int personId)
-    {
-        using var connection = new MySqlConnection(Connection.ConnectionString());
-        connection.Open();
-
-        var patient = this.CreatePatient(personId, connection, null);
-
-        var personDal = new PersonDal();
-        patient.Person = personDal.GetPersonWithId(patient.PersonId);
-
-        return patient;
-    }
-
-    /// <summary>
-    /// Creates the patient.
     /// </summary>
     /// <param name="personId">The person identifier.</param>
     /// <param name="connection">The connection.</param>
@@ -88,9 +36,8 @@ public class PatientDal
         return new Patient(personId, newId, true);
     }
 
-
     /// <summary>
-    /// Creates the patient with person.
+    ///     Creates the patient with person.
     /// </summary>
     /// <param name="lastName">The last name.</param>
     /// <param name="firstName">The first name.</param>

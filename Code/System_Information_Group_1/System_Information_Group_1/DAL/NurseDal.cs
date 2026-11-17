@@ -48,58 +48,6 @@ public class NurseDal
     }
 
     /// <summary>
-    ///     Gets a nurse using the nurse identifier.
-    /// </summary>
-    public Nurse GetNurseWithNurseId(int id)
-    {
-        using var connection = new MySqlConnection(Connection.ConnectionString());
-        connection.Open();
-
-        var query = "select * from nurse where nurse_id = @id;";
-
-        using var command = new MySqlCommand(query, connection);
-        command.Parameters.Add("@id", MySqlDbType.Int32).Value = id;
-
-        Nurse nurse;
-
-        using (var reader = command.ExecuteReader())
-        {
-            var nurseIdOrdinal = reader.GetOrdinal("nurse_id");
-            var personIdOrdinal = reader.GetOrdinal("person_id");
-
-            if (!reader.Read())
-            {
-                throw new InvalidOperationException("Nurse not found.");
-            }
-
-            nurse = readNurse(reader, nurseIdOrdinal, personIdOrdinal);
-        }
-
-        var personDal = new PersonDal();
-        nurse.Person = personDal.GetPersonWithId(nurse.PersonId);
-
-        return nurse;
-    }
-
-    /// <summary>
-    ///     Creates the nurse.
-    /// </summary>
-    /// <param name="personId">The person identifier.</param>
-    /// <returns>A newly created nurse.</returns>
-    public Nurse CreateNurse(int personId)
-    {
-        using var connection = new MySqlConnection(Connection.ConnectionString());
-        connection.Open();
-
-        var nurse = this.CreateNurse(personId, connection, null);
-
-        var personDal = new PersonDal();
-        nurse.Person = personDal.GetPersonWithId(nurse.PersonId);
-
-        return nurse;
-    }
-
-    /// <summary>
     ///     Creates the nurse.
     /// </summary>
     /// <param name="personId">The person identifier.</param>
@@ -230,25 +178,6 @@ public class NurseDal
         }
 
         return nurses;
-    }
-
-    /// <summary>
-    ///     Updates the person identifier for an existing nurse.
-    /// </summary>
-    public bool UpdateNursePersonId(int nurseId, int newPersonId)
-    {
-        using var connection = new MySqlConnection(Connection.ConnectionString());
-        connection.Open();
-
-        var query =
-            "update nurse set person_id = @personId where nurse_id = @nurseId;";
-
-        using var command = new MySqlCommand(query, connection);
-
-        command.Parameters.Add("@personId", MySqlDbType.Int32).Value = newPersonId;
-        command.Parameters.Add("@nurseId", MySqlDbType.Int32).Value = nurseId;
-
-        return command.ExecuteNonQuery() > 0;
     }
 
     /// <summary>

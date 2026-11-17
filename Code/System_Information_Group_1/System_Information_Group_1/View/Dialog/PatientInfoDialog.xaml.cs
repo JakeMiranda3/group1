@@ -211,7 +211,6 @@ public partial class PatientInfoDialog : Window
             : Visibility.Visible;
     }
 
-
     private static bool setError(TextBlock errorLabel, string? error)
     {
         errorLabel.Text = error ?? "";

@@ -1,12 +1,13 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 using MySqlConnector;
 using System_Information_Group_1.Model;
 
-using System.Collections.Generic;
-
 namespace System_Information_Group_1.DAL;
+
 /// <summary>
-/// The doctor data access layer (DAL) class provides methods to interact with the doctor data in the database. It allows retrieving doctor information based on person ID or doctor ID.
+///     The doctor data access layer (DAL) class provides methods to interact with the doctor data in the database. It
+///     allows retrieving doctor information based on person ID or doctor ID.
 /// </summary>
 public class DoctorDal
 {
@@ -23,9 +24,8 @@ public class DoctorDal
         return doctor;
     }
 
-
     /// <summary>
-    /// Creates a doctor row for the given person id and returns the created Doctor with generated id.
+    ///     Creates a doctor row for the given person id and returns the created Doctor with generated id.
     /// </summary>
     /// <param name="personId">Person id to assign doctor role to.</param>
     /// <returns>Created Doctor object.</returns>
@@ -42,15 +42,16 @@ public class DoctorDal
         }
 
         using var idCmd = new MySqlCommand("select last_insert_id();", connection);
-        var newId = System.Convert.ToInt32(idCmd.ExecuteScalar());
+        var newId = Convert.ToInt32(idCmd.ExecuteScalar());
         return new Doctor(personId, newId);
     }
 
     #endregion
 
-    #region access methods    
+    #region access methods
+
     /// <summary>
-    /// Gets the doctor with person identifier.
+    ///     Gets the doctor with person identifier.
     /// </summary>
     /// <param name="id">The identifier.</param>
     /// <returns>The doctor with the specified person ID</returns>
@@ -66,8 +67,9 @@ public class DoctorDal
         var personIdOrdinal = reader.GetOrdinal("person_id");
         return createDoctorWithoutPerson(reader, doctorIdOrdinal, personIdOrdinal);
     }
+
     /// <summary>
-    /// Gets the doctor with doctor identifier.
+    ///     Gets the doctor with doctor identifier.
     /// </summary>
     /// <param name="id">The identifier.</param>
     /// <returns>Get the doctor with the specified doctor ID</returns>
@@ -85,12 +87,11 @@ public class DoctorDal
     }
 
     /// <summary>
-    /// Gets all doctors.
+    ///     Gets all doctors.
     /// </summary>
     /// <returns>The list of doctors</returns>
     public IList<Doctor> GetAllDoctors()
     {
-
         IList<Doctor> doctorList = new List<Doctor>();
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
@@ -114,8 +115,9 @@ public class DoctorDal
         while (reader.Read())
         {
             var doctor = createDoctorWithoutPerson(reader, doctorIdOrdinal, personIdOrdinal);
-            doctor.Person = PersonDal.createPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal,
-                dateOfBirthOrdinal, contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal, genderOrdinal);
+            doctor.Person = PersonDal.MapReaderToPerson(reader, personIdOrdinal, firstNameOrdinal, lastNameOrdinal,
+                dateOfBirthOrdinal, contactPhoneNumberOrdinal, addressOrdinal, zipOrdinal, cityOrdinal, stateOrdinal,
+                genderOrdinal);
             doctorList.Add(doctor);
         }
 
@@ -123,7 +125,7 @@ public class DoctorDal
     }
 
     /// <summary>
-    /// Gets the doctors full name by doctor identifier.
+    ///     Gets the doctors full name by doctor identifier.
     /// </summary>
     /// <param name="doctorId">The doctor identifier.</param>
     /// <returns>the doctors full name</returns>
@@ -131,7 +133,8 @@ public class DoctorDal
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
         connection.Open();
-        var query = "select p.person_id from doctor d join person p on d.person_id = p.person_id where doctor_id = @id;";
+        var query =
+            "select p.person_id from doctor d join person p on d.person_id = p.person_id where doctor_id = @id;";
         using var command = new MySqlCommand(query, connection);
         command.Parameters.Add("@id", MySqlDbType.Int32).Value = doctorId;
         using var reader = command.ExecuteReader();
