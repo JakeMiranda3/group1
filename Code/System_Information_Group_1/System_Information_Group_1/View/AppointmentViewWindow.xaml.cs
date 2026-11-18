@@ -273,7 +273,7 @@ namespace System_Information_Group_1.View
                         MessageBoxImage.Warning);
                     return;
                 }
-                var dialog = new AppointmentInfoDialog(selectedAppointment, selectedCard.State == TimeCardState.BeforeDeadline, this.Doctors)
+                var dialog = new AppointmentInfoDialog(selectedAppointment, this.Doctors)
                 {
                     Owner = this
                 };

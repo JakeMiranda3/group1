@@ -316,4 +316,15 @@ public class AppointmentDal
         return connection.Execute(query, new { appointmentId }) > 0;
     }
 
+    public bool DoesAppointmentHaveVisitById(int appointmentId)
+    {
+        using var connection = new MySqlConnection(Connection.ConnectionString());
+
+        connection.Open();
+
+        var query = "SELECT EXISTS (SELECT 1 from appointment as a join visit as v on a.appointment_id = v.appointment_id WHERE v.appointment_id = @appointmentId)";
+
+        return connection.ExecuteScalar<bool>(query, new { appointmentId });
+    }
+
 }
