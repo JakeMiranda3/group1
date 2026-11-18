@@ -74,7 +74,7 @@ call get_most_performed_tests_during_dates("1978-01-01", "2100-12-12"); -- Grabs
 
 -- William's Stored Procedure
 DELIMITER $
-DROP PROCEDURE IF EXISTS GetTestOrdersByAppointmentId;
+DROP PROCEDURE IF EXISTS GetTestOrdersByAppointmentId$
 CREATE PROCEDURE GetTestOrdersByAppointmentId(IN p_appointment_id INT)
 BEGIN
     SELECT o.appointment_id, o.test_code, o.performed_datetime, o.test_result, o.is_abnormal,
