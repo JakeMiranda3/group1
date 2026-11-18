@@ -110,5 +110,10 @@ public class AppointmentEditController
         }
     }
 
+    public bool CanAppointmentBeDeleted(int appointmentId)
+    {
+        return !this.appointmentDal.DoesAppointmentHaveVisitById(appointmentId);
+    }
+
     #endregion
 }

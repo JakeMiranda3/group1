@@ -26,9 +26,8 @@ public partial class AppointmentInfoDialog : Window
     /// Initializes the appointment info dialog.
     /// </summary>
     /// <param name="appointment">The appointment to display.</param>
-    /// <param name="canDelete">if set to <c>true</c> the delete appointment button is shown.</param>
     /// <param name="doctors">The doctors the appointment can be assigned to.</param>
-    public AppointmentInfoDialog(Appointment appointment, bool canDelete, ICollection<Doctor> doctors) 
+    public AppointmentInfoDialog(Appointment appointment, ICollection<Doctor> doctors) 
     {
         this.InitializeComponent();
         this.populateTimeSlots();
@@ -39,6 +38,8 @@ public partial class AppointmentInfoDialog : Window
         DataContext = appointment;
 
         this.doctorComboBox.ItemsSource = this.doctors;
+
+        var canDelete = this.appointmentEditController.CanAppointmentBeDeleted(appointment.AppointmentId);
         
         this.deleteAppointmentButton.Visibility = canDelete ? Visibility.Visible : Visibility.Collapsed;
         this.deleteAppointmentButton.IsEnabled = canDelete;
