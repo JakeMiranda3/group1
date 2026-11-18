@@ -110,6 +110,11 @@ public class AppointmentEditController
         }
     }
 
+    /// <summary>
+    /// Checks if an appointment can be deleted.
+    /// </summary>
+    /// <param name="appointmentId"></param>
+    /// <returns>True if the appointment can be deleted.</returns>
     public bool CanAppointmentBeDeleted(int appointmentId)
     {
         return !this.appointmentDal.DoesAppointmentHaveVisitById(appointmentId);

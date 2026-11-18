@@ -316,6 +316,11 @@ public class AppointmentDal
         return connection.Execute(query, new { appointmentId }) > 0;
     }
 
+    /// <summary>
+    /// Checks if an appointment has visit by appointment id.
+    /// </summary>
+    /// <param name="appointmentId"></param>
+    /// <returns>True if an appointment has a visit</returns>
     public bool DoesAppointmentHaveVisitById(int appointmentId)
     {
         using var connection = new MySqlConnection(Connection.ConnectionString());
